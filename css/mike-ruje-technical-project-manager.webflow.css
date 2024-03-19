@@ -674,8 +674,13 @@
 }
 
 .link {
-  opacity: .15;
+  opacity: 1;
   text-decoration: none;
+}
+
+.link:hover {
+  opacity: .7;
+  cursor: pointer;
 }
 
 .section-2 {
@@ -1009,3 +1014,24 @@
 }
 
 
+    .link {
+        cursor: pointer;
+        text-decoration: none;
+        color: #1d1f1e;
+        opacity: 1;
+        z-index: 9999999;
+    
+      }
+
+          .link2 {
+        cursor: pointer;
+        text-decoration: none;
+        color: #eee;
+        opacity: 1;
+        z-index: 9999999;
+    }
+
+    .link:hover { 
+        cursor: pointer; 
+        opacity: 0.7 !important;
+    }
