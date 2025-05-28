@@ -7,7 +7,6 @@ import node from '@astrojs/node';
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), react()],
-  site: 'technical.pm',
   base: '/',
   compressHTML: true,
   output: 'server',
@@ -21,6 +20,11 @@ export default defineConfig({
     port: Number(process.env.PORT) || 3000,
     headers: {
       'Cache-Control': 'public, max-age=0, must-revalidate'
+    }
+  },
+  vite: {
+    build: {
+      outDir: 'dist'
     }
   }
 });
