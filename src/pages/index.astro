@@ -1,0 +1,261 @@
+---
+const experiences = [
+	// {
+	// 	title: "Technical Product Manager",
+	// 	company: "Freelance",
+	// 	period: "03/2024 - Present",
+	// },
+	{
+		title: "Technical Product Manager (AI)",
+		company: "SETVI",
+		period: "03/2023 - 03/2024",
+	},
+	{
+		title: "Technical Product Manager",
+		company: "Publicis Sapient",
+		period: "12/2021 - 03/2023",
+	},
+	{
+		title: "Product Manager / Scrum Master",
+		company: "SAP",
+		period: "04/2017 - 12/2021",
+	},
+	{
+		title: "",
+		company: "USAID",
+		period: "",
+	},
+	{
+		title: "",
+		company: "DTI",
+		period: "",
+	},
+	{
+		title: "",
+		company: "Day & Zimmerman",
+		period: "",
+	},
+	{
+		title: "",
+		company: "Cardano",
+		period: "",
+	},
+	{
+		title: "",
+		company: "Nicky",
+		period: "",
+	},
+	{
+		title: "",
+		company: "Amres",
+		period: "",
+	},
+	{
+		title: "",
+		company: "WolframAlpha",
+		period: "",
+	},
+	
+	
+];
+import Layout from '../layouts/Layout.astro';
+import WebGLBackground from '../components/WebGLBackground.astro';
+import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
+
+---
+
+<Layout title="Milos Rujevic - Technical Product Manager">
+	<WebGLBackground />
+
+	<!-- Hero Section -->
+	<section id="hero" class="container mx-auto px-4 py-24 max-w-4xl text-center relative z-10">
+		<h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+			Milos Rujevic
+		</h1>
+		<p class="text-xl text-gray-700 mb-6">Experienced Technical Product Manager driving innovation in AI, Blockchain, and Web3 solutions.</p>
+		<a href="/contact" class="inline-block px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition">Get in Touch</a>
+	</section>
+
+	<!-- Experience Section -->
+	<div class="relative w-full mb-12">
+		<h2 class="text-3xl font-semibold mb-8 text-center">Experience</h2>
+		<!-- Timeline component -->
+
+		<ExperienceTimeline experiences={experiences} client:load />
+
+	</div>
+
+	<!-- Projects Section -->
+	<section id="projects" class="mb-20">
+		<h2 class="text-3xl font-semibold mb-8 text-center">Signature Projects</h2>
+		<div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+			<div class="bg-gray-50 p-6 rounded-lg shadow">
+				<h3 class="font-semibold mb-2">Web3 Payment Protocol - Stellarity</h3>
+				<p class="mb-2">Implemented AWS infrastructure for Hollaex crypto exchanges, reducing downtime by 30%.</p>
+				<a href="#" class="text-purple-600 hover:underline">View Project</a>
+			</div>
+			<div class="bg-gray-50 p-6 rounded-lg shadow">
+				<h3 class="font-semibold mb-2">Uplatnica (Open Source - React)</h3>
+				<p class="mb-2">Developed open-source project creating a digital twin of Serbian pay slips.</p>
+				<a href="#" class="text-purple-600 hover:underline">View Project</a>
+			</div>
+			<div class="bg-gray-50 p-6 rounded-lg shadow">
+				<h3 class="font-semibold mb-2">WolframAlpha NFTs (Cardano)</h3>
+				<p class="mb-2">Managed end-to-end implementation of Cardano NFT standards into WolframAlpha.</p>
+				<a href="#" class="text-purple-600 hover:underline">View Project</a>
+			</div>
+			<div class="bg-gray-50 p-6 rounded-lg shadow">
+				<h3 class="font-semibold mb-2">E-Tabla (USAID)</h3>
+				<p class="mb-2">Optimized initial project setup for SIPRES (etabla.sud.rs), ensuring efficient case management for 46 Misdemeanor Courts.</p>
+				<a href="#" class="text-purple-600 hover:underline">View Project</a>
+			</div>
+		</div>
+	</section>
+
+
+	<!-- Skills Section -->
+	<section id="skills" class="mb-20">
+		<h2 class="text-3xl font-semibold mb-8 text-center">Core Competencies</h2>
+		<div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+			<div class="bg-gray-50 p-6 rounded-lg">
+				<h3 class="font-semibold mb-2">Technical</h3>
+				<ul class="list-disc list-inside text-gray-700">
+					<li>Agile Methodologies</li>
+					<li>Technical Product Management</li>
+					<li>AI/ML Solutions</li>
+					<li>Software Architecture</li>
+					<li>DevOps Practices</li>
+					<li>Cloud Platforms (AWS, Azure)</li>
+					<li>Blockchain & Web3</li>
+					<li>JavaScript (React, Angular, Node.js)</li>
+					<li>DataBricks</li>
+					<li>Salesforce</li>
+					<li>Power Platform</li>
+					<li>GitHub Copilot</li>
+				</ul>
+			</div>
+			<div class="bg-gray-50 p-6 rounded-lg">
+				<h3 class="font-semibold mb-2">Soft Skills</h3>
+				<ul class="list-disc list-inside text-gray-700">
+					<li>Team Leadership</li>
+					<li>Stakeholder Management</li>
+					<li>Strategic Thinking</li>
+					<li>Communication</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<!-- Pricing Section -->
+	<section id="pricing" class="mb-20">
+		<h2 class="text-3xl font-semibold mb-8 text-center">Service Tiers</h2>
+		<div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+			<div class="bg-white border border-gray-200 rounded-lg p-6 shadow text-center">
+				<h3 class="font-bold text-lg mb-2">Consultation</h3>
+				<p class="text-2xl font-semibold mb-2">$150<span class="text-base font-normal">/hr</span></p>
+				<ul class="mb-4 text-gray-700">
+					<li>Strategic Technical Advice</li>
+					<li>Roadmap Planning</li>
+					<li>Problem Solving Sessions</li>
+				</ul>
+				<a 
+					href="/consultation"
+					class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
+				>
+					Book a Session
+				</a>
+			</div>
+
+			<div class="bg-white border border-gray-200 rounded-lg p-6 shadow text-center">
+				<h3 class="font-bold text-lg mb-2">Project Boost</h3>
+				<p class="text-2xl font-semibold mb-2">Custom</p>
+				<ul class="mb-4 text-gray-700">
+					<li>Short-term Project Management</li>
+					<li>Feature Development Oversight</li>
+					<li>Agile Coaching</li>
+				</ul>
+				<a 
+					href="/project"
+					class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
+				>
+					Discuss Project
+				</a>
+			</div>
+
+			<div class="bg-white border border-gray-200 rounded-lg p-6 shadow text-center">
+				<h3 class="font-bold text-lg mb-2">Full Engagement</h3>
+				<p class="text-2xl font-semibold mb-2">Retainer</p>
+				<ul class="mb-4 text-gray-700">
+					<li>Long-term Product Leadership</li>
+					<li>Team Integration</li>
+					<li>End-to-End Solution Delivery</li>
+				</ul>
+				<a 
+					href="/engagement"
+					class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
+				>
+					Let's Partner
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Testimonials Section -->
+	<section id="testimonials" class="mb-20">
+		<h2 class="text-3xl font-semibold mb-8 text-center">What Others Say</h2>
+		<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+			<div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+				<div class="flex items-center mb-4">
+					<div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 font-bold text-xl">MF</div>
+					<div class="ml-4">
+						<h3 class="font-semibold">Michael Fox</h3>
+						<p class="text-sm text-gray-600">Executive, Health Plan Operations</p>
+					</div>
+				</div>
+				<p class="text-gray-700 italic">"Very knowledgeable and great partner. Strong kind and communication. A pleasure to create and work with. Pushes innovation and efficient solutions."</p>
+				<p class="text-sm text-gray-500 mt-4">September 6, 2021</p>
+			</div>
+
+			<div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+				<div class="flex items-center mb-4">
+					<div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 font-bold text-xl">SP</div>
+					<div class="ml-4">
+						<h3 class="font-semibold">Samuele Pavani</h3>
+						<p class="text-sm text-gray-600">Design & Communication | Web3</p>
+					</div>
+				</div>
+				<p class="text-gray-700 italic">"I saw Milos fix a website and its CSS in under 5 minutes. With 2 minutes more of explanation he was able to teach me basic CSS where other videos or courses failed with hours of my attention. Wanna deliver? Hire this man."</p>
+				<p class="text-sm text-gray-500 mt-4">August 10, 2022</p>
+			</div>
+
+			<div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+				<div class="flex items-center mb-4">
+					<div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 font-bold text-xl">XJ</div>
+					<div class="ml-4">
+						<h3 class="font-semibold">Xavier Joseph</h3>
+						<p class="text-sm text-gray-600">Talent & Business Development</p>
+					</div>
+				</div>
+				<p class="text-gray-700 italic">"Great communicator, works well with USA based clients and fits the culture of hustle hard."</p>
+				<p class="text-sm text-gray-500 mt-4">September 6, 2023</p>
+			</div>
+
+	
+		</div>
+	</section>
+
+	<!-- Contact Section -->
+	<section id="contact" class="mb-10">
+		<h2 class="text-3xl font-semibold mb-8 text-center">Ready to Elevate Your Project?</h2>
+		<div class="flex flex-col items-center">
+			<p class="mb-4 text-lg text-gray-700">Let's collaborate to build impactful, cutting-edge solutions.</p>
+			<a href="/contact" class="inline-block px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition mb-4">Start a Conversation</a>
+			<!-- <div class="text-gray-600">Milos Rujevic • <a href="mailto:milosrujevic@gmail.com" class="text-purple-600 hover:text-purple-700 transition-colors">milosrujevic@gmail.com</a></div> -->
+		</div>
+	</section>
+
+	<footer class="text-center text-gray-400 text-sm py-6">
+		© 2025 Milos Rujevic. All rights reserved.<br />
+		Powered by Hostinger Horizons &amp; React.
+	</footer>
+</Layout>
