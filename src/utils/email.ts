@@ -1,4 +1,4 @@
-const BREVO_API_KEY = import.meta.env.PUBLIC_BREVO_API_KEY;
+const BREVO_API_KEY = process.env.BREVO_API_KEY || '';
 const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
 
 if (!BREVO_API_KEY) {
