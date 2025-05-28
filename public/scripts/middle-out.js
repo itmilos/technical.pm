@@ -43,24 +43,24 @@ function drawMultiLines({
     // Or: return canvas.toDataURL();
 }
 
-// // Usage:
-// drawMultiLines({
-//     lines: [
-//         "-DTI-RBT-CARDANO", "", "-PUBLICS-SAP-USAID-", "", "WOLFRAM-ALPHA-"
-//     ],
-//     canvasSize: 768,
-//     font: "bold 100px Arial Narrow, Arial, sans-serif",
-//     letterSpacing: -5 // Try -10, -5, or 0 for different tightness
-// });
-
-
-
 // Usage:
 drawMultiLines({
     lines: [
-        "", "-NICKY-SAP-PUBLICIS-", "", "-AMRES-NICKY-PUBLICIS-", ""
+        "-DTI-RBT-CARDANO", "", "-PUBLICS-SAP-USAID-", "", "WOLFRAM-ALPHA-"
     ],
     canvasSize: 768,
     font: "bold 100px Arial Narrow, Arial, sans-serif",
     letterSpacing: -5 // Try -10, -5, or 0 for different tightness
 });
+
+
+
+// // Usage:
+// drawMultiLines({
+//     lines: [
+//         "", "-NICKY-SAP-PUBLICIS-", "", "-AMRES-NICKY-PUBLICIS-", ""
+//     ],
+//     canvasSize: 768,
+//     font: "bold 100px Arial Narrow, Arial, sans-serif",
+//     letterSpacing: -5 // Try -10, -5, or 0 for different tightness
+// });

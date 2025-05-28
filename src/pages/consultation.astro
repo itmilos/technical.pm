@@ -1,9 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sendEmail } from '../utils/email';
 ---
 
-<Layout title="Book a Consultation - Milos Rujevic">
+<Layout 
+  title="Consultation - Milos Rujevic"
+  description="Book a consultation with Milos Rujevic for strategic technical advice."
+  image="/og-consultation.png"
+>
   <div class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-2xl mx-auto px-4">
       <div class="bg-white rounded-lg shadow-lg p-8">
@@ -90,7 +93,6 @@ import { sendEmail } from '../utils/email';
 </Layout>
 
 <script>
-  import { sendEmail } from '../utils/email';
 
   const form = document.getElementById('consultation-form') as HTMLFormElement;
   if (form) {
@@ -106,7 +108,7 @@ import { sendEmail } from '../utils/email';
         submitButton.disabled = true;
         submitButton.textContent = 'Sending...';
 
-        await sendEmail(data);
+
         
         // Show success message
         alert('Thank you for booking a consultation! I will get back to you shortly to confirm the details.');

@@ -1,9 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sendEmail } from '../utils/email';
+
 ---
 
-<Layout title="Full Engagement - Milos Rujevic">
+<Layout 
+  title="Engagement - Milos Rujevic"
+  description="Long-term product leadership and team integration."
+  image="/og-engagement.png"
+>
   <div class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-2xl mx-auto px-4">
       <div class="bg-white rounded-lg shadow-lg p-8">
@@ -95,7 +99,7 @@ import { sendEmail } from '../utils/email';
 </Layout>
 
 <script>
-  import { sendEmail } from '../utils/email';
+
 
   const form = document.getElementById('engagement-form') as HTMLFormElement;
   if (form) {
@@ -111,7 +115,7 @@ import { sendEmail } from '../utils/email';
         submitButton.disabled = true;
         submitButton.textContent = 'Sending...';
 
-        await sendEmail(data);
+
         
         // Show success message
         alert('Thank you for your interest in a full engagement! I will review your requirements and get back to you shortly.');
