@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-import node from '@astrojs/node';
+import vercelServerless from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,8 +10,11 @@ export default defineConfig({
   base: '/',
   compressHTML: true,
   output: 'server',
-  adapter: node({
-    mode: 'standalone'
+  adapter: vercelServerless({
+    webAnalytics: {
+      enabled: true
+    },
+    maxDuration: 10
   }),
   build: {
     inlineStylesheets: 'auto'

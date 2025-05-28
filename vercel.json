@@ -2,18 +2,5 @@
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "framework": "astro",
-  "outputDirectory": "dist",
-  "functions": {
-    "dist/server/entry.mjs": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/_astro/$1"
-    }
-  ]
+  "framework": "astro"
 } 
