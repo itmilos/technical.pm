@@ -59,3 +59,7 @@
            active:scale-[0.98];
   }
 } 
+
+.experience-timeline-canvas {
+  @apply bg-purple-600;
+}

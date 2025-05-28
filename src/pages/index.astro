@@ -1,63 +1,4 @@
 ---
-const experiences = [
-	// {
-	// 	title: "Technical Product Manager",
-	// 	company: "Freelance",
-	// 	period: "03/2024 - Present",
-	// },
-	{
-		title: "Technical Product Manager (AI)",
-		company: "SETVI",
-		period: "03/2023 - 03/2024",
-	},
-	{
-		title: "Technical Product Manager",
-		company: "Publicis Sapient",
-		period: "12/2021 - 03/2023",
-	},
-	{
-		title: "Product Manager / Scrum Master",
-		company: "SAP",
-		period: "04/2017 - 12/2021",
-	},
-	{
-		title: "",
-		company: "USAID",
-		period: "",
-	},
-	{
-		title: "",
-		company: "DTI",
-		period: "",
-	},
-	{
-		title: "",
-		company: "Day & Zimmerman",
-		period: "",
-	},
-	{
-		title: "",
-		company: "Cardano",
-		period: "",
-	},
-	{
-		title: "",
-		company: "Nicky",
-		period: "",
-	},
-	{
-		title: "",
-		company: "Amres",
-		period: "",
-	},
-	{
-		title: "",
-		company: "WolframAlpha",
-		period: "",
-	},
-	
-	
-];
 import Layout from '../layouts/Layout.astro';
 import WebGLBackground from '../components/WebGLBackground.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
@@ -77,13 +18,13 @@ import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
 	</section>
 
 	<!-- Experience Section -->
-	<div class="relative w-full mb-12">
+	<section id="experience" class="relative w-full mb-12">
 		<h2 class="text-3xl font-semibold mb-8 text-center">Experience</h2>
 		<!-- Timeline component -->
 
-		<ExperienceTimeline experiences={experiences} client:load />
+		<ExperienceTimeline client:load />
 
-	</div>
+	</section>
 
 	<!-- Projects Section -->
 	<section id="projects" class="mb-20">

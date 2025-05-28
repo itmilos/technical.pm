@@ -1,210 +1,148 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-export type Experience = {
-  title: string;
-  company: string;
-  period: string;
-};
+// Add global styles
+const globalStyles = `
+  .experience-timeline-canvas {
+    width: 20vw !important;
+    height: 20vw !important;
+    clip-path: circle(calc(50% - 1px));
+  }
+`;
 
-export default function ExperienceTimeline({ experiences }: { experiences: Experience[] }) {
-  const mountRef = useRef<HTMLDivElement>(null);
-  const meshRef = useRef<THREE.Mesh | null>(null);
+let camera: THREE.OrthographicCamera;
+let scene: THREE.Scene;
+let renderer: THREE.WebGLRenderer;
+let mesh: THREE.Mesh;
+let mesh2: THREE.Mesh;
+
+function init(container: HTMLDivElement) {
+  renderer = new THREE.WebGLRenderer({ alpha: true });
+  // Set initial size to 20vw
+  const size = window.innerWidth * 0.2; // 20vw
+  renderer.setSize(size, size);
+  renderer.setPixelRatio(2);
+  container.appendChild(renderer.domElement);
+
+  // Apply canvas styles
+  renderer.domElement.classList.add('experience-timeline-canvas');
+
+  scene = new THREE.Scene();
+  camera = new THREE.OrthographicCamera(-10, 10, 10, -10, -10, 10);
+
+  // Load textures
+  const textureLoader = new THREE.TextureLoader();
+  const texture = textureLoader.load('./images/out.png');
+  const texture2 = textureLoader.load('./images/middle.png');
+
+  const material = new THREE.MeshBasicMaterial({
+    map: texture,
+    transparent: true
+  });
+
+  const material2 = new THREE.MeshBasicMaterial({
+    map: texture2,
+    transparent: true
+  });
+
+  const geometry = new THREE.SphereGeometry(9.98, 50, 50);
+  const geometry2 = new THREE.SphereGeometry(10, 50, 50);
+  
+  mesh = new THREE.Mesh(geometry, material);
+  mesh2 = new THREE.Mesh(geometry2, material2);
+  
+  mesh2.rotation.y = -Math.PI/2;
+  mesh.rotation.y = -Math.PI/2;
+  
+  scene.add(mesh2);
+  scene.add(mesh);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  render();
+}
+
+function render() {
+  renderer.render(scene, camera);
+  mesh2.rotation.y -= 0.0009;
+  mesh.rotation.y += 0.0009;
+}
+
+export default function ExperienceTimeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = mountRef.current;
+    // Add global styles
+    const styleElement = document.createElement('style');
+    styleElement.textContent = globalStyles;
+    document.head.appendChild(styleElement);
+
+    const container = containerRef.current;
     if (!container) return;
 
-    // Scene setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-3, 3, 3, -3, -10, 10);
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    
-    // Set renderer size based on container size
-    const updateSize = () => {
-      const rect = container.getBoundingClientRect();
-      const size = Math.min(rect.width, rect.height);
-      renderer.setSize(size, size);
-      renderer.domElement.style.width = '100%';
-      renderer.domElement.style.height = '100%';
-      renderer.domElement.style.clipPath = 'circle(calc(50% - 1px))';
-    };
-    
-    updateSize();
-    renderer.setPixelRatio(2);
-    container.appendChild(renderer.domElement);
-
-    // Create single texture with company names using / as separator
-    const texture = createTextTexture(
-      experiences.map(exp => exp.company).join(' / '), // Changed separator from • to /
-      '#4C1D95',
-      '#F3E8FF'
-    );
-
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: false,
-      opacity: 1
-    });
-
-    // Create single mesh
-    const geometry = new THREE.SphereGeometry(3, 32, 32);
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.rotation.y = -Math.PI / 2;
-    meshRef.current = mesh;
-    scene.add(mesh);
+    // Initialize Three.js
+    init(container);
+    animate();
 
     // Mouse move handler
     const handleMouseMove = (e: MouseEvent | TouchEvent) => {
       e.preventDefault();
-      
+
       const event = 'touches' in e ? e.touches[0] : e;
       const rect = container.getBoundingClientRect();
       
-      // Calculate position relative to container
+      // Calculate position relative to container instead of window
       const pos = (((360 * (event.clientX - rect.left - rect.width/2) / rect.width) * Math.PI / 180) / 2) - Math.PI/2;
-      const pos2 = ((360 * (event.clientY - rect.top - rect.height/8) / rect.height) * Math.PI / 180) - Math.PI/2;
-      
-      if (meshRef.current) {
-        meshRef.current.rotation.y = pos;
-        meshRef.current.rotation.x = pos2/10;
-      }
+      const pos2 = ((360 * (event.clientY - rect.top - rect.height/2) / rect.height) * Math.PI / 180) - Math.PI/2;
+
+      mesh2.rotation.y = -pos - Math.PI;
+      mesh.rotation.y = pos;
+      mesh2.rotation.x = pos2/10;
+      mesh.rotation.x = pos2/10;
     };
 
+    // Add event listeners to container instead of document
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('touchmove', handleMouseMove);
     container.addEventListener('touchstart', handleMouseMove);
 
-    // Animation
-    let frameId: number;
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      
-      if (meshRef.current) {
-        meshRef.current.rotation.y += 0.0009;
-      }
-      
-      renderer.render(scene, camera);
-    };
-    animate();
-
     // Handle resize
     const handleResize = () => {
-      updateSize();
+      if (renderer) {
+        const size = window.innerWidth * 0.2; // 20vw
+        renderer.setSize(size, size);
+      }
     };
     window.addEventListener('resize', handleResize);
 
     // Cleanup
     return () => {
-      cancelAnimationFrame(frameId);
-      window.removeEventListener('resize', handleResize);
+      // Remove global styles
+      styleElement.remove();
+      
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('touchmove', handleMouseMove);
       container.removeEventListener('touchstart', handleMouseMove);
-      renderer.dispose();
-      if (container && renderer.domElement.parentNode === container) {
-        container.removeChild(renderer.domElement);
+      window.removeEventListener('resize', handleResize);
+      
+      if (renderer) {
+        renderer.dispose();
+        if (container && renderer.domElement.parentNode === container) {
+          container.removeChild(renderer.domElement);
+        }
       }
     };
-  }, [experiences]);
+  }, []);
 
   return (
     <div 
-      ref={mountRef} 
-      className="relative w-full aspect-square max-w-md mx-auto"
+      ref={containerRef} 
+      className="relative flex items-center justify-center w-full h-full"
       style={{ 
-        touchAction: 'none',
-        minHeight: '200px'
+        touchAction: 'pan-left pan-right pan-up pan-down',
+        minHeight: '300px' // Minimum height for the section
       }}
     />
   );
-}
-
-// Create text texture function
-function createTextTexture(text: string, color: string, bgColor: string) {
-  const canvas = document.createElement('canvas');
-  canvas.width = 4096; // Increased from 3072 for higher resolution
-  canvas.height = 4096; // Increased from 3072 for higher resolution
-  const context = canvas.getContext('2d')!;
-  
-  // Enable high-quality text rendering
-  context.imageSmoothingEnabled = true;
-  context.imageSmoothingQuality = 'high';
-  
-  // Background with gradient
-  const gradient = context.createLinearGradient(0, 0, 0, canvas.height);
-  gradient.addColorStop(0, '#F3E8FF');
-  gradient.addColorStop(1, '#EDE9FE');
-  context.fillStyle = gradient;
-  context.fillRect(0, 0, canvas.width, canvas.height);
-  
-  // Add subtle pattern
-  context.fillStyle = 'rgba(139, 92, 246, 0.03)';
-  for (let i = 0; i < canvas.width; i += 40) {
-    for (let j = 0; j < canvas.height; j += 40) {
-      context.fillRect(i, j, 20, 20);
-    }
-  }
-  
-  // Text with enhanced styling
-  context.font = 'bold 400px "Inter", system-ui, -apple-system, sans-serif'; // Increased size
-  context.fillStyle = '#4C1D95';
-  context.textAlign = 'center';
-  context.textBaseline = 'middle';
-  
-  // Enhanced text shadow
-  context.shadowColor = 'rgba(0, 0, 0, 0.3)';
-  context.shadowBlur = 100; // Increased for higher resolution
-  context.shadowOffsetY = 50; // Increased for higher resolution
-  
-  // Add text stroke
-  context.strokeStyle = '#8B5CF6';
-  context.lineWidth = 12; // Increased for higher resolution
-  
-  // Process text to ensure no line breaks
-  const companies = text.split(' / '); // Split by the new separator
-  const lines = [];
-  let currentLine = '';
-  
-  // Try to fit as many companies as possible on each line
-  for (const company of companies) {
-    const testLine = currentLine ? `${currentLine} / ${company}` : company;
-    const width = context.measureText(testLine).width;
-    
-    if (width < canvas.width - 400) { // Increased margin
-      currentLine = testLine;
-    } else {
-      if (currentLine) {
-        lines.push(currentLine);
-      }
-      currentLine = company;
-    }
-  }
-  if (currentLine) {
-    lines.push(currentLine);
-  }
-  
-  // Draw lines with increased spacing
-  const lineHeight = 500; // Increased for larger font
-  const totalHeight = lines.length * lineHeight;
-  const startY = (canvas.height - totalHeight) / 2;
-  
-  // Draw each line with stroke and fill
-  lines.forEach((line, i) => {
-    const y = startY + i * lineHeight;
-    // Draw stroke first
-    context.strokeText(line, canvas.width / 2, y);
-    // Then draw fill
-    context.fillText(line, canvas.width / 2, y);
-  });
-  
-  // Add subtle highlight
-  context.fillStyle = 'rgba(255, 255, 255, 0.1)';
-  context.beginPath();
-  context.arc(canvas.width / 2, canvas.height / 2, canvas.width * 0.4, 0, Math.PI * 2);
-  context.fill();
-  
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.needsUpdate = true;
-  return texture;
 }
