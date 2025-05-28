@@ -7,7 +7,8 @@ import node from '@astrojs/node';
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), react()],
-  site: 'https://technical.pm',
+  site: 'technical.pm',
+  base: '/',
   compressHTML: true,
   output: 'server',
   adapter: node({
@@ -15,5 +16,11 @@ export default defineConfig({
   }),
   build: {
     inlineStylesheets: 'auto'
+  },
+  server: {
+    port: Number(process.env.PORT) || 3000,
+    headers: {
+      'Cache-Control': 'public, max-age=0, must-revalidate'
+    }
   }
 });
