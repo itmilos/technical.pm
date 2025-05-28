@@ -1,0 +1,263 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  subtitle?: string;
+}
+
+const { id, title, subtitle } = Astro.props;
+const formType = id.split('-')[0]; // contact, consultation, project, or engagement
+---
+
+<div
+  id={id}
+  class="fixed inset-0 z-50 hidden overflow-y-auto"
+  aria-labelledby={`${id}-title`}
+  role="dialog"
+  aria-modal="true"
+>
+  <!-- Background overlay -->
+  <div 
+    class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" 
+    aria-hidden="true"
+    onclick={`document.getElementById('${id}').classList.add('hidden')`}
+  ></div>
+
+  <!-- Modal panel -->
+  <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+    <div 
+      class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+      role="document"
+    >
+      <!-- Close button -->
+      <div class="absolute right-0 top-0 pr-4 pt-4">
+        <button
+          type="button"
+          class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+          onclick={`document.getElementById('${id}').classList.add('hidden')`}
+          aria-label="Close modal"
+        >
+          <span class="sr-only">Close</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal content -->
+      <div class="sm:flex sm:items-start">
+        <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+          <h3 
+            class="text-2xl font-semibold leading-6 text-gray-900" 
+            id={`${id}-title`}
+          >
+            {title}
+          </h3>
+          {subtitle && (
+            <div class="mt-2">
+              <p class="text-lg text-gray-600">{subtitle}</p>
+            </div>
+          )}
+          <div class="mt-6">
+            <slot />
+          </div>
+          
+          <!-- Loading indicator -->
+          <div 
+            id={`${id}-loading`} 
+            class="hidden mt-4"
+            role="status"
+            aria-live="polite"
+          >
+            <div class="flex items-center justify-center">
+              <svg class="animate-spin h-5 w-5 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span class="ml-2 text-gray-600">Sending your message...</span>
+            </div>
+          </div>
+
+          <!-- Success message -->
+          <div 
+            id={`${id}-success`} 
+            class="hidden mt-4 p-4 bg-green-50 text-green-700 rounded-md"
+            role="status"
+            aria-live="polite"
+          >
+            <div class="flex">
+              <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <p class="ml-2">Thank you for your message! I will get back to you shortly.</p>
+            </div>
+          </div>
+
+          <!-- Error message -->
+          <div 
+            id={`${id}-error`} 
+            class="hidden mt-4 p-4 bg-red-50 text-red-700 rounded-md"
+            role="alert"
+            aria-live="assertive"
+          >
+            <div class="flex">
+              <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+              </svg>
+              <p class="ml-2">Sorry, there was an error sending your message. Please try again or email me directly.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { sendEmail } from '../utils/email';
+
+  // Close modal when clicking outside
+  document.addEventListener('click', (e) => {
+    const modals = document.querySelectorAll('[role="dialog"]');
+    modals.forEach((modal) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+  });
+
+  // Close modal when pressing Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const modals = document.querySelectorAll('[role="dialog"]');
+      modals.forEach((modal) => {
+        modal.classList.add('hidden');
+      });
+    }
+  });
+
+  // Handle form submission
+  document.addEventListener('submit', async (e) => {
+    const form = e.target as HTMLFormElement;
+    if (!form.id?.startsWith('contact-form')) return;
+
+    e.preventDefault();
+    const modal = form.closest('[role="dialog"]') as HTMLElement;
+    if (!modal) return;
+
+    const loadingEl = modal.querySelector(`#${modal.id}-loading`) as HTMLElement;
+    const successEl = modal.querySelector(`#${modal.id}-success`) as HTMLElement;
+    const errorEl = modal.querySelector(`#${modal.id}-error`) as HTMLElement;
+    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const errorMessage = errorEl.querySelector('p') as HTMLParagraphElement;
+
+    // Reset form validation
+    form.querySelectorAll('.form-input, .form-select, .form-textarea').forEach((input: Element) => {
+      input.classList.remove('border-red-500');
+      const errorMessage = input.nextElementSibling;
+      if (errorMessage?.classList.contains('text-red-500')) {
+        errorMessage.remove();
+      }
+    });
+
+    try {
+      // Show loading state
+      loadingEl.classList.remove('hidden');
+      successEl.classList.add('hidden');
+      errorEl.classList.add('hidden');
+      submitButton.disabled = true;
+
+      const formData = new FormData(form);
+      const formType = form.id.split('-')[1] || 'contact';
+      
+      // Get all form fields
+      const data = {
+        name: formData.get('name')?.toString() || '',
+        email: formData.get('email')?.toString() || '',
+        company: formData.get('company')?.toString() || undefined,
+        subject: formData.get('subject')?.toString() || 'New Form Submission',
+        message: formData.get('message')?.toString() || '',
+        formType: formType as 'contact' | 'consultation' | 'project' | 'engagement',
+        additionalFields: {} as Record<string, string>
+      };
+
+      // Validate required fields
+      const requiredFields = ['name', 'email', 'message'];
+      const missingFields = requiredFields.filter(field => !data[field as keyof typeof data]);
+      
+      if (missingFields.length > 0) {
+        throw new Error(`Please fill in all required fields: ${missingFields.join(', ')}`);
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email)) {
+        throw new Error('Please enter a valid email address');
+      }
+
+      // Add any additional fields based on form type
+      if (formType === 'consultation') {
+        data.additionalFields = {
+          'Consultation Goals': formData.get('message')?.toString() || ''
+        };
+      } else if (formType === 'project') {
+        const timeline = formData.get('timeline')?.toString();
+        if (!timeline) {
+          throw new Error('Please select an expected timeline');
+        }
+        data.additionalFields = {
+          'Timeline': timeline,
+          'Project Requirements': formData.get('message')?.toString() || ''
+        };
+      } else if (formType === 'engagement') {
+        const teamSize = formData.get('team-size')?.toString();
+        if (!teamSize) {
+          throw new Error('Please select your team size');
+        }
+        data.additionalFields = {
+          'Team Size': teamSize,
+          'Engagement Goals': formData.get('message')?.toString() || ''
+        };
+      }
+
+
+      await sendEmail(data);
+
+      // Show success state
+      form.reset();
+      loadingEl.classList.add('hidden');
+      successEl.classList.remove('hidden');
+      
+      // Close modal after 2 seconds
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        successEl.classList.add('hidden');
+      }, 2000);
+    } catch (error) {
+      console.error('Error sending email:', error);
+      loadingEl.classList.add('hidden');
+      errorEl.classList.remove('hidden');
+      
+      if (error instanceof Error) {
+        errorMessage.textContent = error.message;
+        
+        // Highlight invalid fields
+        if (error.message.includes('required fields')) {
+          const fields = error.message.split(': ')[1].split(', ');
+          fields.forEach(field => {
+            const input = form.querySelector(`[name="${field}"]`) as HTMLElement;
+            if (input) {
+              input.classList.add('border-red-500');
+              const errorDiv = document.createElement('div');
+              errorDiv.className = 'text-red-500 text-sm mt-1';
+              errorDiv.textContent = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+              input.parentNode?.insertBefore(errorDiv, input.nextSibling);
+            }
+          });
+        }
+      }
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+</script> 

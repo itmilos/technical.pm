@@ -7,4 +7,10 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), react()],
+  site: 'https://technical.pm',
+  compressHTML: true,
+  output: 'server',
+  build: {
+    inlineStylesheets: 'auto'
+  }
 });

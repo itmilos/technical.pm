@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import WebGLBackground from '../components/WebGLBackground.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
+import { sendEmail } from '../utils/email';
+import Modal from '../components/Modal.astro';
 
 ---
 
@@ -18,7 +20,13 @@ import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
 			Milos Rujevic
 		</h1>
 		<p class="text-xl text-gray-700 mb-6">Experienced Technical Product Manager driving innovation in AI, Blockchain, and Web3 solutions.</p>
-		<a href="/contact" class="inline-block px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition">Get in Touch</a>
+		<a 
+			href="#"
+			onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;"
+			class="inline-block px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition"
+		>
+			Get in Touch
+		</a>
 	</section>
 
 	<!-- Experience Section -->
@@ -103,12 +111,12 @@ import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
 					<li>Roadmap Planning</li>
 					<li>Problem Solving Sessions</li>
 				</ul>
-				<a 
-					href="/consultation"
+				<button 
+					onclick="document.getElementById('consultation-modal').classList.remove('hidden'); return false;"
 					class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
 				>
 					Book a Session
-				</a>
+				</button>
 			</div>
 
 			<div class="bg-white border border-gray-200 rounded-lg p-6 shadow text-center">
@@ -119,12 +127,12 @@ import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
 					<li>Feature Development Oversight</li>
 					<li>Agile Coaching</li>
 				</ul>
-				<a 
-					href="/project"
+				<button 
+					onclick="document.getElementById('project-modal').classList.remove('hidden'); return false;"
 					class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
 				>
 					Discuss Project
-				</a>
+				</button>
 			</div>
 
 			<div class="bg-white border border-gray-200 rounded-lg p-6 shadow text-center">
@@ -135,12 +143,12 @@ import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
 					<li>Team Integration</li>
 					<li>End-to-End Solution Delivery</li>
 				</ul>
-				<a 
-					href="/engagement"
+				<button 
+					onclick="document.getElementById('engagement-modal').classList.remove('hidden'); return false;"
 					class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
 				>
 					Let's Partner
-				</a>
+				</button>
 			</div>
 		</div>
 	</section>
@@ -198,6 +206,300 @@ import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
 			<!-- <div class="text-gray-600">Milos Rujevic • <a href="mailto:milosrujevic@gmail.com" class="text-purple-600 hover:text-purple-700 transition-colors">milosrujevic@gmail.com</a></div> -->
 		</div>
 	</section>
+
+	<!-- Contact Form Modal -->
+	<Modal id="contact-modal" title="Get in Touch" subtitle="Let's discuss how we can work together">
+		<form id="contact-form" class="space-y-6">
+			<div class="form-group">
+				<label for="name" class="form-label">Name</label>
+				<input
+					type="text"
+					id="name"
+					name="name"
+					required
+					class="form-input"
+					placeholder="Your name"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="email" class="form-label">Email</label>
+				<input
+					type="email"
+					id="email"
+					name="email"
+					required
+					class="form-input"
+					placeholder="your.email@example.com"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="company" class="form-label">Company</label>
+				<input
+					type="text"
+					id="company"
+					name="company"
+					class="form-input"
+					placeholder="Your company name (optional)"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="subject" class="form-label">Subject</label>
+				<select
+					id="subject"
+					name="subject"
+					required
+					class="form-select"
+				>
+					<option value="">Select a subject</option>
+					<option value="general">General Inquiry</option>
+					<option value="consultation">Book a Consultation</option>
+					<option value="project">Project Discussion</option>
+					<option value="engagement">Full Engagement</option>
+					<option value="other">Other</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="message" class="form-label">Message</label>
+				<textarea
+					id="message"
+					name="message"
+					rows="4"
+					required
+					class="form-textarea"
+					placeholder="Tell us about your needs and how we can help"
+				></textarea>
+			</div>
+
+			<div class="pt-4">
+				<button
+					type="submit"
+					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+				>
+					Send Message
+				</button>
+			</div>
+		</form>
+	</Modal>
+
+	<!-- Consultation Form Modal -->
+	<Modal id="consultation-modal" title="Book a Consultation" subtitle="Schedule a strategic technical consultation">
+		<form id="contact-form-consultation" class="space-y-6">
+			<div class="form-group">
+				<label for="consultation-name" class="form-label">Name</label>
+				<input
+					type="text"
+					id="consultation-name"
+					name="name"
+					required
+					class="form-input"
+					placeholder="Your name"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="consultation-email" class="form-label">Email</label>
+				<input
+					type="email"
+					id="consultation-email"
+					name="email"
+					required
+					class="form-input"
+					placeholder="your.email@example.com"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="consultation-company" class="form-label">Company</label>
+				<input
+					type="text"
+					id="consultation-company"
+					name="company"
+					class="form-input"
+					placeholder="Your company name (optional)"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="consultation-goals" class="form-label">Consultation Goals</label>
+				<textarea
+					id="consultation-goals"
+					name="message"
+					rows="4"
+					required
+					class="form-textarea"
+					placeholder="What would you like to discuss? What are your main challenges or goals?"
+				></textarea>
+			</div>
+
+			<div class="pt-4">
+				<button
+					type="submit"
+					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+				>
+					Book Consultation
+				</button>
+			</div>
+		</form>
+	</Modal>
+
+	<!-- Project Form Modal -->
+	<Modal id="project-modal" title="Project Discussion" subtitle="Let's discuss your project needs">
+		<form id="contact-form-project" class="space-y-6">
+			<div class="form-group">
+				<label for="project-name" class="form-label">Name</label>
+				<input
+					type="text"
+					id="project-name"
+					name="name"
+					required
+					class="form-input"
+					placeholder="Your name"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="project-email" class="form-label">Email</label>
+				<input
+					type="email"
+					id="project-email"
+					name="email"
+					required
+					class="form-input"
+					placeholder="your.email@example.com"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="project-company" class="form-label">Company</label>
+				<input
+					type="text"
+					id="project-company"
+					name="company"
+					class="form-input"
+					placeholder="Your company name (optional)"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="project-timeline" class="form-label">Expected Timeline</label>
+				<select
+					id="project-timeline"
+					name="timeline"
+					required
+					class="form-select"
+				>
+					<option value="">Select timeline</option>
+					<option value="urgent">Urgent (1-2 weeks)</option>
+					<option value="soon">Soon (1-2 months)</option>
+					<option value="planning">Planning Phase</option>
+					<option value="flexible">Flexible</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="project-requirements" class="form-label">Project Requirements</label>
+				<textarea
+					id="project-requirements"
+					name="message"
+					rows="4"
+					required
+					class="form-textarea"
+					placeholder="Describe your project, requirements, and any specific challenges you're facing"
+				></textarea>
+			</div>
+
+			<div class="pt-4">
+				<button
+					type="submit"
+					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+				>
+					Submit Project Request
+				</button>
+			</div>
+		</form>
+	</Modal>
+
+	<!-- Engagement Form Modal -->
+	<Modal id="engagement-modal" title="Full Engagement" subtitle="Let's discuss a long-term partnership">
+		<form id="contact-form-engagement" class="space-y-6">
+			<div class="form-group">
+				<label for="engagement-name" class="form-label">Name</label>
+				<input
+					type="text"
+					id="engagement-name"
+					name="name"
+					required
+					class="form-input"
+					placeholder="Your name"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="engagement-email" class="form-label">Email</label>
+				<input
+					type="email"
+					id="engagement-email"
+					name="email"
+					required
+					class="form-input"
+					placeholder="your.email@example.com"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="engagement-company" class="form-label">Company</label>
+				<input
+					type="text"
+					id="engagement-company"
+					name="company"
+					required
+					class="form-input"
+					placeholder="Your company name"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="engagement-team-size" class="form-label">Team Size</label>
+				<select
+					id="engagement-team-size"
+					name="team-size"
+					required
+					class="form-select"
+				>
+					<option value="">Select team size</option>
+					<option value="1-10">1-10 employees</option>
+					<option value="11-50">11-50 employees</option>
+					<option value="51-200">51-200 employees</option>
+					<option value="201+">201+ employees</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="engagement-goals" class="form-label">Engagement Goals</label>
+				<textarea
+					id="engagement-goals"
+					name="message"
+					rows="4"
+					required
+					class="form-textarea"
+					placeholder="Describe your company's needs, goals, and what you're looking to achieve through this engagement"
+				></textarea>
+			</div>
+
+			<div class="pt-4">
+				<button
+					type="submit"
+					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+				>
+					Start Partnership Discussion
+				</button>
+			</div>
+		</form>
+	</Modal>
 
 	<footer class="text-center text-gray-400 text-sm py-6">
 		© 2025 Milos Rujevic. All rights reserved.<br />
