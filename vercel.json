@@ -4,10 +4,16 @@
   "installCommand": "npm install",
   "framework": "astro",
   "outputDirectory": "dist",
+  "functions": {
+    "dist/server/entry.mjs": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/"
+      "destination": "/_astro/$1"
     }
   ]
 } 

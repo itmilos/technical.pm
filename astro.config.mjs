@@ -25,6 +25,9 @@ export default defineConfig({
   vite: {
     build: {
       outDir: 'dist'
+    },
+    ssr: {
+      noExternal: ['@astrojs/*']
     }
   }
 });
