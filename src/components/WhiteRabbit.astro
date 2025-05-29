@@ -5,30 +5,30 @@
   href="https://broken-mud-5273.on.fleek.co/" 
   target="_blank" 
   rel="noopener noreferrer"
-  class="fixed bottom-6 right-6 z-50 group"
+  class="inline-block group"
   aria-label="Visit Fleek Site"
 >
-  <div class="relative w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:shadow-xl">
+  <div class="relative w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:shadow-xl">
     <!-- Rabbit ears -->
-    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-      <div class="w-2 h-6 bg-white rounded-t-full transform -rotate-12"></div>
-      <div class="w-2 h-6 bg-white rounded-t-full transform rotate-12"></div>
+    <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
+      <div class="w-1 h-3 bg-white rounded-t-full transform -rotate-12"></div>
+      <div class="w-1 h-3 bg-white rounded-t-full transform rotate-12"></div>
     </div>
     <!-- Rabbit face -->
     <div class="relative">
       <!-- Eyes -->
-      <div class="flex space-x-2 mb-1">
-        <div class="w-1.5 h-1.5 bg-purple-600 rounded-full"></div>
-        <div class="w-1.5 h-1.5 bg-purple-600 rounded-full"></div>
+      <div class="flex space-x-1 mb-0.5">
+        <div class="w-0.5 h-0.5 bg-purple-600 rounded-full"></div>
+        <div class="w-0.5 h-0.5 bg-purple-600 rounded-full"></div>
       </div>
       <!-- Nose -->
-      <div class="w-2 h-1 bg-pink-300 rounded-full mx-auto"></div>
+      <div class="w-1 h-0.5 bg-pink-300 rounded-full mx-auto"></div>
     </div>
     <!-- Bounce animation on hover -->
     <div class="absolute inset-0 rounded-full bg-purple-100 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
   </div>
   <!-- Tooltip -->
-  <div class="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+  <div class="absolute bottom-full right-0 mb-1 px-2 py-0.5 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
     White Rabbit
   </div>
 </a>
@@ -36,10 +36,10 @@
 <style>
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+    50% { transform: translateY(-2px); }
   }
 
-  .group:hover .w-16 {
+  .group:hover .w-8 {
     animation: bounce 1s infinite;
   }
 </style> 
