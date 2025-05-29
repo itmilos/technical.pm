@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import CookieConsent from '../components/CookieConsent.astro';
 
 interface Props {
   title: string;
@@ -166,6 +167,7 @@ const { title, description = "Technical Product Manager Portfolio", image = "/se
       </div>
     </nav>
     <slot />
+    <CookieConsent />
 
     <script>
       // Mobile menu functionality

@@ -118,12 +118,50 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
 
 <script>
   import { sendEmail } from '../utils/email';
+  import { Cookies } from '../utils/cookies';
+
+  // Function to save form state
+  const saveFormState = (form: HTMLFormElement) => {
+    const formData = new FormData(form);
+    const formState: Record<string, string> = {};
+    formData.forEach((value, key) => {
+      formState[key] = value.toString();
+    });
+    Cookies.set(`form_${form.id}`, JSON.stringify(formState), 1); // Save for 1 day
+  };
+
+  // Function to restore form state
+  const restoreFormState = (form: HTMLFormElement) => {
+    const savedState = Cookies.get(`form_${form.id}`);
+    if (savedState) {
+      try {
+        const formState = JSON.parse(savedState) as Record<string, string>;
+        Object.entries(formState).forEach(([key, value]) => {
+          const input = form.querySelector(`[name="${key}"]`) as HTMLInputElement;
+          if (input) {
+            input.value = value;
+          }
+        });
+      } catch (e) {
+        console.error('Error restoring form state:', e);
+      }
+    }
+  };
+
+  // Function to clear form state
+  const clearFormState = (form: HTMLFormElement) => {
+    Cookies.remove(`form_${form.id}`);
+  };
 
   // Close modal when clicking outside
   document.addEventListener('click', (e) => {
     const modals = document.querySelectorAll('[role="dialog"]');
     modals.forEach((modal) => {
       if (e.target === modal) {
+        const form = modal.querySelector('form');
+        if (form) {
+          saveFormState(form);
+        }
         modal.classList.add('hidden');
       }
     });
@@ -134,8 +172,29 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
     if (e.key === 'Escape') {
       const modals = document.querySelectorAll('[role="dialog"]');
       modals.forEach((modal) => {
+        const form = modal.querySelector('form');
+        if (form) {
+          saveFormState(form);
+        }
         modal.classList.add('hidden');
       });
+    }
+  });
+
+  // Restore form state when modal opens
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.matches('[onclick*="classList.remove(\'hidden\')"]')) {
+      const modalId = target.getAttribute('onclick')?.match(/getElementById\('([^']+)'\)/)?.[1];
+      if (modalId) {
+        setTimeout(() => {
+          const modal = document.getElementById(modalId);
+          const form = modal?.querySelector('form');
+          if (form) {
+            restoreFormState(form);
+          }
+        }, 100); // Small delay to ensure modal is open
+      }
     }
   });
 
@@ -226,6 +285,9 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
 
       await sendEmail(data);
 
+      // Clear form state on successful submission
+      clearFormState(form);
+      
       // Show success state
       form.reset();
       loadingEl.classList.add('hidden');
