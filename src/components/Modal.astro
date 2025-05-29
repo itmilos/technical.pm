@@ -58,10 +58,8 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
               <p class="text-lg text-gray-600">{subtitle}</p>
             </div>
           )}
-          <div class="mt-6">
-            <slot />
-          </div>
-          
+
+          <!-- Move feedback elements here, before the slot -->
           <!-- Loading indicator -->
           <div 
             id={`${id}-loading`} 
@@ -106,6 +104,11 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
               </svg>
               <p class="ml-2">Sorry, there was an error sending your message. Please try again or email me directly.</p>
             </div>
+          </div>
+
+          <!-- Form content (slot) moved after feedback elements -->
+          <div class="mt-6">
+            <slot />
           </div>
         </div>
       </div>
