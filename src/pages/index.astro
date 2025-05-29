@@ -4,6 +4,7 @@ import WebGLBackground from '../components/WebGLBackground.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
 import { sendEmail } from '../utils/email';
 import Modal from '../components/Modal.astro';
+import WhiteRabbit from '../components/WhiteRabbit.astro';
 
 ---
 
@@ -501,8 +502,13 @@ import Modal from '../components/Modal.astro';
 		</form>
 	</Modal>
 
-	<footer class="text-center text-gray-400 text-sm py-6">
-		© 2025 Milos Rujevic. All rights reserved.<br />
-		Powered by Hostinger Horizons &amp; React.
+	<footer class="text-center text-gray-400 text-sm py-6 relative">
+		<div class="flex items-center justify-center gap-2">
+			<span>© 2025 Milos Rujevic. All rights reserved.</span>
+			<span class="text-gray-300">•</span>
+			<span>Powered by Creativity and Free Will</span>
+			<span class="text-gray-300">•</span>
+			<WhiteRabbit />
+		</div>
 	</footer>
 </Layout>
