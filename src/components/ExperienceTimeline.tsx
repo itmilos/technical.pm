@@ -1,15 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// Add global styles
-const globalStyles = `
-  .experience-timeline-canvas {
-    width: 20vw !important;
-    height: 20vw !important;
-    clip-path: circle(calc(50% - 1px));
-  }
-`;
-
+// Remove global styles since they're now in global.css
 let camera: THREE.OrthographicCamera;
 let scene: THREE.Scene;
 let renderer: THREE.WebGLRenderer;
@@ -18,8 +10,8 @@ let mesh2: THREE.Mesh;
 
 function init(container: HTMLDivElement) {
   renderer = new THREE.WebGLRenderer({ alpha: true });
-  // Set initial size to 20vw
-  const size = window.innerWidth * 0.2; // 20vw
+  // Set initial size based on viewport width
+  const size = window.innerWidth < 768 ? window.innerWidth * 0.5 : window.innerWidth * 0.2;
   renderer.setSize(size, size);
   renderer.setPixelRatio(2);
   container.appendChild(renderer.domElement);
@@ -73,11 +65,6 @@ export default function ExperienceTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Add global styles
-    const styleElement = document.createElement('style');
-    styleElement.textContent = globalStyles;
-    document.head.appendChild(styleElement);
-
     const container = containerRef.current;
     if (!container) return;
 
@@ -110,7 +97,7 @@ export default function ExperienceTimeline() {
     // Handle resize
     const handleResize = () => {
       if (renderer) {
-        const size = window.innerWidth * 0.2; // 20vw
+        const size = window.innerWidth < 768 ? window.innerWidth * 0.5 : window.innerWidth * 0.2;
         renderer.setSize(size, size);
       }
     };
@@ -118,9 +105,6 @@ export default function ExperienceTimeline() {
 
     // Cleanup
     return () => {
-      // Remove global styles
-      styleElement.remove();
-      
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('touchmove', handleMouseMove);
       container.removeEventListener('touchstart', handleMouseMove);

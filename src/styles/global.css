@@ -60,6 +60,18 @@
   }
 } 
 
+/* Experience Timeline Canvas Styles */
 .experience-timeline-canvas {
   @apply bg-purple-600;
+  width: 50vw !important;
+  height: 50vw !important;
+  clip-path: circle(calc(50% - 1px));
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .experience-timeline-canvas {
+    width: 20vw !important;
+    height: 20vw !important;
+  }
 }
