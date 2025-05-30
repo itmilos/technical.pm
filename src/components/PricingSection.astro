@@ -1,0 +1,44 @@
+---
+interface PricingTier {
+  title: string;
+  price: string;
+  features: string[];
+  modalId: string;
+  buttonText: string;
+}
+
+interface Props {
+  tiers: PricingTier[];
+}
+
+const { tiers } = Astro.props;
+---
+
+<section id="pricing" class="mb-20 px-4">
+  <h2 class="text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Service Tiers</h2>
+  <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+    {tiers.map((tier) => (
+      <div class="bg-[rgb(var(--background))] border border-[rgb(var(--border))] rounded-lg p-6 shadow text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+        <h3 class="font-bold text-lg mb-2 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">{tier.title}</h3>
+        <p class="text-2xl font-semibold mb-2 group-hover:scale-110 transition-transform duration-300">
+          {tier.price}
+          {tier.price.includes('/hr') && <span class="text-base font-normal">/hr</span>}
+        </p>
+        <ul class="mb-4 text-[rgb(var(--foreground))] space-y-2">
+          {tier.features.map((feature) => (
+            <li class="hover:text-[rgb(var(--primary))] transition-colors duration-200 transform hover:scale-105 inline-block">
+              {feature}
+            </li>
+          ))}
+        </ul>
+        <button 
+          onclick={`document.getElementById('${tier.modalId}').classList.remove('hidden'); return false;`}
+          class="inline-block px-4 py-2 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] rounded hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group"
+        >
+          {tier.buttonText}
+          <span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+        </button>
+      </div>
+    ))}
+  </div>
+</section> 

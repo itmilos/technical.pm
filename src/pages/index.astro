@@ -4,6 +4,120 @@ import WebGLBackground from '../components/WebGLBackground.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.tsx';
 import Modal from '../components/Modal.astro';
 import WhiteRabbit from '../components/WhiteRabbit.astro';
+import ProjectSelection, { type Project } from '../components/ProjectSelection.astro';
+import SkillsSection from '../components/SkillsSection.astro';
+import TestimonialsSection from '../components/TestimonialsSection.astro';
+import PricingSection from '../components/PricingSection.astro';
+
+
+const projects: Project[] = [
+	{
+		title: 'Web3 Payment Protocol - Stellarity',
+		description: 'Implemented AWS infrastructure for Hollaex crypto exchanges, reducing downtime by 30%.',
+		link: 'https://stellarity.exchange/',
+		rotation: 'left',
+	},
+	{
+		title: 'Uplatnica (Open Source - React)',
+		description: 'Developed open-source project creating a digital twin of Serbian pay slips.',
+		link: 'https://github.com/reactserbia/uplatnica',
+		rotation: 'right',
+	},
+	{
+		title: 'WolframAlpha NFTs (Cardano)',
+		description: 'Managed end-to-end implementation of Cardano NFT standards into WolframAlpha.',
+		link: 'https://blog.wolfram.com/2021/07/21/liveminting-nfts-with-the-wolfram-language-on-the-cardano-blockchain/',
+		rotation: 'left',
+	},
+	{
+		title: 'E-Tabla (USAID)',
+		description: 'Optimized initial project setup for SIPRES (etabla.sud.rs), ensuring efficient case management for 46 Misdemeanor Courts.',
+		link: 'https://rnk.sipres.sud.rs/',
+		rotation: 'right',
+	},
+];
+
+const technicalSkills = [
+	'Agile Methodologies',
+	'Technical Product Management',
+	'AI/ML Solutions',
+	'Software Architecture',
+	'DevOps Practices',
+	'Cloud Platforms (AWS, Azure)',
+	'Blockchain & Web3',
+	'JavaScript (React, Angular, Node.js)',
+	'DataBricks',
+	'Salesforce',
+	'Power Platform',
+	'GitHub Copilot'
+];
+
+const softSkills = [
+	'Team Leadership',
+	'Stakeholder Management',
+	'Strategic Thinking',
+	'Communication'
+];
+
+const testimonials = [
+	{
+		initials: 'MF',
+		name: 'Michael Fox',
+		role: 'Executive, Health Plan Operations',
+		text: '"Very knowledgeable and great partner. Strong kind and communication. A pleasure to create and work with. Pushes innovation and efficient solutions."',
+		date: 'September 6, 2021'
+	},
+	{
+		initials: 'SP',
+		name: 'Samuele Pavani',
+		role: 'Design & Communication | Web3',
+		text: '"I saw Milos fix a website and its CSS in under 5 minutes. With 2 minutes more of explanation he was able to teach me basic CSS where other videos or courses failed with hours of my attention. Wanna deliver? Hire this man."',
+		date: 'August 10, 2022'
+	},
+	{
+		initials: 'XJ',
+		name: 'Xavier Joseph',
+		role: 'Talent & Business Development',
+		text: '"Great communicator, works well with USA based clients and fits the culture of hustle hard."',
+		date: 'September 6, 2023'
+	}
+];
+
+const pricingTiers = [
+	{
+		title: 'Consultation',
+		price: '$150/hr',
+		features: [
+			'Strategic Technical Advice',
+			'Roadmap Planning',
+			'Problem Solving Sessions'
+		],
+		modalId: 'consultation-modal',
+		buttonText: 'Book a Session'
+	},
+	{
+		title: 'Project Boost',
+		price: 'Custom',
+		features: [
+			'Short-term Project Management',
+			'Feature Development Oversight',
+			'Agile Coaching'
+		],
+		modalId: 'project-modal',
+		buttonText: 'Discuss Project'
+	},
+	{
+		title: 'Full Engagement',
+		price: 'Retainer',
+		features: [
+			'Long-term Product Leadership',
+			'Team Integration',
+			'End-to-End Solution Delivery'
+		],
+		modalId: 'engagement-modal',
+		buttonText: "Let's Partner"
+	}
+];
 
 ---
 
@@ -16,193 +130,50 @@ import WhiteRabbit from '../components/WhiteRabbit.astro';
 
 	<!-- Hero Section -->
 	<section id="hero" class="container mx-auto px-4 py-24 max-w-4xl text-center relative z-10">
-		<h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+		<h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-[rgb(var(--primary))] to-[rgb(var(--accent))] bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-default">
 			Milos Rujevic
 		</h1>
-		<p class="text-xl text-gray-700 mb-6">Experienced Technical Product Manager driving innovation in AI, Blockchain, and Web3 solutions.</p>
+		<p class="text-xl text-[rgb(var(--muted-foreground))] mb-6 hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default">Experienced Technical Product Manager driving innovation in AI, Blockchain, and Web3 solutions.</p>
 		<a 
 			href="#"
 			onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;"
-			class="inline-block px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition"
+			class="inline-block px-8 py-3 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] font-semibold rounded-lg shadow hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group"
 		>
 			Get in Touch
+			<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
 		</a>
 	</section>
 
 	<!-- Experience Section -->
 	<section id="experience" class="relative w-full mb-12 px-4">
-		<h2 class="text-3xl font-semibold mb-8 text-center">Experience</h2>
+		<h2 class="text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Experience</h2>
 		<div class="flex justify-center items-center">
 			<ExperienceTimeline client:load />
 		</div>
 	</section>
 
 	<!-- Projects Section -->
-	<section id="projects" class="mb-20 px-4">
-		<h2 class="text-3xl font-semibold mb-8 text-center">Signature Projects</h2>
-		<div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-			<div class="bg-gray-50 p-6 rounded-lg shadow">
-				<h3 class="font-semibold mb-2">Web3 Payment Protocol - Stellarity</h3>
-				<p class="mb-2">Implemented AWS infrastructure for Hollaex crypto exchanges, reducing downtime by 30%.</p>
-				<a href="https://stellarity.exchange/" class="text-purple-600 hover:underline">View Project</a>
-			</div>
-			<div class="bg-gray-50 p-6 rounded-lg shadow">
-				<h3 class="font-semibold mb-2">Uplatnica (Open Source - React)</h3>
-				<p class="mb-2">Developed open-source project creating a digital twin of Serbian pay slips.</p>
-				<a href="https://github.com/reactserbia/uplatnica" class="text-purple-600 hover:underline">View Project</a>
-			</div>
-			<div class="bg-gray-50 p-6 rounded-lg shadow">
-				<h3 class="font-semibold mb-2">WolframAlpha NFTs (Cardano)</h3>
-				<p class="mb-2">Managed end-to-end implementation of Cardano NFT standards into WolframAlpha.</p>
-				<a href="https://blog.wolfram.com/2021/07/21/liveminting-nfts-with-the-wolfram-language-on-the-cardano-blockchain/" class="text-purple-600 hover:underline">View Project</a>
-			</div>
-			<div class="bg-gray-50 p-6 rounded-lg shadow">
-				<h3 class="font-semibold mb-2">E-Tabla (USAID)</h3>
-				<p class="mb-2">Optimized initial project setup for SIPRES (etabla.sud.rs), ensuring efficient case management for 46 Misdemeanor Courts.</p>
-				<a href="https://rnk.sipres.sud.rs/" class="text-purple-600 hover:underline">View Project</a>
-			</div>
-		</div>
-	</section>
-
+	<ProjectSelection  projects={projects}/>
 
 	<!-- Skills Section -->
-	<section id="skills" class="mb-20 px-4">
-		<h2 class="text-3xl font-semibold mb-8 text-center">Core Competencies</h2>
-		<div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-			<div class="bg-gray-50 p-6 rounded-lg">
-				<h3 class="font-semibold mb-2">Technical</h3>
-				<ul class="list-disc list-inside text-gray-700">
-					<li>Agile Methodologies</li>
-					<li>Technical Product Management</li>
-					<li>AI/ML Solutions</li>
-					<li>Software Architecture</li>
-					<li>DevOps Practices</li>
-					<li>Cloud Platforms (AWS, Azure)</li>
-					<li>Blockchain & Web3</li>
-					<li>JavaScript (React, Angular, Node.js)</li>
-					<li>DataBricks</li>
-					<li>Salesforce</li>
-					<li>Power Platform</li>
-					<li>GitHub Copilot</li>
-				</ul>
-			</div>
-			<div class="bg-gray-50 p-6 rounded-lg">
-				<h3 class="font-semibold mb-2">Soft Skills</h3>
-				<ul class="list-disc list-inside text-gray-700">
-					<li>Team Leadership</li>
-					<li>Stakeholder Management</li>
-					<li>Strategic Thinking</li>
-					<li>Communication</li>
-				</ul>
-			</div>
-		</div>
-	</section>
+	<SkillsSection technicalSkills={technicalSkills} softSkills={softSkills} />
 
 	<!-- Pricing Section -->
-	<section id="pricing" class="mb-20 px-4">
-		<h2 class="text-3xl font-semibold mb-8 text-center">Service Tiers</h2>
-		<div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-			<div class="bg-white border border-gray-200 rounded-lg p-6 shadow text-center">
-				<h3 class="font-bold text-lg mb-2">Consultation</h3>
-				<p class="text-2xl font-semibold mb-2">$150<span class="text-base font-normal">/hr</span></p>
-				<ul class="mb-4 text-gray-700">
-					<li>Strategic Technical Advice</li>
-					<li>Roadmap Planning</li>
-					<li>Problem Solving Sessions</li>
-				</ul>
-				<button 
-					onclick="document.getElementById('consultation-modal').classList.remove('hidden'); return false;"
-					class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
-				>
-					Book a Session
-				</button>
-			</div>
-
-			<div class="bg-white border border-gray-200 rounded-lg p-6 shadow text-center">
-				<h3 class="font-bold text-lg mb-2">Project Boost</h3>
-				<p class="text-2xl font-semibold mb-2">Custom</p>
-				<ul class="mb-4 text-gray-700">
-					<li>Short-term Project Management</li>
-					<li>Feature Development Oversight</li>
-					<li>Agile Coaching</li>
-				</ul>
-				<button 
-					onclick="document.getElementById('project-modal').classList.remove('hidden'); return false;"
-					class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
-				>
-					Discuss Project
-				</button>
-			</div>
-
-			<div class="bg-white border border-gray-200 rounded-lg p-6 shadow text-center">
-				<h3 class="font-bold text-lg mb-2">Full Engagement</h3>
-				<p class="text-2xl font-semibold mb-2">Retainer</p>
-				<ul class="mb-4 text-gray-700">
-					<li>Long-term Product Leadership</li>
-					<li>Team Integration</li>
-					<li>End-to-End Solution Delivery</li>
-				</ul>
-				<button 
-					onclick="document.getElementById('engagement-modal').classList.remove('hidden'); return false;"
-					class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors"
-				>
-					Let's Partner
-				</button>
-			</div>
-		</div>
-	</section>
+	<PricingSection tiers={pricingTiers} />
 
 	<!-- Testimonials Section -->
-	<section id="testimonials" class="mb-20 px-4">
-		<h2 class="text-3xl font-semibold mb-8 text-center">What Others Say</h2>
-		<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-			<div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-				<div class="flex items-center mb-4">
-					<div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 font-bold text-xl">MF</div>
-					<div class="ml-4">
-						<h3 class="font-semibold">Michael Fox</h3>
-						<p class="text-sm text-gray-600">Executive, Health Plan Operations</p>
-					</div>
-				</div>
-				<p class="text-gray-700 italic">"Very knowledgeable and great partner. Strong kind and communication. A pleasure to create and work with. Pushes innovation and efficient solutions."</p>
-				<p class="text-sm text-gray-500 mt-4">September 6, 2021</p>
-			</div>
-
-			<div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-				<div class="flex items-center mb-4">
-					<div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 font-bold text-xl">SP</div>
-					<div class="ml-4">
-						<h3 class="font-semibold">Samuele Pavani</h3>
-						<p class="text-sm text-gray-600">Design & Communication | Web3</p>
-					</div>
-				</div>
-				<p class="text-gray-700 italic">"I saw Milos fix a website and its CSS in under 5 minutes. With 2 minutes more of explanation he was able to teach me basic CSS where other videos or courses failed with hours of my attention. Wanna deliver? Hire this man."</p>
-				<p class="text-sm text-gray-500 mt-4">August 10, 2022</p>
-			</div>
-
-			<div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-				<div class="flex items-center mb-4">
-					<div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 font-bold text-xl">XJ</div>
-					<div class="ml-4">
-						<h3 class="font-semibold">Xavier Joseph</h3>
-						<p class="text-sm text-gray-600">Talent & Business Development</p>
-					</div>
-				</div>
-				<p class="text-gray-700 italic">"Great communicator, works well with USA based clients and fits the culture of hustle hard."</p>
-				<p class="text-sm text-gray-500 mt-4">September 6, 2023</p>
-			</div>
-
-	
-		</div>
-	</section>
+	<TestimonialsSection testimonials={testimonials} />
 
 	<!-- Contact Section -->
 	<section id="contact" class="mb-10 px-4">
-		<h2 class="text-3xl font-semibold mb-8 text-center">Ready to Elevate Your Project?</h2>
+		<h2 class="text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Ready to Elevate Your Project?</h2>
 		<div class="flex flex-col items-center max-w-4xl mx-auto">
-			<p class="mb-4 text-lg text-gray-700">Let's collaborate to build impactful, cutting-edge solutions.</p>
-			<a  onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;" class="inline-block px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition mb-4">Start a Conversation</a>
-			<!-- <div class="text-gray-600">Milos Rujevic • <a href="mailto:milosrujevic@gmail.com" class="text-purple-600 hover:text-purple-700 transition-colors">milosrujevic@gmail.com</a></div> -->
+			<p class="mb-4 text-lg text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default">Let's collaborate to build impactful, cutting-edge solutions.</p>
+			<a onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;" 
+			   class="inline-block px-8 py-3 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] font-semibold rounded-lg shadow hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group mb-4">
+				Start a Conversation
+				<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+			</a>
 		</div>
 	</section>
 
@@ -276,9 +247,10 @@ import WhiteRabbit from '../components/WhiteRabbit.astro';
 			<div class="pt-4">
 				<button
 					type="submit"
-					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[rgb(var(--primary-foreground))] bg-[rgb(var(--primary))] hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group"
 				>
 					Send Message
+					<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
 				</button>
 			</div>
 		</form>
@@ -337,9 +309,10 @@ import WhiteRabbit from '../components/WhiteRabbit.astro';
 			<div class="pt-4">
 				<button
 					type="submit"
-					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[rgb(var(--primary-foreground))] bg-[rgb(var(--primary))] hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group"
 				>
 					Book Consultation
+					<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
 				</button>
 			</div>
 		</form>
@@ -414,9 +387,10 @@ import WhiteRabbit from '../components/WhiteRabbit.astro';
 			<div class="pt-4">
 				<button
 					type="submit"
-					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[rgb(var(--primary-foreground))] bg-[rgb(var(--primary))] hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group"
 				>
 					Submit Project Request
+					<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
 				</button>
 			</div>
 		</form>
@@ -492,21 +466,24 @@ import WhiteRabbit from '../components/WhiteRabbit.astro';
 			<div class="pt-4">
 				<button
 					type="submit"
-					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+					class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[rgb(var(--primary-foreground))] bg-[rgb(var(--primary))] hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group"
 				>
 					Start Partnership Discussion
+					<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
 				</button>
 			</div>
 		</form>
 	</Modal>
 
-	<footer class="text-center text-gray-400 text-sm py-6 relative">
+	<footer class="text-center text-[rgb(var(--muted-foreground))] text-sm py-6 relative">
 		<div class="flex items-center justify-center gap-2">
-			<span>© 2025 Milos Rujevic. All rights reserved.</span>
-			<span class="text-gray-300">•</span>
-			<span>Powered by Creativity and Free Will		</span>
-			<span class="text-gray-300">•</span>
-			<WhiteRabbit />
+			<span class="hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default">© 2025 Milos Rujevic. All rights reserved.</span>
+			<span class="text-[rgb(var(--border))]">•</span>
+			<span class="hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default">Powered by Creativity and Free Will</span>
+			<span class="text-[rgb(var(--border))]">•</span>
+			<div class="hover:scale-110 transition-transform duration-300">
+				<WhiteRabbit />
+			</div>
 		</div>
 	</footer>
 </Layout>

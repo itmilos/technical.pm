@@ -1,0 +1,34 @@
+---
+interface Props {
+  technicalSkills: string[];
+  softSkills: string[];
+}
+
+const { technicalSkills, softSkills } = Astro.props;
+---
+
+<section id="skills" class="mb-20 px-4">
+  <h2 class="text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Core Competencies</h2>
+  <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+    <div class="bg-[rgb(var(--secondary))] p-6 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+      <h3 class="font-semibold mb-2 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">Technical</h3>
+      <ul class="list-disc list-inside text-[rgb(var(--foreground))] space-y-2">
+        {technicalSkills.map((skill) => (
+          <li class="hover:text-[rgb(var(--primary))] transition-colors duration-200 transform hover:scale-105 inline-block cursor-default">
+            {skill}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="bg-[rgb(var(--secondary))] p-6 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+      <h3 class="font-semibold mb-2 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">Soft Skills</h3>
+      <ul class="list-disc list-inside text-[rgb(var(--foreground))] space-y-2">
+        {softSkills.map((skill) => (
+          <li class="hover:text-[rgb(var(--primary))] transition-colors duration-200 transform hover:scale-105 inline-block cursor-default">
+            {skill}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section> 

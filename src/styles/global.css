@@ -3,8 +3,66 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Light theme (default) */
+    --background: 255, 255, 255;
+    --foreground: 17, 24, 39;
+    --primary: 147, 51, 234;
+    --primary-foreground: 255, 255, 255;
+    --secondary: 243, 244, 246;
+    --secondary-foreground: 17, 24, 39;
+    --muted: 243, 244, 246;
+    --muted-foreground: 107, 114, 128;
+    --accent: 147, 51, 234;
+    --accent-foreground: 255, 255, 255;
+    --border: 229, 231, 235;
+    --input-border: 209, 213, 219;
+    --input-hover: 216, 180, 254;
+    --input-focus: 147, 51, 234;
+    --input-placeholder: 156, 163, 175;
+    --input-disabled: 0.5;
+  }
+
+  [data-theme="dark"] {
+    --background: 17, 24, 39;
+    --foreground: 249, 250, 251;
+    --primary: 168, 85, 247;
+    --primary-foreground: 255, 255, 255;
+    --secondary: 31, 41, 55;
+    --secondary-foreground: 249, 250, 251;
+    --muted: 31, 41, 55;
+    --muted-foreground: 156, 163, 175;
+    --accent: 168, 85, 247;
+    --accent-foreground: 255, 255, 255;
+    --border: 31, 41, 55;
+    --input-border: 55, 65, 81;
+    --input-hover: 192, 132, 252;
+    --input-focus: 168, 85, 247;
+    --input-placeholder: 156, 163, 175;
+    --input-disabled: 0.5;
+  }
+
+  [data-theme="purple"] {
+    --background: 250, 245, 255;
+    --foreground: 88, 28, 135;
+    --primary: 126, 34, 206;
+    --primary-foreground: 255, 255, 255;
+    --secondary: 243, 232, 255;
+    --secondary-foreground: 88, 28, 135;
+    --muted: 243, 232, 255;
+    --muted-foreground: 107, 114, 128;
+    --accent: 126, 34, 206;
+    --accent-foreground: 255, 255, 255;
+    --border: 243, 232, 255;
+    --input-border: 216, 180, 254;
+    --input-hover: 167, 139, 250;
+    --input-focus: 126, 34, 206;
+    --input-placeholder: 156, 163, 175;
+    --input-disabled: 0.5;
+  }
+
   body {
-    @apply text-gray-900 bg-white;
+    @apply bg-[rgb(var(--background))] text-[rgb(var(--foreground))];
   }
 }
 
@@ -13,34 +71,96 @@
     @apply px-4 mx-auto max-w-7xl;
   }
 
+  /* Project Card Styles */
+  .project-card {
+    @apply bg-[rgb(var(--secondary))] p-6 rounded-lg shadow border-4 border-transparent hover:border-[rgb(var(--primary))] hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden;
+    perspective: 1000px;
+  }
+
+  .project-card--rotate-left {
+    @apply hover:rotate-[-1deg];
+  }
+
+  .project-card--rotate-right {
+    @apply hover:rotate-[1deg];
+  }
+
+  .project-card__border {
+    @apply absolute inset-0 border-4 border-[rgb(var(--primary))] rounded-lg opacity-0 transition-opacity duration-300;
+  }
+
+  .project-card__border-top-right {
+    @apply absolute inset-0 border-t-4 border-r-4 border-[rgb(var(--primary))] rounded-lg origin-left scale-x-0 transition-transform duration-300 delay-150;
+  }
+
+  .project-card__border-bottom-left {
+    @apply absolute inset-0 border-b-4 border-l-4 border-[rgb(var(--primary))] rounded-lg origin-right scale-x-0 transition-transform duration-300 delay-300;
+  }
+
+  .project-card__content {
+    @apply transform-gpu relative z-10;
+  }
+
+  .project-card__title {
+    @apply font-semibold mb-2 transition-colors duration-200;
+  }
+
+  .project-card__description {
+    @apply mb-2 transition-colors duration-200;
+  }
+
+  .project-card__link {
+    @apply text-[rgb(var(--primary))] hover:text-[rgb(var(--accent))] hover:underline inline-flex items-center transition-all duration-200;
+  }
+
+  .project-card__arrow {
+    @apply h-4 w-4 ml-1 opacity-0 transition-opacity duration-200;
+  }
+
   /* Form Input Styles */
   .form-input,
   .form-select,
   .form-textarea {
-    @apply w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-900 
-           shadow-sm transition-all duration-200 ease-in-out
-           placeholder:text-gray-400
-           focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
-           hover:border-purple-300
-           disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply w-full px-4 py-2.5 rounded-lg border shadow-sm
+           transition-all duration-200 ease-in-out
+           focus:outline-none focus:ring-2 focus:ring-offset-2
+           disabled:opacity-[var(--input-disabled)] disabled:cursor-not-allowed;
+    border-color: rgb(var(--input-border));
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+  }
+
+  .form-input:hover,
+  .form-select:hover,
+  .form-textarea:hover {
+    border-color: rgb(var(--input-hover));
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    border-color: transparent;
+    --tw-ring-color: rgb(var(--input-focus));
   }
 
   .form-input::placeholder,
   .form-textarea::placeholder {
-    @apply text-gray-400;
+    color: rgb(var(--input-placeholder));
   }
 
   .form-select {
     @apply appearance-none bg-no-repeat bg-right pr-10;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='rgb(var(--muted-foreground))' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   }
 
   .form-label {
-    @apply block text-sm font-medium text-gray-700 mb-1.5;
+    @apply block text-sm font-medium mb-1.5;
+    color: rgb(var(--foreground));
   }
 
   .form-error {
-    @apply mt-1 text-sm text-red-600;
+    @apply mt-1 text-sm;
+    color: rgb(220, 38, 38); /* Keeping red for errors */
   }
 
   .form-group {
@@ -50,19 +170,27 @@
   /* Form Button Styles */
   .form-button {
     @apply w-full flex justify-center items-center px-4 py-2.5
-           text-sm font-medium text-white
-           bg-purple-600 hover:bg-purple-700
-           rounded-lg shadow-sm
+           text-sm font-medium rounded-lg shadow-sm
            transition-all duration-200 ease-in-out
-           focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2
-           disabled:opacity-50 disabled:cursor-not-allowed
+           focus:outline-none focus:ring-2 focus:ring-offset-2
+           disabled:opacity-[var(--input-disabled)] disabled:cursor-not-allowed
            active:scale-[0.98];
+    background-color: rgb(var(--primary));
+    color: rgb(var(--primary-foreground));
+  }
+
+  .form-button:hover {
+    background-color: rgb(var(--accent));
+  }
+
+  .form-button:focus {
+    --tw-ring-color: rgb(var(--primary));
   }
 } 
 
 /* Experience Timeline Canvas Styles */
 .experience-timeline-canvas {
-  @apply bg-purple-600;
+  @apply bg-[rgb(var(--muted))];
   width: 50vw !important;
   height: 50vw !important;
   clip-path: circle(calc(50% - 1px));
@@ -74,4 +202,40 @@
     width: 20vw !important;
     height: 20vw !important;
   }
+}
+
+/* Custom scrollbar for different themes */
+[data-theme] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+[data-theme] ::-webkit-scrollbar-track {
+  background: rgb(var(--secondary));
+}
+
+[data-theme] ::-webkit-scrollbar-thumb {
+  background: rgb(var(--muted-foreground));
+  border-radius: 5px;
+}
+
+[data-theme] ::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--primary));
+}
+
+/* Smooth transitions for theme changes */
+* {
+  @apply transition-colors duration-200;
+}
+
+.bg-gray-50 {
+  @apply bg-[rgb(var(--secondary))];
+}
+
+.text-gray-700 {
+  @apply text-[rgb(var(--foreground))];
+}
+
+.bg-white {
+  @apply bg-[rgb(var(--secondary))];
 }

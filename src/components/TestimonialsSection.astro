@@ -1,0 +1,36 @@
+---
+interface Testimonial {
+  initials: string;
+  name: string;
+  role: string;
+  text: string;
+  date: string;
+}
+
+interface Props {
+  testimonials: Testimonial[];
+}
+
+const { testimonials } = Astro.props;
+---
+
+<section id="testimonials" class="mb-20 px-4">
+  <h2 class="text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">What Others Say</h2>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+    {testimonials.map((testimonial) => (
+      <div class="bg-[rgb(var(--background))] p-6 rounded-lg shadow-lg border border-[rgb(var(--border))] hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 bg-[rgb(var(--secondary))] rounded-full flex items-center justify-center text-[rgb(var(--primary))] font-bold text-xl group-hover:scale-110 transition-transform duration-300">
+            {testimonial.initials}
+          </div>
+          <div class="ml-4">
+            <h3 class="font-semibold group-hover:text-[rgb(var(--primary))] transition-colors duration-200">{testimonial.name}</h3>
+            <p class="text-sm text-[rgb(var(--muted-foreground))] group-hover:text-[rgb(var(--foreground))] transition-colors duration-200">{testimonial.role}</p>
+          </div>
+        </div>
+        <p class="text-[rgb(var(--foreground))] italic group-hover:text-[rgb(var(--primary))] transition-colors duration-200">{testimonial.text}</p>
+        <p class="text-sm text-[rgb(var(--muted-foreground))] mt-4 group-hover:text-[rgb(var(--foreground))] transition-colors duration-200">{testimonial.date}</p>
+      </div>
+    ))}
+  </div>
+</section> 
