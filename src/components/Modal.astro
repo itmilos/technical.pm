@@ -9,6 +9,9 @@ const { id, title, subtitle } = Astro.props;
 const formType = id.split('-')[0]; // contact, consultation, project, or engagement
 ---
 
+<!-- Add Three.js via CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <div
   id={id}
   class="fixed inset-0 z-50 hidden overflow-y-auto"
@@ -16,24 +19,32 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
   role="dialog"
   aria-modal="true"
 >
-  <!-- Background overlay -->
+  <!-- WebGL Background Canvas -->
+  <canvas 
+    id={`${id}-canvas`}
+    class="fixed inset-0 w-full h-full pointer-events-none"
+    aria-hidden="true"
+  ></canvas>
+
+  <!-- Background overlay with blur effect -->
   <div 
-    class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" 
+    class="fixed inset-0 bg-gray-500/75 backdrop-blur-sm transition-opacity" 
     aria-hidden="true"
     onclick={`document.getElementById('${id}').classList.add('hidden')`}
   ></div>
 
-  <!-- Modal panel -->
+  <!-- Modal panel with enhanced interactivity -->
   <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
     <div 
-      class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+      class="relative transform overflow-hidden rounded-lg bg-white/95 backdrop-blur-sm px-4 pb-4 pt-5 text-left shadow-2xl transition-all duration-300 ease-out hover:shadow-purple-500/20 sm:my-8 sm:w-full sm:max-w-lg sm:p-6 group"
       role="document"
+      style="transform-style: preserve-3d; perspective: 1000px;"
     >
-      <!-- Close button -->
+      <!-- Close button with hover effect -->
       <div class="absolute right-0 top-0 pr-4 pt-4">
         <button
           type="button"
-          class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+          class="rounded-md bg-white/80 backdrop-blur-sm text-gray-400 hover:text-purple-500 hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transform hover:scale-110"
           onclick={`document.getElementById('${id}').classList.add('hidden')`}
           aria-label="Close modal"
         >
@@ -44,22 +55,22 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
         </button>
       </div>
 
-      <!-- Modal content -->
-      <div class="sm:flex sm:items-start">
+      <!-- Modal content with parallax effect -->
+      <div class="sm:flex sm:items-start transform-gpu transition-transform duration-200">
         <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
           <h3 
-            class="text-2xl font-semibold leading-6 text-gray-900" 
+            class="text-2xl font-semibold leading-6 text-gray-900 group-hover:text-purple-600 transition-colors duration-200" 
             id={`${id}-title`}
           >
             {title}
           </h3>
           {subtitle && (
             <div class="mt-2">
-              <p class="text-lg text-gray-600">{subtitle}</p>
+              <p class="text-lg text-gray-600 group-hover:text-gray-800 transition-colors duration-200">{subtitle}</p>
             </div>
           )}
 
-          <!-- Move feedback elements here, before the slot -->
+          <!-- Feedback elements with enhanced animations -->
           <!-- Loading indicator -->
           <div 
             id={`${id}-loading`} 
@@ -72,42 +83,46 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              <span class="ml-2 text-gray-600">Sending your message...</span>
+              <span class="ml-2 text-gray-600 animate-pulse">Sending your message...</span>
             </div>
           </div>
 
-          <!-- Success message -->
+          <!-- Success message with enhanced animation -->
           <div 
             id={`${id}-success`} 
-            class="hidden mt-4 p-4 bg-green-50 text-green-700 rounded-md"
+            class="hidden mt-4 p-4 bg-green-50/90 backdrop-blur-sm text-green-700 rounded-md transform transition-all duration-300 scale-95 opacity-0"
             role="status"
             aria-live="polite"
           >
-            <div class="flex">
-              <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-              </svg>
+            <div class="flex items-center">
+              <div class="validation-icon text-green-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
               <p class="ml-2">Thank you for your message! I will get back to you shortly.</p>
             </div>
           </div>
 
-          <!-- Error message -->
+          <!-- Error message with enhanced animation -->
           <div 
             id={`${id}-error`} 
-            class="hidden mt-4 p-4 bg-red-50 text-red-700 rounded-md"
+            class="hidden mt-4 p-4 bg-red-50/90 backdrop-blur-sm text-red-700 rounded-md transform transition-all duration-300 scale-95 opacity-0"
             role="alert"
             aria-live="assertive"
           >
-            <div class="flex">
-              <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-              </svg>
+            <div class="flex items-center">
+              <div class="validation-icon text-red-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
               <p class="ml-2">Sorry, there was an error sending your message. Please try again or email me directly.</p>
             </div>
           </div>
 
-          <!-- Form content (slot) moved after feedback elements -->
-          <div class="mt-6">
+          <!-- Form content with enhanced interactivity -->
+          <div class="mt-6 transform transition-transform duration-200 hover:scale-[1.01]">
             <slot />
           </div>
         </div>
@@ -116,9 +131,322 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
   </div>
 </div>
 
+<style>
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+  }
+  .animate-shake {
+    animation: shake 0.5s ease-in-out infinite;
+  }
+
+  /* Input field animations */
+  .form-input, .form-select, .form-textarea {
+    @apply transition-all duration-200 ease-out;
+    transform-origin: left center;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    @apply ring-2 ring-purple-500 ring-opacity-50 border-purple-500;
+    transform: scale(1.01);
+  }
+
+  .form-input:not(:placeholder-shown):valid,
+  .form-select:not(:placeholder-shown):valid,
+  .form-textarea:not(:placeholder-shown):valid {
+    @apply border-green-500 bg-green-50/10;
+  }
+
+  .form-input:not(:placeholder-shown):invalid:not(:focus),
+  .form-select:not(:placeholder-shown):invalid:not(:focus),
+  .form-textarea:not(:placeholder-shown):invalid:not(:focus) {
+    @apply border-red-500 bg-red-50/10;
+  }
+
+  /* Label animations */
+  .form-label {
+    @apply transition-all duration-200 ease-out transform origin-left;
+  }
+
+  .form-input:focus + .form-label,
+  .form-select:focus + .form-label,
+  .form-textarea:focus + .form-label,
+  .form-input:not(:placeholder-shown) + .form-label,
+  .form-select:not(:placeholder-shown) + .form-label,
+  .form-textarea:not(:placeholder-shown) + .form-label {
+    @apply text-purple-600 scale-90 -translate-y-1;
+  }
+
+  /* Character counter animation */
+  .char-counter {
+    @apply text-sm text-gray-500 transition-all duration-200;
+  }
+
+  .char-counter.warning {
+    @apply text-yellow-500;
+  }
+
+  .char-counter.error {
+    @apply text-red-500 animate-pulse;
+  }
+
+  /* Focus ring animation */
+  @keyframes focusRing {
+    0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(139, 92, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    animation: focusRing 1.5s ease-out infinite;
+  }
+
+  /* Form field container */
+  .form-field-container {
+    @apply relative mb-4;
+  }
+
+  /* Input field base styles */
+  .form-input, .form-select, .form-textarea {
+    @apply w-full px-4 py-2.5 pr-10 rounded-lg border border-gray-300 bg-white/80 backdrop-blur-sm;
+    @apply transition-all duration-200 ease-out;
+    transform-origin: left center;
+    min-height: 36px;
+  }
+
+  .form-textarea {
+    @apply min-h-[80px] resize-y;
+  }
+
+  /* Label positioning and animation */
+  .form-label {
+    @apply absolute left-4 top-1/2 -translate-y-1/2 px-1;
+    @apply bg-white/80 backdrop-blur-sm rounded;
+    @apply text-gray-500 text-xs;
+    @apply transition-all duration-200 ease-out transform origin-left;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Adjust label position for textarea */
+  .form-textarea + .form-label {
+    @apply top-2 -translate-y-0;
+  }
+
+  /* Label animation states */
+  .form-input:focus + .form-label,
+  .form-select:focus + .form-label,
+  .form-textarea:focus + .form-label,
+  .form-input:not(:placeholder-shown) + .form-label,
+  .form-select:not(:placeholder-shown) + .form-label,
+  .form-textarea:not(:placeholder-shown) + .form-label {
+    @apply text-purple-600 text-[10px];
+    @apply -top-1.5 left-2;
+    @apply bg-white px-1;
+  }
+
+  /* Validation icons positioning - small and inside input */
+  .validation-icon {
+    @apply absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center pointer-events-none z-10;
+  }
+
+  /* Character counter positioning - now inside input */
+  .char-counter {
+    @apply absolute right-10 bottom-1; /* Adjusted to not overlap with icon */
+    @apply text-[10px] text-gray-400;
+    @apply transition-all duration-200;
+    pointer-events: none;
+  }
+
+  /* Error message - now as a tooltip inside input */
+  .error-message {
+    @apply absolute right-10 top-1/2 -translate-y-1/2; /* Adjusted to not overlap with icon */
+    @apply text-[10px] text-red-500;
+    @apply transition-all duration-200;
+    @apply opacity-0 transform translate-x-2;
+    @apply whitespace-nowrap;
+    pointer-events: none;
+    max-width: calc(100% - 3.5rem); /* Adjusted to account for icon */
+  }
+
+  .error-message.visible {
+    @apply opacity-100 translate-x-0;
+  }
+
+  /* Adjust error message for textarea */
+  .form-textarea ~ .error-message {
+    @apply top-2 -translate-y-0;
+  }
+
+  /* Focus and validation states */
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    @apply ring-1 ring-purple-500 ring-opacity-50 border-purple-500;
+    @apply bg-white;
+    transform: scale(1.005);
+  }
+
+  .form-input:not(:placeholder-shown):valid,
+  .form-select:not(:placeholder-shown):valid,
+  .form-textarea:not(:placeholder-shown):valid {
+    @apply border-green-500 bg-green-50/5;
+  }
+
+  .form-input:not(:placeholder-shown):invalid:not(:focus),
+  .form-select:not(:placeholder-shown):invalid:not(:focus),
+  .form-textarea:not(:placeholder-shown):invalid:not(:focus) {
+    @apply border-red-500 bg-red-50/5;
+  }
+
+  /* Focus ring animation - more subtle */
+  @keyframes focusRing {
+    0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.2); }
+    70% { box-shadow: 0 0 0 3px rgba(139, 92, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    animation: focusRing 1.5s ease-out infinite;
+  }
+
+  .validation-icon-success {
+    @apply absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 bg-green-500 rounded-full;
+    background-image: url('data:image/svg+xml;utf8,<svg ...>');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+</style>
+
 <script>
   import { sendEmail } from '../utils/email';
   import { Cookies } from '../utils/cookies';
+
+  // Declare THREE as a global variable
+  declare const THREE: any;
+
+  // Three.js particle animation setup
+  function initParticleAnimation(modalId: string) {
+    const canvas = document.getElementById(`${modalId}-canvas`) as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    // Create particles
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particleCount = 1000;
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 10;
+      positions[i + 1] = (Math.random() - 0.5) * 10;
+      positions[i + 2] = (Math.random() - 0.5) * 10;
+
+      colors[i] = Math.random() * 0.5 + 0.5; // Purple-ish
+      colors[i + 1] = Math.random() * 0.3;   // Less green
+      colors[i + 2] = Math.random() * 0.5 + 0.5; // Purple-ish
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.05,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.6,
+    });
+
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particles);
+
+    camera.position.z = 5;
+
+    // Mouse interaction
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    document.addEventListener('mousemove', (event) => {
+      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      targetX = mouseX * 0.5;
+      targetY = mouseY * 0.5;
+
+      particles.rotation.x += 0.001;
+      particles.rotation.y += 0.002;
+
+      particles.position.x += (targetX - particles.position.x) * 0.05;
+      particles.position.y += (targetY - particles.position.y) * 0.05;
+
+      renderer.render(scene, camera);
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  }
+
+  // Initialize particle animation when modal opens
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.matches('[onclick*="classList.remove(\'hidden\')"]')) {
+      const modalId = target.getAttribute('onclick')?.match(/getElementById\('([^']+)'\)/)?.[1];
+      if (modalId) {
+        setTimeout(() => {
+          initParticleAnimation(modalId);
+        }, 100);
+      }
+    }
+  });
+
+  // Add parallax effect to modal content
+  document.addEventListener('mousemove', (e) => {
+    const modals = document.querySelectorAll('[role="dialog"]:not(.hidden)');
+    modals.forEach((modal) => {
+      const modalContent = modal.querySelector('[role="document"]') as HTMLElement;
+      if (modalContent) {
+        const rect = modalContent.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        
+        modalContent.style.transform = `
+          perspective(1000px)
+          rotateX(${y * -5}deg)
+          rotateY(${x * 5}deg)
+          translateZ(10px)
+        `;
+      }
+    });
+  });
+
+  // Reset transform when mouse leaves modal
+  document.addEventListener('mouseleave', (e) => {
+    const modals = document.querySelectorAll('[role="dialog"]:not(.hidden)');
+    modals.forEach((modal) => {
+      const modalContent = modal.querySelector('[role="document"]') as HTMLElement;
+      if (modalContent) {
+        modalContent.style.transform = 'none';
+      }
+    });
+  });
 
   // Function to save form state
   const saveFormState = (form: HTMLFormElement) => {
@@ -323,6 +651,170 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       }
     } finally {
       submitButton.disabled = false;
+    }
+  });
+
+  // Enhance success/error animations
+  function showSuccess(modal: HTMLElement) {
+    const successEl = modal.querySelector(`#${modal.id}-success`) as HTMLElement;
+    if (successEl) {
+      successEl.classList.remove('hidden');
+      successEl.classList.remove('scale-95', 'opacity-0');
+      successEl.classList.add('scale-100', 'opacity-100');
+    }
+  }
+
+  function showError(modal: HTMLElement) {
+    const errorEl = modal.querySelector(`#${modal.id}-error`) as HTMLElement;
+    if (errorEl) {
+      errorEl.classList.remove('hidden');
+      errorEl.classList.remove('scale-95', 'opacity-0');
+      errorEl.classList.add('scale-100', 'opacity-100');
+    }
+  }
+
+  // Helper functions for SVG icons
+  function getCheckIconSVG() {
+    return `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+    </svg>`;
+  }
+  function getErrorIconSVG() {
+    return `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>`;
+  }
+
+  // Input validation with animation
+  function validateInput(input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) {
+    const isValid = input.checkValidity();
+    const isDirty = input.value !== '';
+    const container = input.closest('.form-field-container');
+    
+    if (!container) return;
+    
+    // Remove existing validation classes
+    input.classList.remove('border-red-500', 'border-green-500', 'bg-red-50/5', 'bg-green-50/5');
+    
+    // Remove existing validation icons and messages
+    const existingIcons = container.querySelectorAll('.validation-icon, .error-message');
+    existingIcons.forEach(icon => icon.remove());
+    
+    if (isDirty) {
+      if (isValid) {
+        input.classList.add('border-green-500', 'bg-green-50/5');
+        // Add success checkmark
+        const successIcon = document.createElement('div');
+        successIcon.className = 'validation-icon text-green-500';
+        successIcon.innerHTML = getCheckIconSVG();
+        container.appendChild(successIcon);
+        setTimeout(() => successIcon.classList.remove('opacity-0'), 50);
+      } else {
+        input.classList.add('border-red-500', 'bg-red-50/5');
+        // Add error icon
+        const errorIcon = document.createElement('div');
+        errorIcon.className = 'validation-icon text-red-500';
+        errorIcon.innerHTML = getErrorIconSVG();
+        container.appendChild(errorIcon);
+        setTimeout(() => errorIcon.classList.remove('opacity-0'), 50);
+        
+        // Add error message as tooltip
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'error-message';
+        errorMessage.textContent = input.validationMessage || 'Required';
+        container.appendChild(errorMessage);
+        setTimeout(() => errorMessage.classList.add('visible'), 50);
+      }
+    }
+  }
+
+  // Add input field animations and validation
+  function setupFormAnimations() {
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+      // Wrap each input in a container if not already wrapped
+      const inputs = form.querySelectorAll('input:not(.form-field-container input), select:not(.form-field-container select), textarea:not(.form-field-container textarea)');
+      inputs.forEach(input => {
+        if (!input.parentElement?.classList.contains('form-field-container')) {
+          const container = document.createElement('div');
+          container.className = 'form-field-container';
+          input.parentNode?.insertBefore(container, input);
+          container.appendChild(input);
+        }
+      });
+
+      // Setup animations for all inputs
+      const allInputs = form.querySelectorAll('.form-field-container input, .form-field-container select, .form-field-container textarea');
+      allInputs.forEach(input => {
+        // Add floating label effect
+        const label = input.previousElementSibling;
+        if (label?.classList.contains('form-label')) {
+          // Initial state check
+          const inputElement = input as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+          if (inputElement.value) {
+            label.classList.add('text-purple-600', 'text-xs', '-top-2', 'left-3', 'bg-white');
+          }
+
+          input.addEventListener('focus', () => {
+            label.classList.add('text-purple-600', 'text-xs', '-top-2', 'left-3', 'bg-white');
+          });
+          
+          input.addEventListener('blur', () => {
+            const inputElement = input as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+            if (!inputElement.value) {
+              label.classList.remove('text-purple-600', 'text-xs', '-top-2', 'left-3', 'bg-white');
+            }
+          });
+        }
+
+        // Add character counter for textareas
+        if (input.tagName.toLowerCase() === 'textarea') {
+          const maxLength = input.getAttribute('maxlength');
+          if (maxLength) {
+            const maxLengthNum = parseInt(maxLength, 10);
+            const counter = document.createElement('div');
+            counter.className = 'char-counter';
+            counter.textContent = `0/${maxLengthNum}`;
+            input.parentNode?.appendChild(counter);
+
+            input.addEventListener('input', () => {
+              const inputElement = input as HTMLTextAreaElement;
+              const length = inputElement.value.length;
+              counter.textContent = `${length}/${maxLengthNum}`;
+              
+              counter.classList.remove('warning', 'error');
+              if (length > maxLengthNum * 0.8) {
+                counter.classList.add('warning');
+              }
+              if (length > maxLengthNum * 0.95) {
+                counter.classList.add('error');
+              }
+            });
+          }
+        }
+
+        // Add validation feedback
+        input.addEventListener('input', () => {
+          validateInput(input as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement);
+        });
+
+        input.addEventListener('blur', () => {
+          validateInput(input as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement);
+        });
+      });
+    });
+  }
+
+  // Initialize form animations when modal opens
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.matches('[onclick*="classList.remove(\'hidden\')"]')) {
+      const modalId = target.getAttribute('onclick')?.match(/getElementById\('([^']+)'\)/)?.[1];
+      if (modalId) {
+        setTimeout(() => {
+          setupFormAnimations();
+        }, 100);
+      }
     }
   });
 </script> 
