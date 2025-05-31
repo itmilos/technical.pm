@@ -11,24 +11,45 @@ const { technicalSkills, softSkills } = Astro.props;
   <h2 class="text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Core Competencies</h2>
   <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
     <div class="bg-[rgb(var(--secondary))] p-6 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-      <h3 class="font-semibold mb-2 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">Technical</h3>
-      <ul class="list-disc list-inside text-[rgb(var(--foreground))] space-y-2">
+      <h3 class="font-semibold mb-4 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">Technical</h3>
+      <div class="flex flex-wrap gap-2">
         {technicalSkills.map((skill) => (
-          <li class="hover:text-[rgb(var(--primary))] transition-colors duration-200 transform hover:scale-105 inline-block cursor-default">
+          <span 
+            class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium
+                   bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))]
+                   hover:bg-[rgb(var(--primary))]/20 hover:scale-105
+                   transition-all duration-200 cursor-default
+                   border border-[rgb(var(--primary))]/20
+                   backdrop-blur-sm"
+          >
             {skill}
-          </li>
+          </span>
         ))}
-      </ul>
+      </div>
     </div>
     <div class="bg-[rgb(var(--secondary))] p-6 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-      <h3 class="font-semibold mb-2 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">Soft Skills</h3>
-      <ul class="list-disc list-inside text-[rgb(var(--foreground))] space-y-2">
+      <h3 class="font-semibold mb-4 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">Soft Skills</h3>
+      <div class="flex flex-wrap gap-2">
         {softSkills.map((skill) => (
-          <li class="hover:text-[rgb(var(--primary))] transition-colors duration-200 transform hover:scale-105 inline-block cursor-default">
+          <span 
+            class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium
+                   bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))]
+                   hover:bg-[rgb(var(--primary))]/20 hover:scale-105
+                   transition-all duration-200 cursor-default
+                   border border-[rgb(var(--primary))]/20
+                   backdrop-blur-sm"
+          >
             {skill}
-          </li>
+          </span>
         ))}
-      </ul>
+      </div>
     </div>
   </div>
-</section> 
+</section>
+
+<style>
+  /* Add a subtle glow effect on hover */
+  span:hover {
+    box-shadow: 0 0 15px rgba(var(--primary), 0.2);
+  }
+</style> 

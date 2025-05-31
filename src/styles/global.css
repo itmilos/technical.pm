@@ -4,26 +4,7 @@
 
 @layer base {
   :root {
-    /* Light theme (default) */
-    --background: 255, 255, 255;
-    --foreground: 17, 24, 39;
-    --primary: 147, 51, 234;
-    --primary-foreground: 255, 255, 255;
-    --secondary: 243, 244, 246;
-    --secondary-foreground: 17, 24, 39;
-    --muted: 243, 244, 246;
-    --muted-foreground: 107, 114, 128;
-    --accent: 147, 51, 234;
-    --accent-foreground: 255, 255, 255;
-    --border: 229, 231, 235;
-    --input-border: 209, 213, 219;
-    --input-hover: 216, 180, 254;
-    --input-focus: 147, 51, 234;
-    --input-placeholder: 156, 163, 175;
-    --input-disabled: 0.5;
-  }
-
-  [data-theme="dark"] {
+    /* Dark theme (default) */
     --background: 17, 24, 39;
     --foreground: 249, 250, 251;
     --primary: 168, 85, 247;
@@ -38,6 +19,25 @@
     --input-border: 55, 65, 81;
     --input-hover: 192, 132, 252;
     --input-focus: 168, 85, 247;
+    --input-placeholder: 156, 163, 175;
+    --input-disabled: 0.5;
+  }
+
+  [data-theme="light"] {
+    --background: 255, 255, 255;
+    --foreground: 17, 24, 39;
+    --primary: 147, 51, 234;
+    --primary-foreground: 255, 255, 255;
+    --secondary: 243, 244, 246;
+    --secondary-foreground: 17, 24, 39;
+    --muted: 243, 244, 246;
+    --muted-foreground: 107, 114, 128;
+    --accent: 147, 51, 234;
+    --accent-foreground: 255, 255, 255;
+    --border: 229, 231, 235;
+    --input-border: 209, 213, 219;
+    --input-hover: 216, 180, 254;
+    --input-focus: 147, 51, 234;
     --input-placeholder: 156, 163, 175;
     --input-disabled: 0.5;
   }
@@ -121,10 +121,7 @@
   .form-input,
   .form-select,
   .form-textarea {
-    @apply w-full px-4 py-2.5 rounded-lg border shadow-sm
-           transition-all duration-200 ease-in-out
-           focus:outline-none focus:ring-2 focus:ring-offset-2
-           disabled:opacity-[var(--input-disabled)] disabled:cursor-not-allowed;
+    @apply w-full px-4 py-2.5 rounded-lg border shadow-sm transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-[var(--input-disabled)] disabled:cursor-not-allowed;
     border-color: rgb(var(--input-border));
     background-color: rgb(var(--background));
     color: rgb(var(--foreground));
@@ -160,7 +157,8 @@
 
   .form-error {
     @apply mt-1 text-sm;
-    color: rgb(220, 38, 38); /* Keeping red for errors */
+    color: rgb(220, 38, 38);
+    /* Keeping red for errors */
   }
 
   .form-group {
@@ -169,12 +167,7 @@
 
   /* Form Button Styles */
   .form-button {
-    @apply w-full flex justify-center items-center px-4 py-2.5
-           text-sm font-medium rounded-lg shadow-sm
-           transition-all duration-200 ease-in-out
-           focus:outline-none focus:ring-2 focus:ring-offset-2
-           disabled:opacity-[var(--input-disabled)] disabled:cursor-not-allowed
-           active:scale-[0.98];
+    @apply w-full flex justify-center items-center px-4 py-2.5 text-sm font-medium rounded-lg shadow-sm transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-[var(--input-disabled)] disabled:cursor-not-allowed active:scale-[0.98];
     background-color: rgb(var(--primary));
     color: rgb(var(--primary-foreground));
   }
@@ -186,7 +179,7 @@
   .form-button:focus {
     --tw-ring-color: rgb(var(--primary));
   }
-} 
+}
 
 /* Experience Timeline Canvas Styles */
 .experience-timeline-canvas {
@@ -238,4 +231,13 @@
 
 .bg-white {
   @apply bg-[rgb(var(--secondary))];
+}
+
+
+/* Validation icons positioning - inside input */
+.validation-icon {
+  top: -33px;
+  position: relative;
+  float: right;
+  padding-right: 12px;
 }

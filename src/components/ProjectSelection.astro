@@ -24,10 +24,6 @@ const { projects } = Astro.props;
       const { title, description, link, rotation = 'left' } = project;
       return (
         <div class={`group cursor-pointer project-card ${rotation === 'left' ? 'project-card--rotate-left' : 'project-card--rotate-right'}`}>
-          <div class="project-card__border group-hover:opacity-100">
-            <div class="project-card__border-top-right group-hover:scale-x-100"></div>
-            <div class="project-card__border-bottom-left group-hover:scale-x-100"></div>
-          </div>
           <div class="project-card__content">
             <h3 class="project-card__title group-hover:text-[rgb(var(--primary))]">{title}</h3>
             <p class="project-card__description group-hover:text-[rgb(var(--foreground))]">{description}</p>

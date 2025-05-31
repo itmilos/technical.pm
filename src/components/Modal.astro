@@ -18,6 +18,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
   aria-labelledby={`${id}-title`}
   role="dialog"
   aria-modal="true"
+  tabindex="-1"
 >
   <!-- WebGL Background Canvas -->
   <canvas 
@@ -36,17 +37,19 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
   <!-- Modal panel with enhanced interactivity -->
   <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
     <div 
-      class="relative transform overflow-hidden rounded-lg bg-white/95 backdrop-blur-sm px-4 pb-4 pt-5 text-left shadow-2xl transition-all duration-300 ease-out hover:shadow-purple-500/20 sm:my-8 sm:w-full sm:max-w-lg sm:p-6 group"
+      class="relative transform overflow-hidden rounded-lg bg-white/95 backdrop-blur-sm px-4 pb-4 pt-5 text-left shadow-2xl transition-all duration-300 ease-out hover:shadow-purple-500/20 sm:my-8 sm:w-full sm:max-w-lg sm:p-6 group
+      dark:bg-gray-900/95"
       role="document"
       style="transform-style: preserve-3d; perspective: 1000px;"
     >
-      <!-- Close button with hover effect -->
+      <!-- Close button with hover effect and focus styles -->
       <div class="absolute right-0 top-0 pr-4 pt-4">
         <button
           type="button"
-          class="rounded-md bg-white/80 backdrop-blur-sm text-gray-400 hover:text-purple-500 hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transform hover:scale-110"
+          class="rounded-md bg-white/80 backdrop-blur-sm text-gray-400 hover:text-purple-500 hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transform hover:scale-110 focus:scale-110"
           onclick={`document.getElementById('${id}').classList.add('hidden')`}
           aria-label="Close modal"
+          id={`${id}-close-button`}
         >
           <span class="sr-only">Close</span>
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -219,64 +222,39 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
     @apply min-h-[80px] resize-y;
   }
 
-  /* Label positioning and animation */
-  .form-label {
-    @apply absolute left-4 top-1/2 -translate-y-1/2 px-1;
-    @apply bg-white/80 backdrop-blur-sm rounded;
-    @apply text-gray-500 text-xs;
-    @apply transition-all duration-200 ease-out transform origin-left;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* Adjust label position for textarea */
-  .form-textarea + .form-label {
-    @apply top-2 -translate-y-0;
-  }
-
-  /* Label animation states */
-  .form-input:focus + .form-label,
-  .form-select:focus + .form-label,
-  .form-textarea:focus + .form-label,
-  .form-input:not(:placeholder-shown) + .form-label,
-  .form-select:not(:placeholder-shown) + .form-label,
-  .form-textarea:not(:placeholder-shown) + .form-label {
-    @apply text-purple-600 text-[10px];
-    @apply -top-1.5 left-2;
-    @apply bg-white px-1;
-  }
-
-  /* Validation icons positioning - small and inside input */
+  /* Validation icons positioning - inside input */
   .validation-icon {
-    @apply absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center pointer-events-none z-10;
+    @apply absolute right-3 -top-2 w-5 h-5 flex items-center justify-center pointer-events-none z-10;
+    top: -33px;
+    position: relative;
+    float: right;
+    padding-right: 12px;
   }
 
-  /* Character counter positioning - now inside input */
+  /* Character counter positioning - inside input */
   .char-counter {
-    @apply absolute right-10 bottom-1; /* Adjusted to not overlap with icon */
+    @apply absolute right-10 top-1/2 -translate-y-1/2;
     @apply text-[10px] text-gray-400;
     @apply transition-all duration-200;
     pointer-events: none;
   }
 
-  /* Error message - now as a tooltip inside input */
+  /* Error message - as a tooltip below input */
   .error-message {
-    @apply absolute right-10 top-1/2 -translate-y-1/2; /* Adjusted to not overlap with icon */
+    @apply absolute left-0 -bottom-5;
     @apply text-[10px] text-red-500;
     @apply transition-all duration-200;
-    @apply opacity-0 transform translate-x-2;
-    @apply whitespace-nowrap;
+    @apply opacity-0 transform translate-y-1;
     pointer-events: none;
-    max-width: calc(100% - 3.5rem); /* Adjusted to account for icon */
   }
 
   .error-message.visible {
-    @apply opacity-100 translate-x-0;
+    @apply opacity-100 translate-y-0;
   }
 
   /* Adjust error message for textarea */
   .form-textarea ~ .error-message {
-    @apply top-2 -translate-y-0;
+    @apply -bottom-6;
   }
 
   /* Focus and validation states */
@@ -315,6 +293,15 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
     background-size: contain;
     background-repeat: no-repeat;
   }
+
+  .form-field-container {
+    position: relative;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    padding-right: 2.5rem; /* pr-10 in Tailwind, enough space for icon */
+  }
+
 </style>
 
 <script>
@@ -708,7 +695,6 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
         successIcon.className = 'validation-icon text-green-500';
         successIcon.innerHTML = getCheckIconSVG();
         container.appendChild(successIcon);
-        setTimeout(() => successIcon.classList.remove('opacity-0'), 50);
       } else {
         input.classList.add('border-red-500', 'bg-red-50/5');
         // Add error icon
@@ -716,9 +702,8 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
         errorIcon.className = 'validation-icon text-red-500';
         errorIcon.innerHTML = getErrorIconSVG();
         container.appendChild(errorIcon);
-        setTimeout(() => errorIcon.classList.remove('opacity-0'), 50);
         
-        // Add error message as tooltip
+        // Add error message below input
         const errorMessage = document.createElement('div');
         errorMessage.className = 'error-message';
         errorMessage.textContent = input.validationMessage || 'Required';
@@ -814,6 +799,89 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
         setTimeout(() => {
           setupFormAnimations();
         }, 100);
+      }
+    }
+  });
+
+  // Focus trap functionality
+  function setupFocusTrap(modalId: string) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    const focusableElements = modal.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstFocusableElement = focusableElements[0] as HTMLElement;
+    const lastFocusableElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+    const closeButton = modal.querySelector(`#${modalId}-close-button`) as HTMLElement;
+
+    // Function to handle focus trap
+    function handleFocusTrap(e: KeyboardEvent) {
+      if (e.key !== 'Tab') return;
+
+      if (e.shiftKey) {
+        // If shift + tab
+        if (document.activeElement === firstFocusableElement) {
+          e.preventDefault();
+          lastFocusableElement.focus();
+        }
+      } else {
+        // If tab
+        if (document.activeElement === lastFocusableElement) {
+          e.preventDefault();
+          firstFocusableElement.focus();
+        }
+      }
+    }
+
+    // Function to handle modal open
+    function handleModalOpen() {
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      // Focus the close button when modal opens
+      closeButton?.focus();
+      // Add focus trap event listener
+      modal.addEventListener('keydown', handleFocusTrap);
+    }
+
+    // Function to handle modal close
+    function handleModalClose() {
+      if (!modal) return;
+      modal.classList.add('hidden');
+      // Remove focus trap event listener
+      modal.removeEventListener('keydown', handleFocusTrap);
+    }
+
+    // Update click handlers to use the new functions
+    const openButtons = document.querySelectorAll(`[onclick*="getElementById('${modalId}').classList.remove('hidden')"]`);
+    openButtons.forEach(button => {
+      button.setAttribute('onclick', `document.getElementById('${modalId}')?.dispatchEvent(new CustomEvent('modal-open'))`);
+    });
+
+    // Add event listeners for modal open/close
+    modal.addEventListener('modal-open', handleModalOpen);
+    modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        handleModalClose();
+      }
+    });
+
+    // Update close button click handler
+    closeButton?.setAttribute('onclick', `document.getElementById('${modalId}')?.dispatchEvent(new CustomEvent('modal-close'))`);
+    modal.addEventListener('modal-close', handleModalClose);
+
+    // Update background overlay click handler
+    const overlay = modal.querySelector('.fixed.inset-0.bg-gray-500\\/75');
+    overlay?.setAttribute('onclick', `document.getElementById('${modalId}')?.dispatchEvent(new CustomEvent('modal-close'))`);
+  }
+
+  // Initialize focus trap when modal opens
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.matches('[onclick*="dispatchEvent(new CustomEvent(\'modal-open\')"]')) {
+      const modalId = target.getAttribute('onclick')?.match(/getElementById\('([^']+)'\)/)?.[1];
+      if (modalId) {
+        setupFocusTrap(modalId);
       }
     }
   });

@@ -6,7 +6,7 @@ export const themes: Theme[] = ['light', 'dark', 'purple'];
 
 export const themeColors = {
   light: {
-    background: 'bg-white',
+    background: 'bg-purple-100',
     text: 'text-gray-900',
     primary: 'bg-purple-600',
     primaryHover: 'hover:bg-purple-700',
@@ -22,6 +22,7 @@ export const themeColors = {
     secondary: 'bg-gray-800',
     secondaryHover: 'hover:bg-gray-700',
     border: 'border-gray-700',
+    foreground: 'text-gray-100',
   },
   purple: {
     background: 'bg-purple-50',
@@ -35,12 +36,12 @@ export const themeColors = {
 };
 
 export function getTheme(): Theme {
-  if (typeof document === 'undefined') return 'light';
+  if (typeof document === 'undefined') return 'dark';
   const savedTheme = document.cookie
     .split('; ')
     .find(row => row.startsWith(`${THEME_COOKIE_KEY}=`))
     ?.split('=')[1] as Theme;
-  return savedTheme || 'light';
+  return savedTheme || 'dark';
 }
 
 export function setTheme(theme: Theme) {
