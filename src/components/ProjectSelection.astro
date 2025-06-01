@@ -23,11 +23,12 @@ const { projects } = Astro.props;
     {projects.map((project, index) => {
       const { title, description, link, rotation = 'left' } = project;
       return (
-        <div class={`group cursor-pointer project-card ${rotation === 'left' ? 'project-card--rotate-left' : 'project-card--rotate-right'}`}>
-          <div class="project-card__content">
+        <div class={`group cursor-pointer project-card flex flex-col ${rotation === 'left' ? 'project-card--rotate-left' : 'project-card--rotate-right'}`}>
+          <div class="project-card__content flex-1 flex flex-col">
             <h3 class="project-card__title group-hover:text-[rgb(var(--primary))]">{title}</h3>
             <p class="project-card__description group-hover:text-[rgb(var(--foreground))]">{description}</p>
-            <a href={link} class="project-card__link group-hover:translate-x-1">
+            <div class="flex-1"></div>
+            <a href={link} class="project-card__link group-hover:translate-x-1 mt-auto">
               View Project
               <svg xmlns="http://www.w3.org/2000/svg" class="project-card__arrow group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -47,6 +48,9 @@ const { projects } = Astro.props;
     background: rgb(var(--muted));
     border-radius: 0.5rem;
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
   }
 
   .project-card:hover {
