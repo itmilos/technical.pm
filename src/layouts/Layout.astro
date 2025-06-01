@@ -3,15 +3,25 @@ import '../styles/global.css';
 import CookieConsent from '../components/CookieConsent.astro';
 import ThemeSwitcher from '../components/ThemeSwitcher.astro';
 import { getTheme } from '../utils/theme';
+import { SEO } from 'astro-seo';
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
+  article?: boolean;
+  twitterCard?: 'summary' | 'summary_large_image';
 }
 
-const { title, description = "Technical Product Manager Portfolio", image = "/seo/og-image.png" } = Astro.props;
+const { 
+  title, 
+  description = "Technical Product Manager Portfolio", 
+  image = "/seo/og-image.png",
+  article = false,
+  twitterCard = 'summary_large_image'
+} = Astro.props;
 const initialTheme = getTheme();
+const canonicalURL = Astro.url?.href ?? "https://technical.pm";
 ---
 
 <!DOCTYPE html>
@@ -22,26 +32,49 @@ const initialTheme = getTheme();
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url?.href ?? "https://technical.pm"} />
-    <meta property="og:image" content={image} />
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
-    <!-- Canonical -->
-    <link rel="canonical" href={Astro.url?.href ?? "https://technical.pm"} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+    
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonicalURL}
+      openGraph={{
+        basic: {
+          title: title,
+          type: article ? 'article' : 'website',
+          image: image,
+        },
+        optional: {
+          description: description,
+        },
+        image: {
+          alt: `${title} - Technical Product Manager Portfolio`,
+        },
+      }}
+      twitter={{
+        card: twitterCard,
+        site: '@milosrujevic',
+        creator: '@milosrujevic',
+        title: title,
+        description: description,
+        image: image,
+        imageAlt: `${title} - Technical Product Manager Portfolio`,
+      }}
+      extend={{
+        meta: [
+          { name: 'robots', content: 'index, follow' },
+          { name: 'author', content: 'Milos Rujevic' },
+        ],
+        link: [
+          { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+          { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+          { 
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
+          },
+        ],
+      }}
     />
+
     <script type="application/ld+json">
       {JSON.stringify({
         "@context": "https://schema.org",

@@ -13,6 +13,7 @@ interface Props {
   readingTime: number;
   lastModified?: string;
   rawContent?: string; // Optional raw markdown content for TOC generation
+  image?: string; // Add image prop for article SEO
 }
 
 const {
@@ -26,7 +27,8 @@ const {
   content,
   readingTime,
   lastModified = date,
-  rawContent = content // Fallback to content if rawContent is not provided
+  rawContent = content,
+  image = "/seo/og-image.png" // Default image for blog posts
 } = Astro.props;
 
 // Format dates
@@ -60,9 +62,49 @@ const baseUrl = import.meta.env.PROD
 
 // Construct the full URL for sharing
 const shareUrl = `${baseUrl}${Astro.url.pathname}`;
+
+// Prepare article schema
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": title,
+  "description": description,
+  "image": image,
+  "author": {
+    "@type": "Person",
+    "name": author,
+    "description": authorBio,
+    "image": authorImage
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Technical PM",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${baseUrl}/favicon.svg`
+    }
+  },
+  "datePublished": date,
+  "dateModified": lastModified,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": shareUrl
+  },
+  "keywords": tags.join(", "),
+  "wordCount": content.split(/\s+/).length,
+  "timeRequired": `PT${readingTime}M`
+};
 ---
 
-<Layout title={`${title} | Technical PM Blog`}>
+<Layout 
+  title={`${title} | Technical PM Blog`}
+  description={description}
+  image={image}
+  article={true}
+  twitterCard="summary_large_image"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  
   <article class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Article Header -->
     <header class="mb-8">
