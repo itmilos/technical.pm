@@ -1,0 +1,97 @@
+---
+import BlogPost from '../../components/BlogPost.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+// Enable static generation for this page
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  
+  // More detailed debug logging
+  console.log('Debug - Content Collection Details:');
+  posts.forEach(post => {
+    console.log({
+      filename: post.id,
+      slug: post.slug,
+      rawSlug: post.id.replace('blog/', '').replace('.md', ''),
+      hasBody: !!post.body,
+      data: {
+        title: post.data.title,
+        date: post.data.date,
+        tags: post.data.tags
+      }
+    });
+  });
+  
+  const paths = posts.map((post: CollectionEntry<'blog'>) => {
+    const path = {
+      params: { slug: post.slug },
+      props: { post },
+    };
+    console.log('Debug - Generated path for post:', {
+      filename: post.id,
+      slug: post.slug,
+      path: path.params.slug,
+      fullPath: `/blog/${path.params.slug}`
+    });
+    return path;
+  });
+  
+  console.log('Debug - All generated paths:', paths.map(p => p.params.slug));
+  return paths;
+}
+
+const { post } = Astro.props;
+
+// More detailed request debugging
+console.log('Debug - Request Details:', {
+  url: Astro.url.pathname,
+  params: Astro.params,
+  requestedSlug: Astro.params.slug,
+  hasPost: !!post,
+  postDetails: post ? {
+    slug: post.slug,
+    id: post.id,
+    filename: post.id.split('/').pop(),
+    hasBody: !!post.body,
+    title: post.data.title
+  } : null
+});
+
+if (!post) {
+  console.log('Debug - 404 Details:', {
+    requestedSlug: Astro.params.slug,
+    availableSlugs: (await getCollection('blog')).map(p => p.slug)
+  });
+  return Astro.redirect('/404');
+}
+
+// Get the rendered content
+const { Content } = await post.render();
+
+// Calculate reading time (assuming average reading speed of 200 words per minute)
+// We'll use the raw markdown content for word count
+const wordCount = post.body.split(/\s+/).length;
+const readingTime = Math.ceil(wordCount / 200);
+
+// Get the full post data
+const fullPost = Astro.props;
+---
+
+<BlogPost
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  author={post.data.author}
+  authorBio={post.data.authorBio}
+  authorImage={post.data.authorImage}
+  tags={post.data.tags}
+  content={post.body}
+  rawContent={post.body}
+  readingTime={readingTime}
+  lastModified={post.data.lastModified}
+>
+  <Content />
+</BlogPost> 

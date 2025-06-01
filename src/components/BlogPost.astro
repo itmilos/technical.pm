@@ -1,0 +1,246 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: string;
+  author: string;
+  authorBio?: string;
+  authorImage?: string;
+  tags: string[];
+  content: string;
+  readingTime: number;
+  lastModified?: string;
+  rawContent?: string; // Optional raw markdown content for TOC generation
+}
+
+const {
+  title,
+  description,
+  date,
+  author,
+  authorBio = "Technical Product Manager with more then a decade of experience in enterprise software and AI solutions.",
+  authorImage = "/images/authors/itm.jpeg",
+  tags,
+  content,
+  readingTime,
+  lastModified = date,
+  rawContent = content // Fallback to content if rawContent is not provided
+} = Astro.props;
+
+// Format dates
+const formattedDate = new Date(date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+const formattedLastModified = new Date(lastModified).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+// Generate table of contents from headings
+const headings = rawContent.match(/^#{2,3}\s.+$/gm) || [];
+const toc = headings.map(heading => {
+  const match = heading.match(/^#+/);
+  if (!match) return null;
+  const level = match[0].length;
+  const text = heading.replace(/^#+\s+/, '');
+  const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return { level, text, slug };
+}).filter((item): item is { level: number; text: string; slug: string } => item !== null);
+
+// Get the base URL for sharing
+const baseUrl = import.meta.env.PROD 
+  ? 'https://technical.pm'  // Replace with your actual production domain
+  : 'http://localhost:3000';
+
+// Construct the full URL for sharing
+const shareUrl = `${baseUrl}${Astro.url.pathname}`;
+---
+
+<Layout title={`${title} | Technical PM Blog`}>
+  <article class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Article Header -->
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold mb-4">{title}</h1>
+      
+      <!-- Meta Information -->
+      <div class="flex flex-wrap items-center gap-4 text-gray-600 dark:text-gray-400 text-sm mb-6">
+        <time datetime={date}>{formattedDate}</time>
+        <span>•</span>
+        <span>{readingTime} min read</span>
+        {lastModified !== date && (
+          <>
+            <span>•</span>
+            <span>Updated {formattedLastModified}</span>
+          </>
+        )}
+      </div>
+
+      <!-- Tags -->
+      <div class="flex flex-wrap gap-2 mb-6">
+        {tags.map((tag) => (
+          <a 
+            href={`/blog?tag=${encodeURIComponent(tag.toLowerCase())}`}
+            class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-sm rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+
+      <!-- Description -->
+      <p class="text-xl text-gray-700 dark:text-gray-300 mb-8">
+        {description}
+      </p>
+
+      <!-- Author Bio -->
+      <div class="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg mb-8">
+        <img 
+          src={authorImage} 
+          alt={author}
+          class="w-16 h-16 rounded-full object-cover"
+        />
+        <div>
+          <h2 class="font-semibold">{author}</h2>
+          <p class="text-sm text-gray-600 dark:text-gray-400">{authorBio}</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Table of Contents -->
+    {toc.length > 0 && (
+      <nav class="mb-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <h2 class="text-lg font-semibold mb-3">Table of Contents</h2>
+        <ul class="space-y-2">
+          {toc.map(({ level, text, slug }) => (
+            <li class={`ml-${(level - 2) * 4}`}>
+              <a 
+                href={`#${slug}`}
+                class="text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                {text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    <!-- Article Content -->
+    <div class="prose dark:prose-invert max-w-none">
+      <slot />
+    </div>
+
+    <!-- Share and Navigation -->
+    <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex flex-wrap justify-between items-center gap-4">
+        <!-- Share Buttons -->
+        <div class="flex gap-2">
+          <a 
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(Astro.url.href)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <a 
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex gap-4">
+          <a 
+            href="/blog"
+            class="text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            ← Back to Blog
+          </a>
+        </div>
+      </div>
+    </footer>
+  </article>
+</Layout>
+
+<style>
+  /* Add smooth scrolling for anchor links */
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  /* Style the prose content */
+  :global(.prose) {
+    @apply text-gray-800 dark:text-gray-200;
+  }
+
+  :global(.prose h2) {
+    @apply text-2xl font-bold mt-8 mb-4 scroll-mt-20;
+  }
+
+  :global(.prose h3) {
+    @apply text-xl font-semibold mt-6 mb-3 scroll-mt-20;
+  }
+
+  :global(.prose p) {
+    @apply mb-4 leading-relaxed;
+  }
+
+  :global(.prose ul) {
+    @apply list-disc list-inside mb-4 space-y-2;
+  }
+
+  :global(.prose ol) {
+    @apply list-decimal list-inside mb-4 space-y-2;
+  }
+
+  :global(.prose li) {
+    @apply mb-2;
+  }
+
+  :global(.prose a) {
+    @apply text-blue-600 dark:text-blue-400 hover:underline;
+  }
+
+  :global(.prose code) {
+    @apply px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-sm;
+  }
+
+  :global(.prose pre) {
+    @apply p-4 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-x-auto mb-4;
+  }
+
+  :global(.prose blockquote) {
+    @apply pl-4 border-l-4 border-gray-300 dark:border-gray-600 italic my-4;
+  }
+
+  :global(.prose img) {
+    @apply rounded-lg my-4;
+  }
+
+  :global(.prose table) {
+    @apply w-full border-collapse mb-4;
+  }
+
+  :global(.prose th) {
+    @apply border border-gray-300 dark:border-gray-600 px-4 py-2 bg-gray-100 dark:bg-gray-800;
+  }
+
+  :global(.prose td) {
+    @apply border border-gray-300 dark:border-gray-600 px-4 py-2;
+  }
+</style> 
