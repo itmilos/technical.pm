@@ -71,6 +71,7 @@ const canonicalURL = Astro.url?.href ?? "https://technical.pm";
             rel: 'stylesheet',
             href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
           },
+          { href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap', rel: 'stylesheet' },
         ],
       }}
     />
@@ -92,7 +93,18 @@ const canonicalURL = Astro.url?.href ?? "https://technical.pm";
     <nav class="sticky top-0 z-20 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-gray-100 dark:border-gray-800 shadow-sm">
       <div class="container mx-auto flex items-center justify-between px-4 py-3 max-w-4xl">
         <div class="flex items-center gap-4">
-          <a href="#hero" class="text-xl font-bold text-purple-700 dark:text-purple-400">TPM</a>
+          <a href="/" aria-label="Home" class="inline-block align-middle">
+            <h1 class="font-extrabold uppercase text-xl sm:text-2xl leading-none tracking-tight relative inline-block"
+                style="
+                  color: #FF6EC7;
+                  text-shadow:
+                    0.08em 0.08em 0 #7A206B,
+                    0.10em 0.10em 0 #7A206B;
+                  font-family: 'Montserrat', 'Oswald', 'Bungee', sans-serif;
+                ">
+              T <span style="color: #FFB6E6;">PM</span>
+            </h1>
+          </a>
           <ThemeSwitcher />
         </div>
         <div class="flex items-center gap-4">
@@ -136,7 +148,18 @@ const canonicalURL = Astro.url?.href ?? "https://technical.pm";
         >
           <div class="flex flex-col h-full">
             <div class="flex justify-between items-center p-4 border-b border-gray-100 dark:border-gray-800">
-              <a href="#hero" class="text-xl font-bold text-purple-700 dark:text-purple-400">TPM</a>
+              <a href="/" aria-label="Home" class="inline-block align-middle">
+                <h1 class="font-extrabold uppercase text-xl sm:text-2xl leading-none tracking-tight relative inline-block"
+                    style="
+                      color: #FF6EC7;
+                      text-shadow:
+                        0.08em 0.08em 0 #7A206B,
+                        0.10em 0.10em 0 #7A206B;
+                      font-family: 'Montserrat', 'Oswald', 'Bungee', sans-serif;
+                    ">
+                  T <span style="color: #FFB6E6;">PM</span>
+                </h1>
+              </a>
               <button
                 id="close-menu-button"
                 class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500"
