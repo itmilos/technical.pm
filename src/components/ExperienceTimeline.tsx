@@ -10,8 +10,8 @@ let mesh2: THREE.Mesh;
 
 function init(container: HTMLDivElement) {
   renderer = new THREE.WebGLRenderer({ alpha: true });
-  // Set initial size based on viewport width
-  const size = window.innerWidth < 768 ? window.innerWidth * 0.5 : window.innerWidth * 0.2;
+  // Set initial size based on viewport width - smaller on mobile
+  const size = window.innerWidth < 768 ? Math.min(window.innerWidth * 0.4, 200) : window.innerWidth * 0.2;
   renderer.setSize(size, size);
   renderer.setPixelRatio(2);
   container.appendChild(renderer.domElement);
@@ -97,7 +97,7 @@ export default function ExperienceTimeline() {
     // Handle resize
     const handleResize = () => {
       if (renderer) {
-        const size = window.innerWidth < 768 ? window.innerWidth * 0.5 : window.innerWidth * 0.2;
+        const size = window.innerWidth < 768 ? Math.min(window.innerWidth * 0.4, 200) : window.innerWidth * 0.2;
         renderer.setSize(size, size);
       }
     };
@@ -122,7 +122,7 @@ export default function ExperienceTimeline() {
   return (
     <div 
       ref={containerRef} 
-      className="relative flex items-center justify-center w-full h-full"
+      className="relative flex items-center justify-center w-full h-full mx-12"
       style={{ 
         touchAction: 'pan-left pan-right pan-up pan-down',
         minHeight: '300px' // Minimum height for the section

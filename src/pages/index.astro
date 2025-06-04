@@ -129,15 +129,15 @@ const pricingTiers = [
 	<WebGLBackground />
 
 	<!-- Hero Section -->
-	<section id="hero" class="container mx-auto px-4 py-24 max-w-4xl text-center relative z-10">
-		<h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-[rgb(var(--primary))] to-[rgb(var(--accent))] bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-default">
+	<section id="hero" class="container mx-auto px-4 py-16 sm:py-20 md:py-24 max-w-4xl text-center relative z-10">
+		<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[rgb(var(--primary))] to-[rgb(var(--accent))] bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 cursor-default leading-tight">
 			Milos Rujevic
 		</h1>
-		<p class="text-xl text-[rgb(var(--muted-foreground))] mb-6 hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default">Experienced Technical Product Manager driving innovation in AI, Blockchain, and Web3 solutions.</p>
+		<p class="text-lg sm:text-xl text-[rgb(var(--muted-foreground))] mb-6 hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default max-w-2xl mx-auto leading-relaxed">Experienced Technical Product Manager driving innovation in AI, Blockchain, and Web3 solutions.</p>
 		<a 
 			href="#"
 			onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;"
-			class="inline-block px-8 py-3 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] font-semibold rounded-lg shadow hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group"
+			class="inline-block px-6 sm:px-8 py-3 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] font-semibold rounded-lg shadow hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group text-sm sm:text-base"
 		>
 			Get in Touch
 			<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
@@ -145,9 +145,9 @@ const pricingTiers = [
 	</section>
 
 	<!-- Experience Section -->
-	<section id="experience" class="relative w-full mb-12 px-4">
-		<h2 class="text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Experience</h2>
-		<div class="flex justify-center items-center">
+	<section id="experience" class="relative w-full mb-16 sm:mb-20 px-4">
+		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Experience</h2>
+		<div class="flex justify-center items-center min-h-[250px] sm:min-h-[300px]">
 			<ExperienceTimeline client:load />
 		</div>
 	</section>
@@ -166,11 +166,11 @@ const pricingTiers = [
 
 	<!-- Contact Section -->
 	<section id="contact" class="mb-10 px-4">
-		<h2 class="text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Ready to Elevate Your Project?</h2>
-		<div class="flex flex-col items-center max-w-4xl mx-auto">
-			<p class="mb-4 text-lg text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default">Let's collaborate to build impactful, cutting-edge solutions.</p>
+		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Ready to Elevate Your Project?</h2>
+		<div class="flex flex-col items-center max-w-4xl mx-auto text-center">
+			<p class="mb-6 text-base sm:text-lg text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default max-w-2xl leading-relaxed">Let's collaborate to build impactful, cutting-edge solutions.</p>
 			<a onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;" 
-			   class="inline-block px-8 py-3 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] font-semibold rounded-lg shadow hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group mb-4 cursor-pointer">
+			   class="inline-block px-6 sm:px-8 py-3 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] font-semibold rounded-lg shadow hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group mb-4 cursor-pointer text-sm sm:text-base">
 				Start a Conversation
 				<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
 			</a>

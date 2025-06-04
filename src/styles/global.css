@@ -184,8 +184,10 @@
 /* Experience Timeline Canvas Styles */
 .experience-timeline-canvas {
   @apply bg-[rgb(var(--muted))];
-  width: 50vw !important;
-  height: 50vw !important;
+  width: 40vw !important;
+  height: 40vw !important;
+  max-width: 200px !important;
+  max-height: 200px !important;
   clip-path: circle(calc(50% - 1px));
 }
 
@@ -194,6 +196,8 @@
   .experience-timeline-canvas {
     width: 20vw !important;
     height: 20vw !important;
+    max-width: none !important;
+    max-height: none !important;
   }
 }
 
