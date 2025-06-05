@@ -45,12 +45,14 @@ const { projects } = Astro.props;
   .project-card {
     position: relative;
     padding: 1.5rem;
-    background: rgb(var(--muted));
+    background: rgb(var(--card));
+    border: 1px solid rgb(var(--border));
     border-radius: 0.5rem;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     min-height: 220px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   }
 
   @media (min-width: 640px) {
@@ -63,6 +65,7 @@ const { projects } = Astro.props;
   .project-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+    border-color: rgb(var(--primary));
   }
 
   .project-card__border {
@@ -108,6 +111,7 @@ const { projects } = Astro.props;
     margin-bottom: 0.75rem;
     transition: color 0.3s ease;
     line-height: 1.3;
+    color: rgb(var(--card-foreground));
   }
 
   @media (min-width: 640px) {

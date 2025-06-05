@@ -56,8 +56,8 @@ console.log('Debug - Post links:', postLinks);
 <Layout title="Blog | Technical PM">
   <div class="container mx-auto px-4 py-8 max-w-4xl">
     <header class="mb-12">
-      <h1 class="text-4xl font-bold mb-4">Technical PM Blog</h1>
-      <p class="text-xl text-gray-700 dark:text-gray-300">
+      <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-[rgb(var(--primary))] to-[rgb(var(--accent))] bg-clip-text text-transparent">Technical PM Blog</h1>
+      <p class="text-xl text-[rgb(var(--muted-foreground))] hover:text-[rgb(var(--foreground))] transition-colors duration-200">
         Insights, guides, and best practices for technical product managers.
       </p>
     </header>
@@ -69,8 +69,8 @@ console.log('Debug - Post links:', postLinks);
           href="/blog"
           class={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
             !currentTag
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+              ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+              : 'bg-[rgb(var(--secondary))] text-[rgb(var(--secondary-foreground))] hover:bg-[rgb(var(--accent))]/20'
           }`}
         >
           All Posts
@@ -80,8 +80,8 @@ console.log('Debug - Post links:', postLinks);
             href={`/blog?tag=${encodeURIComponent(tag)}`}
             class={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               currentTag === tag
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+                : 'bg-[rgb(var(--secondary))] text-[rgb(var(--secondary-foreground))] hover:bg-[rgb(var(--accent))]/20'
             }`}
           >
             {tag}
@@ -96,7 +96,7 @@ console.log('Debug - Post links:', postLinks);
         <h2 class="text-2xl font-semibold mb-2">
           Posts tagged with "{currentTag}"
         </h2>
-        <a href="/blog" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+        <a href="/blog" class="text-[rgb(var(--primary))] hover:text-[rgb(var(--accent))] hover:underline text-sm transition-colors duration-200">
           ← View all posts
         </a>
       </div>
@@ -105,27 +105,27 @@ console.log('Debug - Post links:', postLinks);
     <!-- Blog Posts Grid -->
     <div class="grid gap-8 md:grid-cols-2">
       {sortedPosts.map((post: CollectionEntry<'blog'>) => (
-        <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+        <article class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105">
           <div class="p-6">
             <div class="flex flex-wrap gap-2 mb-4">
               {post.data.tags.map((tag: string) => (
                 <a
                   href={`/blog?tag=${encodeURIComponent(tag)}`}
-                  class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  class="px-2 py-1 bg-[rgb(var(--accent))]/20 text-[rgb(var(--accent))] text-xs rounded-full hover:bg-[rgb(var(--accent))]/30 transition-colors duration-200"
                 >
                   {tag}
                 </a>
               ))}
             </div>
             <h2 class="text-xl font-bold mb-2">
-              <a href={`/blog/${post.slug}`} class="hover:text-blue-600 dark:hover:text-blue-400">
+              <a href={`/blog/${post.slug}`} class="hover:text-[rgb(var(--primary))] transition-colors duration-200">
                 {post.data.title}
               </a>
             </h2>
-            <p class="text-gray-600 dark:text-gray-400 mb-4">
+            <p class="text-[rgb(var(--muted-foreground))] mb-4">
               {post.data.description}
             </p>
-            <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+            <div class="flex items-center justify-between text-sm text-[rgb(var(--muted-foreground))]">
               <time datetime={post.data.date}>
                 {new Date(post.data.date).toLocaleDateString('en-US', {
                   year: 'numeric',
@@ -143,11 +143,11 @@ console.log('Debug - Post links:', postLinks);
     <!-- No Posts Message -->
     {sortedPosts.length === 0 && (
       <div class="text-center py-12">
-        <p class="text-xl text-gray-600 dark:text-gray-400 mb-4">
+        <p class="text-xl text-[rgb(var(--muted-foreground))] mb-4">
           No posts found {currentTag ? `for tag "${currentTag}"` : ''}.
         </p>
         {currentTag && (
-          <a href="/blog" class="text-blue-600 dark:text-blue-400 hover:underline">
+          <a href="/blog" class="text-[rgb(var(--primary))] hover:text-[rgb(var(--accent))] hover:underline transition-colors duration-200">
             View all posts
           </a>
         )}
