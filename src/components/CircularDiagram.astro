@@ -19,7 +19,7 @@ const {
 ---
 
 <!-- Circular Diagram -->
-<div class="relative w-full max-w-5xl mx-auto mb-16">
+<div class="relative w-full max-w-6xl mx-auto mb-20">
 	<!-- Floating particles background -->
 	<div class="absolute inset-0 pointer-events-none">
 		<div class="floating-particle particle-1"></div>
@@ -58,9 +58,9 @@ const {
 			</div>
 		</div>
 
-		<!-- Because Circle - Right -->
+		<!-- What Circle - Right -->
 		<div class="absolute circle-right-position z-20">
-			<div class="circle-satellite because-circle group cursor-pointer" data-circle="because">
+			<div class="circle-satellite what-circle group cursor-pointer" data-circle="what">
 				<div class="circle-glow"></div>
 				<div class="circle-content">
 					<h3 class="circle-title-small text-cyber-teal-500">{rightTitle}</h3>
@@ -73,7 +73,7 @@ const {
 		</div>
 
 		<!-- Enhanced Connection Lines -->
-		<svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 500 400">
+		<svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 600 480">
 			<defs>
 				<!-- Enhanced gradients with more stops -->
 				<linearGradient id="enhancedGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -101,9 +101,9 @@ const {
 				</filter>
 			</defs>
 			<!-- Curved connections -->
-			<path d="M 250 180 Q 180 280 120 320" stroke="url(#enhancedGradient1)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-1" filter="url(#glow)" />
-			<path d="M 250 180 Q 320 280 380 320" stroke="url(#enhancedGradient2)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-2" filter="url(#glow)" />
-			<path d="M 120 320 Q 250 380 380 320" stroke="url(#enhancedGradient3)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-3" filter="url(#glow)" />
+			<path d="M 300 200 Q 220 320 140 380" stroke="url(#enhancedGradient1)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-1" filter="url(#glow)" />
+			<path d="M 300 200 Q 380 320 460 380" stroke="url(#enhancedGradient2)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-2" filter="url(#glow)" />
+			<path d="M 140 380 Q 300 450 460 380" stroke="url(#enhancedGradient3)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-3" filter="url(#glow)" />
 			
 			<!-- Animated flow dots -->
 			<circle r="4" fill="#6C3EA6" opacity="0.8" class="flow-dot dot-1">
@@ -123,9 +123,9 @@ const {
 			</circle>
 			
 			<!-- Hidden paths for dot animation -->
-			<path id="path1" d="M 250 180 Q 180 280 120 320" opacity="0" />
-			<path id="path2" d="M 250 180 Q 320 280 380 320" opacity="0" />
-			<path id="path3" d="M 120 320 Q 250 380 380 320" opacity="0" />
+			<path id="path1" d="M 300 200 Q 220 320 140 380" opacity="0" />
+			<path id="path2" d="M 300 200 Q 380 320 460 380" opacity="0" />
+			<path id="path3" d="M 140 380 Q 300 450 460 380" opacity="0" />
 		</svg>
 
 		<!-- Interactive overlay for enhanced effects -->
@@ -140,8 +140,8 @@ const {
 <style>
 	/* Enhanced Circular Diagram Styles */
 	.circle-diagram {
-		height: 450px;
-		width: 500px;
+		height: 550px;
+		width: 600px;
 		position: relative;
 	}
 
@@ -163,25 +163,25 @@ const {
 
 	/* Circle positioning */
 	.circle-center-position {
-		top: 20%;
+		top: 15%;
 		left: 50%;
 		transform: translateX(-50%);
 	}
 
 	.circle-left-position {
-		bottom: 10%;
-		left: 8%;
+		bottom: 8%;
+		left: 6%;
 	}
 
 	.circle-right-position {
-		bottom: 10%;
-		right: 8%;
+		bottom: 8%;
+		right: 6%;
 	}
 
 	/* Enhanced center circle */
 	.circle-center {
-		width: 180px;
-		height: 180px;
+		width: 220px;
+		height: 220px;
 		position: relative;
 		background: radial-gradient(circle at 30% 30%, 
 			rgba(108, 62, 166, 0.3) 0%, 
@@ -215,8 +215,8 @@ const {
 
 	/* Enhanced satellite circles */
 	.circle-satellite {
-		width: 140px;
-		height: 140px;
+		width: 170px;
+		height: 170px;
 		position: relative;
 		background: radial-gradient(circle at 30% 30%, 
 			rgba(255, 255, 255, 0.2) 0%, 
@@ -248,7 +248,7 @@ const {
 			inset 0 1px 0 rgba(255, 255, 255, 0.2);
 	}
 
-	.because-circle:hover {
+	.what-circle:hover {
 		transform: scale(1.12) translateY(-8px);
 		background: radial-gradient(circle at 30% 30%, 
 			rgba(14, 194, 164, 0.3) 0%, 
@@ -283,7 +283,7 @@ const {
 		letter-spacing: 0.03em;
 	}
 
-	.because-circle:hover .circle-text-small {
+	.what-circle:hover .circle-text-small {
 		color: rgba(243, 230, 248, 1);
 		text-shadow: 
 			0 2px 4px rgba(0, 0, 0, 0.2),
@@ -312,7 +312,7 @@ const {
 		background: radial-gradient(circle, transparent 40%, rgba(181, 126, 220, 0.15) 70%);
 	}
 
-	.because-circle:hover .circle-glow {
+	.what-circle:hover .circle-glow {
 		opacity: 1;
 		background: radial-gradient(circle, transparent 40%, rgba(14, 194, 164, 0.15) 70%);
 	}
@@ -329,32 +329,37 @@ const {
 
 	/* Typography */
 	.circle-title {
-		font-size: 1.25rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin-bottom: 1rem;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.circle-title-small {
+		font-size: 1.125rem;
 		font-weight: 700;
 		margin-bottom: 0.75rem;
 		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
-	.circle-title-small {
-		font-size: 1rem;
-		font-weight: 700;
-		margin-bottom: 0.5rem;
-		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-
 	.circle-text {
-		font-size: 0.95rem;
-		line-height: 1.3;
+		font-size: 1rem;
+		line-height: 1.4;
 		font-weight: 500;
 		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 	}
 
-	
+	.circle-text-small {
+		font-size: 0.875rem !important;
+		line-height: 1.4;
+		letter-spacing: 0.01em;
+		font-weight: 500;
+	}
 
 	.circle-content {
-		padding: 1.5rem;
+		padding: 2rem;
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -391,7 +396,44 @@ const {
 	/* Responsive design */
 	@media (max-width: 768px) {
 		.circle-diagram {
-			height: 350px;
+			height: 420px;
+			width: 460px;
+		}
+
+		.circle-center {
+			width: 170px;
+			height: 170px;
+		}
+
+		.circle-satellite {
+			width: 130px;
+			height: 130px;
+		}
+
+		.circle-title { 
+			font-size: 1.25rem;
+			margin-bottom: 0.75rem;
+		}
+		.circle-title-small { 
+			font-size: 1rem;
+			margin-bottom: 0.5rem;
+		}
+		.circle-text { 
+			font-size: 0.9rem;
+			line-height: 1.4;
+		}
+		
+		.circle-text-small {
+			font-size: 0.75rem !important;
+			line-height: 1.35;
+			letter-spacing: 0.01em;
+			font-weight: 500;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.circle-diagram {
+			height: 360px;
 			width: 380px;
 		}
 
@@ -405,31 +447,41 @@ const {
 			height: 110px;
 		}
 
+		.circle-content {
+			padding: 1rem;
+		}
+
 		.circle-title { 
-			font-size: 1.1rem;
+			font-size: 1.125rem;
 			margin-bottom: 0.5rem;
+			line-height: 1.2;
 		}
+		
 		.circle-title-small { 
-			font-size: 0.9rem;
+			font-size: 0.95rem;
 			margin-bottom: 0.4rem;
+			line-height: 1.2;
 		}
+		
 		.circle-text { 
-			font-size: 0.85rem;
+			font-size: 0.8rem;
 			line-height: 1.4;
 		}
 		
 		.circle-text-small {
-			font-size: 0.8rem !important;
-			line-height: 1.35;
-			letter-spacing: 0.01em;
+			font-size: 0.65rem !important;
+			line-height: 1.3;
+			letter-spacing: 0.005em;
 			font-weight: 500;
+			word-spacing: 0.02em;
 		}
 	}
 
-	@media (max-width: 640px) {
+	/* Extra small mobile devices */
+	@media (max-width: 480px) {
 		.circle-diagram {
-			height: 300px;
-			width: 320px;
+			height: 320px;
+			width: 340px;
 		}
 
 		.circle-center {
@@ -443,65 +495,18 @@ const {
 		}
 
 		.circle-content {
-			padding: 0.8rem;
+			padding: 0.75rem;
 		}
 
 		.circle-title { 
 			font-size: 1rem;
 			margin-bottom: 0.4rem;
-			line-height: 1.2;
-		}
-		
-		.circle-title-small { 
-			font-size: 0.85rem;
-			margin-bottom: 0.35rem;
-			line-height: 1.2;
-		}
-		
-		.circle-text { 
-			font-size: 0.8rem;
-			line-height: 1.4;
-		}
-		
-		.circle-text-small {
-			font-size: 0.75rem !important;
-			line-height: 1.3;
-			letter-spacing: 0.005em;
-			font-weight: 500;
-			word-spacing: 0.02em;
-		}
-	}
-
-	/* Extra small mobile devices */
-	@media (max-width: 480px) {
-		.circle-diagram {
-			height: 280px;
-			width: 300px;
-		}
-
-		.circle-center {
-			width: 110px;
-			height: 110px;
-		}
-
-		.circle-satellite {
-			width: 85px;
-			height: 85px;
-		}
-
-		.circle-content {
-			padding: 0.6rem;
-		}
-
-		.circle-title { 
-			font-size: 0.95rem;
-			margin-bottom: 0.3rem;
 			line-height: 1.1;
 		}
 		
 		.circle-title-small { 
-			font-size: 0.8rem;
-			margin-bottom: 0.25rem;
+			font-size: 0.85rem;
+			margin-bottom: 0.3rem;
 			line-height: 1.1;
 		}
 		

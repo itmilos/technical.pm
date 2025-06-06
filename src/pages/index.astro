@@ -11,7 +11,9 @@ import PricingSection from '../components/PricingSection.astro';
 import CircularDiagram from '../components/CircularDiagram.astro';
 import TargetAudiencesSection from '../components/TargetAudiencesSection.astro';
 import GlobeAnimation from '../components/GlobeAnimation.tsx';
-
+import InteractiveCoreValues from '../components/InteractiveCoreValues.astro';
+import CoreValuesSection from '../components/ValuesSection.astro';
+import CoreValues3D from '../components/CoreValues3d.jsx';
 
 const projects: Project[] = [
 	{
@@ -39,16 +41,6 @@ const projects: Project[] = [
 		rotation: 'right',
 	},
 ];
-
-const coreValues = [
-	{ value: 'Results-Oriented', description: 'Every action is measured by its impact' },
-	{ value: 'Efficiency', description: 'Streamlining processes for maximum output' },
-	{ value: 'Self-Sustaining Solutions', description: 'Building systems that work independently' },
-	{ value: 'Dedication', description: 'Complete commitment to client success' },
-	{ value: 'Transparency', description: 'Open communication and honest reporting' },
-	{ value: 'Innovation', description: 'Continuous improvement and creative thinking' }
-];
-
 
 const testimonials = [
 	{
@@ -114,20 +106,21 @@ const pricingTiers = [
 
 <Layout 
 	title="Why"
-	description="We exist to improve people’s lives. How? By guiding IT companies to reorient themselves—not just toward profit, but toward service. Because when technology companies truly serve people, they don’t just create value… they create wealth that benefits everyone."
+	description="We exist to improve people's lives. How? By guiding IT companies to reorient themselves—not just toward profit, but toward service. Because when technology companies truly serve people, they don't just create value… they create wealth that benefits everyone."
 	image="/seo/og-image.png"
 >
 	<WebGLBackground />
 
 	<!-- Hero Section -->
 	<section id="hero" class="container mx-auto py-8 sm:py-20 md:py-24 max-w-4xl text-center relative z-10">
+
 		<CircularDiagram 
 		centerTitle="Why"
-		centerText="To improve people's lives"
+		centerText="People deserve tech that works for them, not the other way around."
 		leftTitle="How"
-		leftText="Guiding companies from not just profit, to service"
-		rightTitle="Because"
-		rightText="Creating wealth that benefits everyone"
+		leftText="By being relentless, hands-on, and fearless—challenging norms with sharp focus and uncompromising care."
+		rightTitle="What"
+		rightText="We simplify IT, streamlining your ops, slashing costs, unlocking talent, and building game-changing connections."
 		/>
 
 		<TargetAudiencesSection />
@@ -156,18 +149,8 @@ const pricingTiers = [
 	<ProjectSelection  projects={projects}/>
 
 
-	<!-- Values Section -->
-	<section id="values" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">Core Values</h2>
-		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-			{coreValues.map((item) => (
-				<div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 hover:bg-white/15 hover:border-white/30 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
-					<h3 class="font-semibold mb-3 text-royal-purple-600">{item.value}</h3>
-					<p class="text-pale-blush-100 text-sm leading-relaxed">{item.description}</p>
-				</div>
-			))}
-		</div>
-	</section>
+	<!-- Interactive Core Values Section -->
+	<CoreValues3D client:only="react" />
 
 	<!-- Pricing Section -->
 	<PricingSection tiers={pricingTiers} />
