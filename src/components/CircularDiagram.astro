@@ -46,29 +46,29 @@ const {
 
 		<!-- How Circle - Left -->
 		<div class="absolute circle-left-position z-20">
-			<div class="circle-satellite how-circle group cursor-pointer" data-circle="how">
-				<div class="circle-glow"></div>
+			<div class="shape-satellite square-satellite group cursor-pointer" data-circle="how">
+				<div class="shape-glow"></div>
 				<div class="circle-content">
 					<h3 class="circle-title-small text-electric-lavender-500">{leftTitle}</h3>
 					<p class="circle-text-small text-xs text-pale-blush-100">
 						{leftText}
 					</p>
 				</div>
-				<div class="circle-pulse"></div>
+				<div class="shape-pulse"></div>
 			</div>
 		</div>
 
 		<!-- What Circle - Right -->
 		<div class="absolute circle-right-position z-20">
-			<div class="circle-satellite what-circle group cursor-pointer" data-circle="what">
-				<div class="circle-glow"></div>
+			<div class="shape-satellite rectangle-satellite group cursor-pointer" data-circle="what">
+				<div class="shape-glow"></div>
 				<div class="circle-content">
 					<h3 class="circle-title-small text-cyber-teal-500">{rightTitle}</h3>
 					<p class="circle-text-small text-xs text-pale-blush-100">
 						{rightText}
 					</p>
 				</div>
-				<div class="circle-pulse"></div>
+				<div class="shape-pulse"></div>
 			</div>
 		</div>
 
@@ -213,8 +213,8 @@ const {
 			inset 0 1px 0 rgba(255, 255, 255, 0.3);
 	}
 
-	/* Enhanced satellite circles */
-	.circle-satellite {
+	/* Enhanced satellite shapes */
+	.shape-satellite {
 		width: 170px;
 		height: 170px;
 		position: relative;
@@ -224,7 +224,6 @@ const {
 			rgba(255, 255, 255, 0.05) 100%);
 		backdrop-filter: blur(12px);
 		border: 2px solid rgba(255, 255, 255, 0.25);
-		border-radius: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -235,96 +234,84 @@ const {
 			inset 0 1px 0 rgba(255, 255, 255, 0.15);
 	}
 
-	.how-circle:hover {
-		transform: scale(1.12) translateY(-8px);
+	/* Square shape */
+	.square-satellite {
+		border-radius: 0;
+		transform: none;
+		border: 3px solid rgba(181, 126, 220, 0.4);
 		background: radial-gradient(circle at 30% 30%, 
-			rgba(181, 126, 220, 0.3) 0%, 
-			rgba(181, 126, 220, 0.15) 50%, 
+			rgba(255, 255, 255, 0.2) 0%, 
+			rgba(255, 255, 255, 0.1) 50%, 
 			rgba(255, 255, 255, 0.05) 100%);
-		border-color: rgba(181, 126, 220, 0.4);
 		box-shadow: 
-			0 12px 36px rgba(181, 126, 220, 0.2),
-			0 0 30px rgba(181, 126, 220, 0.15),
-			inset 0 1px 0 rgba(255, 255, 255, 0.2);
+			inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+			0 6px 24px rgba(0, 0, 0, 0.1);
 	}
 
-	.what-circle:hover {
+	.square-satellite:hover {
+		transform: scale(1.12) translateY(-8px);
+		background: radial-gradient(circle at 30% 30%, 
+			rgba(181, 126, 220, 0.35) 0%, 
+			rgba(181, 126, 220, 0.18) 50%, 
+			rgba(255, 255, 255, 0.08) 100%);
+		border-color: rgba(181, 126, 220, 0.6);
+		box-shadow: 0 12px 36px rgba(181, 126, 220, 0.25), 0 0 30px rgba(181, 126, 220, 0.18), 0 0 16px 2px rgba(181, 126, 220, 0.18), inset 0 0 0 2px rgba(255,255,255,0.18);
+	}
+
+	/* Rectangle shape (right satellite) */
+	.rectangle-satellite {
+		border-radius: 0;
+		background: radial-gradient(circle at 30% 30%, 
+			rgba(255, 255, 255, 0.2) 0%, 
+			rgba(255, 255, 255, 0.1) 50%, 
+			rgba(255, 255, 255, 0.05) 100%);
+		border: 3px solid rgba(14, 194, 164, 0.4);
+		box-shadow: 0 2px 16px 0 rgba(14, 194, 164, 0.15), inset 0 0 0 1.5px rgba(255,255,255,0.12), 0 6px 24px rgba(0, 0, 0, 0.1);
+	}
+	.rectangle-satellite:hover {
 		transform: scale(1.12) translateY(-8px);
 		background: radial-gradient(circle at 30% 30%, 
 			rgba(14, 194, 164, 0.3) 0%, 
 			rgba(14, 194, 164, 0.15) 50%, 
 			rgba(255, 255, 255, 0.05) 100%);
-		border-color: rgba(14, 194, 164, 0.4);
-		box-shadow: 
-			0 12px 36px rgba(14, 194, 164, 0.2),
-			0 0 30px rgba(14, 194, 164, 0.15),
-			inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		border-color: rgba(14, 194, 164, 0.6);
+		box-shadow: 0 12px 36px rgba(14, 194, 164, 0.2), 0 0 30px rgba(14, 194, 164, 0.15), inset 0 0 0 2px rgba(255,255,255,0.18);
+	}
+	.rectangle-satellite .shape-glow {
+		border-radius: 0;
+	}
+	.rectangle-satellite .shape-pulse {
+		border-radius: 0;
+		border: 2px solid rgba(14, 194, 164, 0.4);
 	}
 
-	/* Hide circle titles on hover */
-	.circle-center:hover .circle-title {
-		opacity: 0;
-		transform: translateY(-10px) scale(0.8);
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-
-	.circle-satellite:hover .circle-title-small {
-		opacity: 0;
-		transform: translateY(-8px) scale(0.8);
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	}
-
-	/* Enhanced hover effects for circle text */
-	.how-circle:hover .circle-text-small {
-		color: rgba(243, 230, 248, 1);
-		text-shadow: 
-			0 2px 4px rgba(0, 0, 0, 0.2),
-			0 0 12px rgba(181, 126, 220, 0.3);
-		letter-spacing: 0.03em;
-	}
-
-	.what-circle:hover .circle-text-small {
-		color: rgba(243, 230, 248, 1);
-		text-shadow: 
-			0 2px 4px rgba(0, 0, 0, 0.2),
-			0 0 12px rgba(14, 194, 164, 0.3);
-		letter-spacing: 0.03em;
-	}
-
-	/* Circle glow effects */
-	.circle-glow {
+	/* Shape glow effects */
+	.shape-glow {
 		position: absolute;
 		inset: -20px;
-		border-radius: 50%;
 		background: radial-gradient(circle, transparent 40%, rgba(108, 62, 166, 0.1) 70%);
 		opacity: 0;
 		transition: opacity 0.4s ease;
 		pointer-events: none;
+		z-index: 0;
 	}
 
-	.circle-center:hover .circle-glow {
-		opacity: 1;
-		background: radial-gradient(circle, transparent 40%, rgba(108, 62, 166, 0.2) 70%);
+	.square-satellite .shape-glow {
+		border-radius: 0;
 	}
 
-	.how-circle:hover .circle-glow {
-		opacity: 1;
-		background: radial-gradient(circle, transparent 40%, rgba(181, 126, 220, 0.15) 70%);
-	}
-
-	.what-circle:hover .circle-glow {
-		opacity: 1;
-		background: radial-gradient(circle, transparent 40%, rgba(14, 194, 164, 0.15) 70%);
-	}
-
-	/* Pulse animation */
-	.circle-pulse {
+	/* Shape pulse animation */
+	.shape-pulse {
 		position: absolute;
 		inset: -10px;
-		border-radius: 50%;
-		border: 1px solid rgba(108, 62, 166, 0.3);
 		opacity: 0;
 		animation: pulse-ring 3s ease-out infinite;
+		z-index: 0;
+	}
+
+	.square-satellite .shape-pulse {
+		border-radius: 0;
+		border: 2px solid rgba(181, 126, 220, 0.4);
 	}
 
 	/* Typography */
@@ -359,7 +346,7 @@ const {
 	}
 
 	.circle-content {
-		padding: 2rem;
+		padding: 0.3rem;
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -396,18 +383,18 @@ const {
 	/* Responsive design */
 	@media (max-width: 768px) {
 		.circle-diagram {
-			height: 420px;
-			width: 460px;
+			height: 480px;
+			width: 540px;
 		}
 
 		.circle-center {
-			width: 170px;
-			height: 170px;
+			width: 210px;
+			height: 210px;
 		}
 
-		.circle-satellite {
-			width: 130px;
-			height: 130px;
+		.shape-satellite {
+			width: 170px;
+			height: 170px;
 		}
 
 		.circle-title { 
@@ -433,22 +420,22 @@ const {
 
 	@media (max-width: 640px) {
 		.circle-diagram {
-			height: 360px;
-			width: 380px;
+			height: 400px;
+			width: 440px;
 		}
 
 		.circle-center {
-			width: 140px;
-			height: 140px;
+			width: 160px;
+			height: 160px;
 		}
 
-		.circle-satellite {
-			width: 110px;
-			height: 110px;
+		.shape-satellite {
+			width: 130px;
+			height: 130px;
 		}
 
 		.circle-content {
-			padding: 1rem;
+			padding: 0.1rem;
 		}
 
 		.circle-title { 
@@ -458,9 +445,9 @@ const {
 		}
 		
 		.circle-title-small { 
-			font-size: 0.95rem;
-			margin-bottom: 0.4rem;
-			line-height: 1.2;
+			font-size: 0.85rem;
+			margin-bottom: 0.3rem;
+			line-height: 1.1;
 		}
 		
 		.circle-text { 
@@ -469,8 +456,8 @@ const {
 		}
 		
 		.circle-text-small {
-			font-size: 0.65rem !important;
-			line-height: 1.3;
+			font-size: 0.6rem !important;
+			line-height: 1.2;
 			letter-spacing: 0.005em;
 			font-weight: 500;
 			word-spacing: 0.02em;
@@ -480,22 +467,22 @@ const {
 	/* Extra small mobile devices */
 	@media (max-width: 480px) {
 		.circle-diagram {
-			height: 320px;
-			width: 340px;
+			height: 340px;
+			width: 380px;
 		}
 
 		.circle-center {
-			width: 120px;
-			height: 120px;
+			width: 130px;
+			height: 130px;
 		}
 
-		.circle-satellite {
-			width: 95px;
-			height: 95px;
+		.shape-satellite {
+			width: 105px;
+			height: 105px;
 		}
 
 		.circle-content {
-			padding: 0.75rem;
+			padding: 0.3rem;
 		}
 
 		.circle-title { 
@@ -505,9 +492,9 @@ const {
 		}
 		
 		.circle-title-small { 
-			font-size: 0.85rem;
-			margin-bottom: 0.3rem;
-			line-height: 1.1;
+			font-size: 0.7rem;
+			margin-bottom: 0.2rem;
+			line-height: 1.05;
 		}
 		
 		.circle-text { 
@@ -517,8 +504,8 @@ const {
 		
 		.circle-text-small {
 			font-family: Inter, system-ui, sans-serif;
-			font-size: 0.55rem !important;
-			line-height: 1.25;
+			font-size: 0.48rem !important;
+			line-height: 1.1;
 			letter-spacing: 0;
 			font-weight: 500;
 			word-spacing: 0.01em;
@@ -555,9 +542,25 @@ const {
 	}
 
 	/* Interactive effects */
-	.circle-center[data-circle="why"]:hover ~ .circle-left-position .circle-satellite,
-	.circle-center[data-circle="why"]:hover ~ .circle-right-position .circle-satellite {
+	.circle-center[data-circle="why"]:hover ~ .circle-left-position .square-satellite {
 		transform: scale(1.05);
-		box-shadow: 0 8px 32px rgba(108, 62, 166, 0.15);
+		box-shadow: 
+			inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+			0 8px 32px rgba(181, 126, 220, 0.2);
+	}
+
+	.circle-center[data-circle="why"]:hover ~ .circle-right-position .rectangle-satellite {
+		transform: scale(1.05);
+		box-shadow: 0 8px 32px rgba(14, 194, 164, 0.2);
+	}
+
+	/* Text alignment for each shape */
+	.square-satellite .circle-content {
+		text-align: left;
+		align-items: flex-start;
+	}
+	.rectangle-satellite .circle-content {
+		text-align: right;
+		align-items: flex-end;
 	}
 </style> 
