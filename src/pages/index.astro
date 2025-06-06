@@ -10,7 +10,7 @@ import TestimonialsSection from '../components/TestimonialsSection.astro';
 import PricingSection from '../components/PricingSection.astro';
 import CircularDiagram from '../components/CircularDiagram.astro';
 import TargetAudiencesSection from '../components/TargetAudiencesSection.astro';
-
+import GlobeAnimation from '../components/GlobeAnimation.tsx';
 
 
 const projects: Project[] = [
@@ -141,6 +141,16 @@ const pricingTiers = [
 			<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
 		</a>
 	</section>
+
+	<section id="experience" class="relative w-full mb-16 sm:mb-20 px-4">
+		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Experience</h2>
+		<div class="flex justify-center items-center min-h-[250px] sm:min-h-[300px]">
+			
+				<GlobeAnimation  client:load />
+		</div>
+	</section>
+
+
 
 	<!-- Projects Section -->
 	<ProjectSelection  projects={projects}/>

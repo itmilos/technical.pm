@@ -53,3 +53,13 @@
 	.error-message {
 		padding: 8px 12px;
 	}
+
+	/* Experience Timeline Canvas Styles */
+	.experience-timeline-canvas {
+		@apply bg-[rgb(var(--muted))];
+		width: 40vw !important;
+		height: 40vw !important;
+		max-width: 200px !important;
+		max-height: 200px !important;
+		clip-path: circle(calc(50% - 1px));
+	}
