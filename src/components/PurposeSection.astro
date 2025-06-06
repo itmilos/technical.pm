@@ -1,0 +1,50 @@
+---
+import CircularDiagram from './CircularDiagram.astro';
+---
+
+<!-- Purpose Section -->
+<section id="purpose" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
+	<h2 class="text-2xl sm:text-3xl font-semibold mb-12 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">Why We Exist</h2>
+	
+	<CircularDiagram 
+		centerTitle="Why"
+		centerText="To improve people's lives"
+		leftTitle="How"
+		leftText="By guiding companies toward service"
+		rightTitle="Because"
+		rightText="Creating wealth that benefits everyone"
+	/>
+
+	<!-- Expanded Text Cards -->
+	<div class="grid md:grid-cols-3 gap-6">
+		<div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 shadow-lg hover:bg-white/15 hover:border-white/30 transition-all duration-300">
+			<div class="flex items-center justify-center mb-4">
+				<div class="text-3xl mr-3">🎯</div>
+				<h3 class="text-xl font-semibold text-royal-purple-600 font-accent">Why</h3>
+			</div>
+			<p class="text-pale-blush-50 text-center font-medium font-primary">
+				To improve people's lives.
+			</p>
+		</div>
+
+		<div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 shadow-lg hover:bg-white/15 hover:border-white/30 transition-all duration-300">
+			<div class="flex items-center justify-center mb-4">
+				<div class="text-3xl mr-3">⚙️</div>
+				<h3 class="text-xl font-semibold text-electric-lavender-500 font-accent">How</h3>
+			</div>
+			<p class="text-pale-blush-100 text-center leading-relaxed font-primary">
+				By guiding IT companies to reorient themselves—not just toward profit, but toward service.
+			</p>
+		</div>
+
+		<div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 shadow-lg hover:bg-white/15 hover:border-white/30 transition-all duration-300">
+			<div class="flex items-center justify-center mb-4">
+				<div class="text-3xl mr-3">💎</div>
+				<h3 class="text-xl font-semibold text-cyber-teal-500 font-accent">Because</h3>
+			</div>
+			<p class="text-pale-blush-100 text-center leading-relaxed font-primary">
+				Because when technology companies truly serve people, they don't just create value… they create wealth that benefits everyone.
+			</p>
+		</div>
+	</div>
+</section> 

@@ -8,18 +8,18 @@ const { technicalSkills, softSkills } = Astro.props;
 ---
 
 <section id="skills" class="mb-20 px-4">
-  <h2 class="text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Core Competencies</h2>
+  <h2 class="text-3xl font-semibold mb-8 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">Core Competencies</h2>
   <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-    <div class="bg-[rgb(var(--secondary))] p-6 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-      <h3 class="font-semibold mb-4 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">Technical</h3>
+    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-lg hover:bg-white/15 hover:border-white/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group shadow-lg">
+      <h3 class="font-semibold mb-4 text-pale-blush-50 group-hover:text-royal-purple-600 transition-colors duration-200">Technical</h3>
       <div class="flex flex-wrap gap-2">
         {technicalSkills.map((skill) => (
           <span 
             class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium
-                   bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))]
-                   hover:bg-[rgb(var(--primary))]/20 hover:scale-105
+                   bg-royal-purple-600/20 text-royal-purple-300
+                   hover:bg-royal-purple-600/30 hover:scale-105
                    transition-all duration-200 cursor-default
-                   border border-[rgb(var(--primary))]/20
+                   border border-royal-purple-600/30
                    backdrop-blur-sm"
           >
             {skill}
@@ -27,16 +27,16 @@ const { technicalSkills, softSkills } = Astro.props;
         ))}
       </div>
     </div>
-    <div class="bg-[rgb(var(--secondary))] p-6 rounded-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-      <h3 class="font-semibold mb-4 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">Soft Skills</h3>
+    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-lg hover:bg-white/15 hover:border-white/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group shadow-lg">
+      <h3 class="font-semibold mb-4 text-pale-blush-50 group-hover:text-royal-purple-600 transition-colors duration-200">Soft Skills</h3>
       <div class="flex flex-wrap gap-2">
         {softSkills.map((skill) => (
           <span 
             class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium
-                   bg-[rgb(var(--primary))]/10 text-[rgb(var(--primary))]
-                   hover:bg-[rgb(var(--primary))]/20 hover:scale-105
+                   bg-royal-purple-600/20 text-royal-purple-300
+                   hover:bg-royal-purple-600/30 hover:scale-105
                    transition-all duration-200 cursor-default
-                   border border-[rgb(var(--primary))]/20
+                   border border-royal-purple-600/30
                    backdrop-blur-sm"
           >
             {skill}

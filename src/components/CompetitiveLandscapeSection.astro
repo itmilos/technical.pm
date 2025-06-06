@@ -1,0 +1,28 @@
+---
+const competitors = [
+	'Software Development Companies',
+	'IT Consulting Companies', 
+	'Marketing Agencies',
+	'IT Administration/Support Companies',
+	'Recruiting Companies',
+	'Audit Companies'
+];
+---
+
+<!-- Competitive Landscape Section -->
+<section id="competition" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
+	<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">Competitive Landscape</h2>
+	<div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-8 shadow-lg">
+		<p class="text-center text-pale-blush-100 mb-6 leading-relaxed font-primary">
+			We operate in a diverse competitive environment, differentiating through our unique combination of technical expertise and genuine human connection.
+		</p>
+		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+			{competitors.map((competitor) => (
+				<div class="flex items-center space-x-3 p-3 rounded-lg border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-200">
+					<div class="w-2 h-2 bg-electric-lavender-500 rounded-full flex-shrink-0"></div>
+					<span class="text-sm text-pale-blush-50 font-primary">{competitor}</span>
+				</div>
+			))}
+		</div>
+	</div>
+</section> 

@@ -2,96 +2,22 @@
 import Layout from '../layouts/Layout.astro';
 import WebGLBackground from '../components/WebGLBackground.astro';
 import WhiteRabbit from '../components/WhiteRabbit.astro';
+import Modal from '../components/Modal.astro';
+import FutureVisionSection from '../components/FutureVisionSection.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import SecretSauceSection from '../components/SecretSauceSection.astro';
+import PurposeSection from '../components/PurposeSection.astro';
+import ValuesSection from '../components/ValuesSection.astro';
+import TargetAudiencesSection from '../components/TargetAudiencesSection.astro';
+import BrandPersonalitySection from '../components/BrandPersonalitySection.astro';
+import ColorPaletteSection from '../components/ColorPaletteSection.astro';
+import CompetitiveLandscapeSection from '../components/CompetitiveLandscapeSection.astro';
+import AnimatedContactForm from '../components/AnimatedContactForm.astro';
+import CTASection from '../components/CTASection.astro';
+import InternalControlCycle from '../components/InternalControlCycle.astro';
 
 
-const futureVision = [
-	{
-		timeframe: '5 Years',
-		title: 'Semi-Automated Business Intelligence',
-		description: 'Develop a semi-automated system to discover business patterns, helping companies identify optimization opportunities through data-driven insights.',
-		icon: '🔍'
-	},
-	{
-		timeframe: '10 Years',
-		title: 'Fully Automated Advisory System',
-		description: 'Deploy a fully automated system that provides real-time hints and recommendations to improve business experience and operational efficiency.',
-		icon: '🤖'
-	},
-	{
-		timeframe: '20 Years',
-		title: 'Global Decentralized Network',
-		description: 'Create a globally distributed decentralized system for real-time business experience improvement, connecting businesses worldwide.',
-		icon: '🌐'
-	}
-];
 
-const coreServices = [
-	'IT Consulting',
-	'Operations Optimization for IT Companies',
-	'Business Efficiency Enhancement',
-	'Vendor Connection & Management',
-	'Cost Saving Opportunity Identification',
-	'Business Experience Improvement',
-	'Strategic Talent Acquisition'
-];
-
-const secretSauce = [
-	{ title: 'Hands-on Approach', description: 'Direct involvement in your projects' },
-	{ title: 'Dedication', description: 'Unwavering commitment to success' },
-	{ title: 'Employee Impersonation', description: 'Integrating seamlessly with your team' },
-	{ title: 'Result-Oriented', description: 'Focus on measurable outcomes' },
-	{ title: 'Attention to Detail', description: 'Precision in every aspect' },
-	{ title: 'Unorthodox Approach', description: 'Creative problem-solving methods' },
-	{ title: 'Genuine Care', description: 'Authentic concern for your success' },
-	{ title: 'Outside-the-Box Thinking', description: 'Innovative solutions beyond conventional wisdom' }
-];
-
-const coreValues = [
-	{ value: 'Results-Oriented', description: 'Every action is measured by its impact' },
-	{ value: 'Efficiency', description: 'Streamlining processes for maximum output' },
-	{ value: 'Self-Sustaining Solutions', description: 'Building systems that work independently' },
-	{ value: 'Dedication', description: 'Complete commitment to client success' },
-	{ value: 'Transparency', description: 'Open communication and honest reporting' },
-	{ value: 'Innovation', description: 'Continuous improvement and creative thinking' }
-];
-
-const targetAudiences = [
-	{
-		title: 'Small Companies',
-		description: 'Nimble organizations ready to scale efficiently',
-		size: '1-20 employees',
-		color: 'bg-[rgb(var(--ui-accent))]'
-	},
-	{
-		title: 'Startups',
-		description: 'High-growth companies needing strategic guidance',
-		size: 'Early to growth stage',
-		color: 'bg-[rgb(var(--cta))]'
-	},
-	{
-		title: 'Medium Companies',
-		description: 'Established businesses optimizing for scale',
-		size: 'Up to 100 people',
-		color: 'bg-[rgb(var(--primary))]'
-	}
-];
-
-const brandPersonality = [
-	{ axis: 'Elite vs Mass Appeal', position: 80, leftBrand: 'Chanel', rightBrand: 'H&M', leftIcon: '👑', rightIcon: '🏪' },
-	{ axis: 'Serious vs Playful', position: 85, leftBrand: 'SAP', rightBrand: 'Google', leftIcon: '💼', rightIcon: '🎨' },
-	{ axis: 'Conventional vs Rebel', position: 80, leftBrand: 'Honda', rightBrand: 'Tesla', leftIcon: '🏛️', rightIcon: '⚡' },
-	{ axis: 'Friend vs Authority', position: 65, leftBrand: 'Disney', rightBrand: 'New York Times', leftIcon: '🤝', rightIcon: '📰' },
-	{ axis: 'Mature vs Innovative', position: 50, leftBrand: 'Hilton', rightBrand: 'Airbnb', leftIcon: '🏨', rightIcon: '🏠' }
-];
-
-const competitors = [
-	'Software Development Companies',
-	'IT Consulting Companies', 
-	'Marketing Agencies',
-	'IT Administration/Support Companies',
-	'Recruiting Companies',
-	'Audit Companies'
-];
 ---
 
 <Layout 
@@ -106,183 +32,43 @@ const competitors = [
 		<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 hover:scale-105 transition-transform duration-300 cursor-default leading-tight">
 			Brand Strategy
 		</h1>
-		<p class="text-lg sm:text-xl text-[rgb(var(--muted-foreground))] mb-8 hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default max-w-3xl mx-auto leading-relaxed">
+		<p class="text-lg sm:text-xl text-deep-charcoal-300 mb-8 hover:text-pale-blush-50 transition-colors duration-200 cursor-default max-w-3xl mx-auto leading-relaxed font-primary">
 			Our roadmap to transforming business operations through innovation, automation, and genuine human connection.
 		</p>
 	</section>
 
-	<!-- Future Vision Section -->
-	<section id="vision" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Future Vision</h2>
-		<div class="grid md:grid-cols-3 gap-8">
-			{futureVision.map((vision) => (
-				<div class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-					<div class="text-4xl mb-4 text-center">{vision.icon}</div>
-					<div class="text-sm font-medium text-[rgb(var(--primary))] mb-2 text-center">{vision.timeframe}</div>
-					<h3 class="text-lg font-semibold mb-3 text-center">{vision.title}</h3>
-					<p class="text-[rgb(var(--muted-foreground))] text-sm leading-relaxed">{vision.description}</p>
-				</div>
-			))}
-		</div>
-	</section>
+	<FutureVisionSection />
+	<ServicesSection />
+	<SecretSauceSection />
+	<PurposeSection />
+	<ValuesSection />
+	<TargetAudiencesSection />
+	<BrandPersonalitySection />
+	<ColorPaletteSection />
+	<SecretSauceSection />
+	<!-- <InternalControlCycle /> -->
+	<CompetitiveLandscapeSection />
 
-	<!-- What We Do Section -->
-	<section id="services" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">What We Do</h2>
-		<div class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-8">
-			<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-				{coreServices.map((service) => (
-					<div class="flex items-center space-x-3 p-3 rounded-lg hover:bg-[rgb(var(--accent))]/10 transition-colors duration-200">
-						<div class="w-2 h-2 bg-[rgb(var(--primary))] rounded-full flex-shrink-0"></div>
-						<span class="text-sm">{service}</span>
-					</div>
-				))}
-			</div>
-		</div>
-	</section>
+	<CTASection />
 
-	<!-- Secret Sauce Section -->
-	<section id="approach" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Our Secret Sauce</h2>
-		<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-			{secretSauce.map((item) => (
-				<div class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-					<h3 class="font-semibold mb-2 text-sm">{item.title}</h3>
-					<p class="text-[rgb(var(--muted-foreground))] text-xs leading-relaxed">{item.description}</p>
-				</div>
-			))}
-		</div>
-	</section>
+	<!-- Contact Form Modal -->
+	<Modal id="contact-modal" title="Get in Touch" subtitle="Let's discuss how we can work together">
+		<AnimatedContactForm 
+			formId="contact-form"
+			buttonText="Send Message"
+		/>
+	</Modal>
 
-	<!-- Purpose Section -->
-	<section id="purpose" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-4xl relative z-10">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Why We Exist</h2>
-		<div class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-8 text-center">
-			<div class="text-4xl mb-4">🎯</div>
-			<h3 class="text-xl font-semibold mb-4">Improving People's Lives</h3>
-			<p class="text-[rgb(var(--muted-foreground))] mb-4 leading-relaxed">
-				By helping IT companies optimize their operations and become more efficient, we enable them to better serve people and generate sustainable wealth.
-			</p>
-			<p class="text-sm text-[rgb(var(--primary))] font-medium">
-				Our mission: Be in service of people while creating meaningful economic value.
-			</p>
-		</div>
-	</section>
-
-	<!-- Values Section -->
-	<section id="values" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Core Values</h2>
-		<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-			{coreValues.map((item) => (
-				<div class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-					<h3 class="font-semibold mb-3 text-[rgb(var(--primary))]">{item.value}</h3>
-					<p class="text-[rgb(var(--muted-foreground))] text-sm leading-relaxed">{item.description}</p>
-				</div>
-			))}
-		</div>
-	</section>
-
-	<!-- Target Audiences Section -->
-	<section id="audiences" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Target Audiences</h2>
-		<div class="grid md:grid-cols-3 gap-8">
-			{targetAudiences.map((audience) => (
-				<div class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-					<div class={`w-12 h-12 ${audience.color} rounded-lg flex items-center justify-center mb-4 mx-auto`}>
-						<span class="text-white font-bold text-lg">
-							{audience.title.charAt(0)}
-						</span>
-					</div>
-					<h3 class="text-lg font-semibold mb-2 text-center">{audience.title}</h3>
-					<p class="text-[rgb(var(--muted-foreground))] text-sm mb-3 text-center leading-relaxed">{audience.description}</p>
-					<div class="text-xs text-[rgb(var(--primary))] font-medium text-center">{audience.size}</div>
-				</div>
-			))}
-		</div>
-	</section>
-
-	<!-- Brand Personality Section -->
-	<section id="personality" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Brand Personality</h2>
-		<div class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-8">
-			<div class="space-y-8">
-				{brandPersonality.map((trait) => (
-					<div class="space-y-3">
-						<div class="flex justify-between items-center text-sm">
-							<div class="flex items-center space-x-2">
-								<span class="text-lg">{trait.leftIcon}</span>
-								<span class="font-medium">{trait.leftBrand}</span>
-							</div>
-							<div class="flex items-center space-x-2">
-								<span class="font-medium">{trait.rightBrand}</span>
-								<span class="text-lg">{trait.rightIcon}</span>
-							</div>
-						</div>
-						<div class="relative">
-							<div class="w-full h-2 bg-[rgb(var(--border))] rounded-full">
-								<div 
-									class="h-2 bg-gradient-to-r from-[rgb(var(--primary))] to-[rgb(var(--accent))] rounded-full transition-all duration-300"
-									style={`width: ${trait.position}%`}
-								></div>
-							</div>
-							<div 
-								class="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-[rgb(var(--primary))] rounded-full border-2 border-white shadow-lg"
-								style={`left: calc(${trait.position}% - 8px)`}
-							></div>
-						</div>
-						<div class="text-center text-xs text-[rgb(var(--muted-foreground))] font-medium">
-							{trait.axis}
-						</div>
-					</div>
-				))}
-			</div>
-		</div>
-	</section>
-
-	<!-- Competitive Landscape Section -->
-	<section id="competition" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Competitive Landscape</h2>
-		<div class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-8">
-			<p class="text-center text-[rgb(var(--muted-foreground))] mb-6 leading-relaxed">
-				We operate in a diverse competitive environment, differentiating through our unique combination of technical expertise and genuine human connection.
-			</p>
-			<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-				{competitors.map((competitor) => (
-					<div class="flex items-center space-x-3 p-3 rounded-lg border border-[rgb(var(--border))] hover:bg-[rgb(var(--accent))]/10 transition-colors duration-200">
-						<div class="w-2 h-2 bg-[rgb(var(--accent))] rounded-full flex-shrink-0"></div>
-						<span class="text-sm">{competitor}</span>
-					</div>
-				))}
-			</div>
-		</div>
-	</section>
-
-	<!-- CTA Section -->
-	<section id="cta" class="container mx-auto px-4 mb-16 max-w-4xl relative z-10">
-		<div class="bg-gradient-to-r from-[rgb(var(--primary))]/10 to-[rgb(var(--accent))]/10 border border-[rgb(var(--border))] rounded-lg p-8 text-center">
-			<h2 class="text-2xl font-semibold mb-4">Ready to Transform Your Business?</h2>
-			<p class="text-[rgb(var(--muted-foreground))] mb-6 leading-relaxed">
-				Let's discuss how our unique approach can help your company achieve its goals.
-			</p>
-			<a 
-				href="/"
-				class="inline-block px-6 sm:px-8 py-3 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] font-semibold rounded-lg shadow hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group text-sm sm:text-base"
-			>
-				Get Started
-				<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
-			</a>
-		</div>
-	</section>
-
-	<footer class="text-center text-[rgb(var(--muted-foreground))] text-sm py-6 relative">
+	<footer class="text-center text-deep-charcoal-400 text-sm py-6 relative">
 		<div class="flex flex-col sm:flex-row items-center justify-center gap-2">
-			<span class="hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default">© 2025 Milos Rujevic. All rights reserved.</span>
-			<span class="text-[rgb(var(--border))] hidden sm:inline">•</span>
-			<span class="hover:text-[rgb(var(--foreground))] transition-colors duration-200 cursor-default">Powered by Creativity and Free Will</span>
-			<span class="text-[rgb(var(--border))] hidden sm:inline">•</span>
+			<span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default font-primary">© 2025 Milos Rujevic. All rights reserved.</span>
+			<span class="text-pale-blush-200 hidden sm:inline font-primary">•</span>
+			<span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default font-primary">Powered by Creativity and Free Will</span>
+			<span class="text-pale-blush-200 hidden sm:inline font-primary">•</span>
 			<div class="hover:scale-110 transition-transform duration-300">
 				<WhiteRabbit />
 			</div>
 		</div>
 	</footer>
-</Layout> 
+</Layout>
+ 

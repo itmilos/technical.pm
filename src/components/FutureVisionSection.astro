@@ -1,0 +1,37 @@
+---
+const futureVision = [
+	{
+		timeframe: '5 Years',
+		title: 'Semi-Automated Business Intelligence',
+		description: 'Develop a semi-automated system to discover business patterns, helping companies identify optimization opportunities through data-driven insights.',
+		icon: '🔍'
+	},
+	{
+		timeframe: '10 Years',
+		title: 'Fully Automated Advisory System',
+		description: 'Deploy a fully automated system that provides real-time hints and recommendations to improve business experience and operational efficiency.',
+		icon: '🤖'
+	},
+	{
+		timeframe: '20 Years',
+		title: 'Global Decentralized Network',
+		description: 'Create a globally distributed decentralized system for real-time business experience improvement, connecting businesses worldwide.',
+		icon: '🌐'
+	}
+];
+---
+
+<!-- Future Vision Section -->
+<section id="vision" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
+	<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">Future Vision</h2>
+	<div class="grid md:grid-cols-3 gap-8">
+		{futureVision.map((vision) => (
+			<div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 hover:bg-white/15 hover:border-white/30 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+				<div class="text-4xl mb-4 text-center">{vision.icon}</div>
+				<div class="text-sm font-medium text-royal-purple-600 mb-2 text-center font-accent">{vision.timeframe}</div>
+				<h3 class="text-lg font-semibold mb-3 text-center text-pale-blush-50 font-accent">{vision.title}</h3>
+				<p class="text-pale-blush-100 text-sm leading-relaxed font-primary">{vision.description}</p>
+			</div>
+		))}
+	</div>
+</section> 

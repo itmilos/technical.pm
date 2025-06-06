@@ -1,0 +1,836 @@
+---
+export interface Props {
+	id?: string;
+	title?: string;
+	subtitle?: string;
+	formId?: string;
+	buttonText?: string;
+	fields?: FormField[];
+}
+
+export interface FormField {
+	type: 'text' | 'email' | 'textarea' | 'select';
+	id: string;
+	name: string;
+	label: string;
+	icon: string;
+	required?: boolean;
+	options?: { value: string; label: string }[];
+	rows?: number;
+}
+
+const {
+	id = 'animated-contact-form',
+	title = "Get in Touch",
+	subtitle = "Let's discuss how we can work together",
+	formId = 'contact-form',
+	buttonText = "Send Message",
+	fields = [
+		{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
+		{ type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true },
+		{ type: 'select', id: 'subject', name: 'subject', label: 'Subject', icon: '💼', required: true, options: [
+			{ value: 'general', label: 'General Inquiry' },
+			{ value: 'consultation', label: 'Book a Consultation' },
+			{ value: 'project', label: 'Project Discussion' },
+			{ value: 'engagement', label: 'Full Engagement' },
+			{ value: 'other', label: 'Other' }
+		]},
+		{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your needs', icon: '💭', required: true, rows: 4 }
+	]
+} = Astro.props;
+---
+
+<div class="animated-form-container">
+	<!-- Animated background particles -->
+	<div class="form-particles">
+		<div class="form-particle particle-1"></div>
+		<div class="form-particle particle-2"></div>
+		<div class="form-particle particle-3"></div>
+	</div>
+
+	<form id={formId} class="space-y-6 relative z-10">
+		{fields.map((field) => (
+			<div class="input-group">
+				<div class="input-wrapper">
+					{field.type === 'textarea' ? (
+						<textarea
+							id={field.id}
+							name={field.name}
+							rows={field.rows || 4}
+							class="animated-input animated-textarea"
+							placeholder=" "
+							required={field.required}
+						></textarea>
+					) : field.type === 'select' ? (
+						<select
+							id={field.id}
+							name={field.name}
+							class="animated-input animated-select"
+							required={field.required}
+						>
+							<option value="" disabled selected></option>
+							{field.options?.map((option) => (
+								<option value={option.value}>{option.label}</option>
+							))}
+						</select>
+					) : (
+						<input
+							type={field.type}
+							id={field.id}
+							name={field.name}
+							class="animated-input"
+							placeholder=" "
+							required={field.required}
+						/>
+					)}
+					<label for={field.id} class="floating-label font-primary">
+						<span class="label-text">{field.label}</span>
+						<span class="label-icon">{field.icon}</span>
+					</label>
+					<div class="input-border"></div>
+					<div class="input-glow"></div>
+					{field.type === 'select' && (
+						<div class="select-arrow">
+							<svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+								<path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+					)}
+				</div>
+			</div>
+		))}
+
+		<!-- Animated Submit Button -->
+		<div class="text-center pt-4">
+			<button type="submit" class="animated-submit-btn group">
+				<span class="btn-background"></span>
+				<span class="btn-text font-accent">
+					{buttonText}
+					<svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
+						<path d="M1 8H15M9 2L15 8L9 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</span>
+				<div class="btn-particles">
+					<div class="btn-particle"></div>
+					<div class="btn-particle"></div>
+					<div class="btn-particle"></div>
+				</div>
+			</button>
+		</div>
+	</form>
+</div>
+
+<style>
+	/* Animated Form Container */
+	.animated-form-container {
+		position: relative;
+		overflow: hidden;
+		padding: 8px;
+		border-radius: 20px;
+		background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+		backdrop-filter: blur(20px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+	}
+
+	/* Enhanced Floating background particles */
+	.form-particles {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: 1;
+		overflow: hidden;
+		border-radius: 20px;
+	}
+
+	.form-particle {
+		position: absolute;
+		border-radius: 50%;
+		pointer-events: none;
+		animation: float-particles 12s ease-in-out infinite;
+		filter: blur(1px);
+	}
+
+	.particle-1 {
+		width: 24px;
+		height: 24px;
+		background: radial-gradient(circle, rgba(108, 62, 166, 0.6), rgba(108, 62, 166, 0.1));
+		top: 15%;
+		left: 8%;
+		animation-delay: 0s;
+	}
+
+	.particle-2 {
+		width: 18px;
+		height: 18px;
+		background: radial-gradient(circle, rgba(181, 126, 220, 0.5), rgba(181, 126, 220, 0.1));
+		top: 60%;
+		right: 12%;
+		animation-delay: 3s;
+	}
+
+	.particle-3 {
+		width: 14px;
+		height: 14px;
+		background: radial-gradient(circle, rgba(14, 194, 164, 0.5), rgba(14, 194, 164, 0.1));
+		bottom: 25%;
+		left: 15%;
+		animation-delay: 6s;
+	}
+
+	/* Input Group Styling */
+	.input-group {
+		position: relative;
+		margin-bottom: 24px;
+	}
+
+	.input-wrapper {
+		position: relative;
+		border-radius: 16px;
+		background: rgba(255, 255, 255, 0.03);
+		backdrop-filter: blur(15px);
+		border: 1.5px solid rgba(255, 255, 255, 0.1);
+		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		overflow: hidden;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	}
+
+	.input-wrapper:hover {
+		background: rgba(255, 255, 255, 0.08);
+		border-color: rgba(181, 126, 220, 0.3);
+		transform: translateY(-2px);
+		box-shadow: 0 8px 35px rgba(108, 62, 166, 0.15);
+	}
+
+	.input-wrapper:focus-within {
+		background: rgba(255, 255, 255, 0.1);
+		border-color: rgba(181, 126, 220, 0.5);
+		transform: translateY(-1px);
+		box-shadow: 0 12px 40px rgba(108, 62, 166, 0.25);
+	}
+
+	/* Enhanced Animated Inputs */
+	.animated-input {
+		width: 100%;
+		padding: 12px;
+		background: transparent;
+		border: none;
+		outline: none;
+		color: #F3E6F8;
+		font-size: 16px;
+		font-family: var(--font-primary);
+		font-weight: 400;
+		line-height: 1.5;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		position: relative;
+		z-index: 2;
+		min-height: 24px; /* Consistent base height */
+		box-sizing: border-box;
+	}
+
+	.animated-input::placeholder {
+		color: transparent;
+	}
+
+	.animated-textarea {
+		resize: vertical;
+		min-height: 120px;
+		padding: 12px; /* Consistent padding */
+		line-height: 1.6;
+	}
+
+	.animated-select {
+		appearance: none;
+		cursor: pointer;
+		padding: 12px 50px 12px 12px; /* Consistent padding with space for arrow */
+		height: 48px; /* Fixed height to match other inputs */
+	}
+
+	/* Target LastPass icons inside form inputs */
+	.animated-input + [data-lastpass-icon-root],
+	.form-field-container [data-lastpass-icon-root],
+	.input-wrapper [data-lastpass-icon-root] {
+		display: none !important;
+		visibility: hidden !important;
+		opacity: 0 !important;
+	}
+
+	/* Hide any LastPass generated content */
+	[data-lastpass-icon-root] * {
+		display: none !important;
+		visibility: hidden !important;
+		opacity: 0 !important;
+	}
+
+	/* Enhanced Floating Labels */
+	.floating-label {
+		position: absolute;
+		left: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: rgba(243, 230, 248, 0.7);
+		font-size: 16px;
+		font-weight: 400;
+		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		pointer-events: none;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		z-index: 3;
+		background: rgba(255, 255, 255, 0.05);
+		padding: 4px 8px;
+		border-radius: 8px;
+		backdrop-filter: blur(10px);
+	}
+
+	.label-icon {
+		font-size: 18px;
+		opacity: 0.8;
+		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+	}
+
+	/* Enhanced Label animations - Hide when input has content */
+	.animated-input:not(:placeholder-shown) ~ .floating-label {
+		opacity: 0;
+		transform: translateY(-100%) scale(0.8);
+		pointer-events: none;
+	}
+
+	/* Hide both label text and icon when input has content - Higher specificity */
+	.animated-input:not(:placeholder-shown) ~ .floating-label .label-text,
+	.animated-input:not(:placeholder-shown) ~ .floating-label .label-icon {
+		opacity: 0 !important;
+		transform: scale(0.6) !important;
+		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	}
+
+	/* Ensure labels stay hidden even when focused if content exists */
+	.animated-input:focus:not(:placeholder-shown) ~ .floating-label .label-text,
+	.animated-input:focus:not(:placeholder-shown) ~ .floating-label .label-icon {
+		opacity: 0 !important;
+		transform: scale(0.6) !important;
+	}
+
+	/* Show compact label only on focus when input is empty */
+	.animated-input:focus:placeholder-shown ~ .floating-label {
+		top: -8px;
+		transform: translateY(0);
+		font-size: 12px;
+		color: #B57EDC;
+		font-weight: 500;
+		background: linear-gradient(135deg, rgba(181, 126, 220, 0.2), rgba(108, 62, 166, 0.1));
+		border: 1px solid rgba(181, 126, 220, 0.3);
+		box-shadow: 0 4px 12px rgba(181, 126, 220, 0.2);
+		opacity: 1;
+	}
+
+	.animated-input:focus:placeholder-shown ~ .floating-label .label-icon {
+		transform: scale(0.85);
+		opacity: 1;
+		color: #B57EDC;
+	}
+
+	/* Enhanced Border Animations */
+	.input-border {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: linear-gradient(90deg, #6C3EA6, #B57EDC, #0EC2A4, #FF4F58, #6C3EA6);
+		background-size: 300% 100%;
+		transform: scaleX(0);
+		transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		animation: gradient-flow 4s ease-in-out infinite;
+		border-radius: 0 0 16px 16px;
+	}
+
+	.animated-input:focus ~ .input-border {
+		transform: scaleX(1);
+	}
+
+	/* Enhanced Input Glow Effect */
+	.input-glow {
+		position: absolute;
+		inset: -2px;
+		border-radius: 18px;
+		background: linear-gradient(45deg, #6C3EA6, #B57EDC, #0EC2A4, #FF4F58);
+		background-size: 400% 400%;
+		opacity: 0;
+		z-index: -1;
+		transition: opacity 0.4s ease;
+		animation: gradient-flow 6s ease-in-out infinite;
+		filter: blur(8px);
+	}
+
+	.animated-input:focus ~ .input-glow {
+		opacity: 0.4;
+	}
+
+	/* Enhanced Select Arrow */
+	.select-arrow {
+		position: absolute;
+		right: 20px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: rgba(243, 230, 248, 0.7);
+		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		pointer-events: none;
+		z-index: 3;
+		background: rgba(255, 255, 255, 0.1);
+		padding: 8px;
+		border-radius: 8px;
+		backdrop-filter: blur(10px);
+	}
+
+	.animated-select:focus ~ .select-arrow {
+		color: #B57EDC;
+		transform: translateY(-50%) rotate(180deg);
+		background: rgba(181, 126, 220, 0.2);
+		box-shadow: 0 4px 12px rgba(181, 126, 220, 0.3);
+	}
+
+	/* Enhanced Animated Submit Button */
+	.animated-submit-btn {
+		position: relative;
+		padding: 18px 36px;
+		border: none;
+		border-radius: 16px;
+		background: transparent;
+		color: white;
+		font-size: 16px;
+		font-weight: 600;
+		font-family: var(--font-accent);
+		cursor: pointer;
+		overflow: hidden;
+		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		min-width: 220px;
+		box-shadow: 0 8px 32px rgba(108, 62, 166, 0.3);
+	}
+
+	.btn-background {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, #6C3EA6, #B57EDC, #0EC2A4, #6C3EA6);
+		background-size: 300% 300%;
+		animation: gradient-flow 4s ease-in-out infinite;
+		transition: all 0.4s ease;
+		border-radius: 16px;
+	}
+
+	.btn-background::before {
+		content: '';
+		position: absolute;
+		inset: 2px;
+		background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+		border-radius: 14px;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.animated-submit-btn:hover .btn-background::before {
+		opacity: 1;
+	}
+
+	.btn-text {
+		position: relative;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		font-weight: 600;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+	}
+
+	.btn-arrow {
+		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+	}
+
+	.animated-submit-btn:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 16px 48px rgba(108, 62, 166, 0.4);
+	}
+
+	.animated-submit-btn:hover .btn-background {
+		background-size: 250% 250%;
+	}
+
+	.animated-submit-btn:hover .btn-arrow {
+		transform: translateX(6px);
+	}
+
+	.animated-submit-btn:active {
+		transform: translateY(-2px);
+		transition: transform 0.1s ease;
+	}
+
+	/* Enhanced Button Particles */
+	.btn-particles {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		overflow: hidden;
+		border-radius: 16px;
+	}
+
+	.btn-particle {
+		position: absolute;
+		width: 6px;
+		height: 6px;
+		background: rgba(255, 255, 255, 0.9);
+		border-radius: 50%;
+		opacity: 0;
+		animation: btn-particle-float 3s ease-in-out infinite;
+		filter: blur(0.5px);
+	}
+
+	.btn-particle:nth-child(1) {
+		top: 20%;
+		left: 20%;
+		animation-delay: 0s;
+	}
+
+	.btn-particle:nth-child(2) {
+		top: 70%;
+		left: 80%;
+		animation-delay: 1s;
+	}
+
+	.btn-particle:nth-child(3) {
+		top: 50%;
+		left: 50%;
+		animation-delay: 2s;
+	}
+
+	.animated-submit-btn:hover .btn-particle {
+		animation-play-state: running;
+	}
+
+	/* Enhanced Animations */
+	@keyframes float-particles {
+		0%, 100% {
+			transform: translateY(0px) rotate(0deg) scale(1);
+			opacity: 0.6;
+		}
+		33% {
+			transform: translateY(-20px) rotate(120deg) scale(1.1);
+			opacity: 0.8;
+		}
+		66% {
+			transform: translateY(-10px) rotate(240deg) scale(0.9);
+			opacity: 1;
+		}
+	}
+
+	@keyframes gradient-flow {
+		0%, 100% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+	}
+
+	@keyframes btn-particle-float {
+		0% {
+			opacity: 0;
+			transform: translateY(0) scale(0);
+		}
+		50% {
+			opacity: 1;
+			transform: translateY(-12px) scale(1);
+		}
+		100% {
+			opacity: 0;
+			transform: translateY(-24px) scale(0);
+		}
+	}
+
+	/* Enhanced Responsive Design */
+	@media (max-width: 768px) {
+		.animated-form-container {
+			padding: 6px;
+			border-radius: 16px;
+		}
+
+		.input-wrapper {
+			border-radius: 12px;
+		}
+
+		.animated-input {
+			padding: 20px 16px 6px 16px;
+			font-size: 16px; /* Prevent zoom on iOS */
+		}
+
+		.floating-label {
+			left: 16px;
+			font-size: 14px;
+			padding: 2px 6px;
+		}
+
+		.animated-submit-btn {
+			width: 100%;
+			padding: 16px 24px;
+			min-width: unset;
+			border-radius: 12px;
+		}
+
+		.select-arrow {
+			right: 16px;
+			padding: 6px;
+		}
+	}
+
+	/* Enhanced Form validation states - No validation icons */
+	.animated-input:invalid:not(:placeholder-shown) ~ .input-border {
+		background: linear-gradient(90deg, #FF4F58, #FF6B6B, #FF4F58);
+		transform: scaleX(1);
+		animation: error-pulse 2s ease-in-out infinite;
+	}
+
+	.animated-input:invalid:not(:placeholder-shown) ~ .floating-label {
+		color: #FF4F58;
+		background: linear-gradient(135deg, rgba(255, 79, 88, 0.2), rgba(255, 79, 88, 0.1));
+		border-color: rgba(255, 79, 88, 0.4);
+	}
+
+	.animated-input:invalid:not(:placeholder-shown) ~ .input-glow {
+		background: linear-gradient(45deg, #FF4F58, #FF6B6B);
+		opacity: 0.3;
+	}
+
+	.animated-input:valid:not(:placeholder-shown) ~ .input-border {
+		background: linear-gradient(90deg, #0EC2A4, #4ECDC4, #0EC2A4);
+		transform: scaleX(1);
+		animation: success-pulse 2s ease-in-out infinite;
+	}
+
+	.animated-input:valid:not(:placeholder-shown) ~ .floating-label {
+		color: #0EC2A4;
+		background: linear-gradient(135deg, rgba(14, 194, 164, 0.2), rgba(14, 194, 164, 0.1));
+		border-color: rgba(14, 194, 164, 0.4);
+	}
+
+	.animated-input:valid:not(:placeholder-shown) ~ .input-glow {
+		background: linear-gradient(45deg, #0EC2A4, #4ECDC4);
+		opacity: 0.25;
+	}
+
+	@keyframes error-pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.7; }
+	}
+
+	@keyframes success-pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.8; }
+	}
+
+	/* Hide any validation icons that might appear */
+	.animated-input:valid ~ .validation-icon,
+	.animated-input:invalid ~ .validation-icon,
+	.input-wrapper .validation-icon,
+	.input-wrapper::after,
+	.input-wrapper::before {
+		display: none !important;
+	}
+
+	/* Ensure no browser default validation styling appears */
+	.animated-input:valid,
+	.animated-input:invalid {
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	.animated-input:valid:focus,
+	.animated-input:invalid:focus {
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	/* Loading state improvements */
+	.animated-submit-btn.loading {
+		pointer-events: none;
+		opacity: 0.8;
+	}
+
+	.animated-submit-btn.loading .btn-background {
+		animation-duration: 1s;
+	}
+
+	/* Focus ring improvements */
+	.animated-input:focus {
+		box-shadow: none;
+	}
+
+	.input-wrapper:focus-within::before {
+		content: '';
+		position: absolute;
+		inset: -3px;
+		border-radius: 19px;
+		background: linear-gradient(45deg, #6C3EA6, #B57EDC, #0EC2A4);
+		background-size: 200% 200%;
+		z-index: -1;
+		animation: gradient-flow 3s ease-in-out infinite;
+		opacity: 0.5;
+		filter: blur(4px);
+	}
+
+	/* Success state styling */
+	.animated-submit-btn.success {
+		background: linear-gradient(135deg, #0EC2A4, #4ECDC4) !important;
+		transform: translateY(-2px) !important;
+	}
+	
+	.animated-submit-btn.success .btn-background {
+		background: linear-gradient(135deg, #0EC2A4, #4ECDC4) !important;
+	}
+	
+	@keyframes pulse {
+		0%, 100% { transform: translateY(-2px) scale(1); }
+		50% { transform: translateY(-2px) scale(1.05); }
+	}
+	
+	.input-wrapper.valid {
+		border-color: rgba(14, 194, 164, 0.5) !important;
+		box-shadow: 0 8px 25px rgba(14, 194, 164, 0.2) !important;
+	}
+	
+	.input-wrapper.invalid {
+		border-color: rgba(255, 79, 88, 0.5) !important;
+		box-shadow: 0 8px 25px rgba(255, 79, 88, 0.2) !important;
+	}
+</style>
+
+<script>
+	// Enhanced form interactivity for all animated forms
+	document.addEventListener('DOMContentLoaded', function() {
+		const forms = document.querySelectorAll('.animated-form-container form') as NodeListOf<HTMLFormElement>;
+		
+		forms.forEach(form => {
+			const inputs = form.querySelectorAll('.animated-input') as NodeListOf<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
+
+			// Enhanced input interactions
+			inputs.forEach(input => {
+				const wrapper = input.parentElement as HTMLElement;
+				const floatingLabel = wrapper?.querySelector('.floating-label') as HTMLElement;
+				
+				// Function to update label visibility
+				const updateLabelVisibility = () => {
+					if (input.value.trim().length > 0) {
+						// Hide label when input has content
+						if (floatingLabel) {
+							floatingLabel.style.opacity = '0';
+							floatingLabel.style.transform = 'translateY(-100%) scale(0.8)';
+							floatingLabel.style.pointerEvents = 'none';
+						}
+					} else {
+						// Show label when input is empty
+						if (floatingLabel) {
+							floatingLabel.style.opacity = '';
+							floatingLabel.style.transform = '';
+							floatingLabel.style.pointerEvents = '';
+						}
+					}
+				};
+				
+				// Check initial state (for pre-filled inputs)
+				updateLabelVisibility();
+				
+				// Focus effects with improved animations
+				input.addEventListener('focus', function() {
+					if (wrapper) {
+						wrapper.style.transform = 'scale(1.01)';
+						wrapper.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+					}
+				});
+
+				input.addEventListener('blur', function() {
+					if (wrapper) {
+						wrapper.style.transform = 'scale(1)';
+					}
+					// Update label visibility on blur
+					updateLabelVisibility();
+				});
+
+				// Enhanced auto-resize textarea with smooth transitions
+				if (input.tagName === 'TEXTAREA') {
+					const textarea = input as HTMLTextAreaElement;
+					
+					textarea.addEventListener('input', function() {
+						const textareaElement = this as HTMLTextAreaElement;
+						textareaElement.style.height = 'auto';
+						textareaElement.style.height = textareaElement.scrollHeight + 'px';
+						
+						// Add smooth resize animation
+						textareaElement.style.transition = 'height 0.2s ease';
+						setTimeout(() => {
+							textareaElement.style.transition = '';
+						}, 200);
+					});
+				}
+
+				// Enhanced input validation feedback (no icons)
+				input.addEventListener('input', function() {
+					const inputElement = input;
+					const floatingLabel = wrapper?.querySelector('.floating-label') as HTMLElement;
+					
+					// Hide/show floating label based on input content
+					if (inputElement.value.trim().length > 0) {
+						// Hide label when input has content
+						if (floatingLabel) {
+							floatingLabel.style.opacity = '0';
+							floatingLabel.style.transform = 'translateY(-100%) scale(0.8)';
+							floatingLabel.style.pointerEvents = 'none';
+						}
+					} else {
+						// Show label when input is empty
+						if (floatingLabel) {
+							floatingLabel.style.opacity = '';
+							floatingLabel.style.transform = '';
+							floatingLabel.style.pointerEvents = '';
+						}
+					}
+					
+					// Validation styling
+					if (inputElement.checkValidity()) {
+						wrapper?.classList.add('valid');
+						wrapper?.classList.remove('invalid');
+					} else if (inputElement.value.length > 0) {
+						wrapper?.classList.add('invalid');
+						wrapper?.classList.remove('valid');
+					} else {
+						wrapper?.classList.remove('valid', 'invalid');
+					}
+				});
+			});
+
+			// Let the Modal component handle form submission
+			// Just handle the visual feedback and label management
+			// The actual form submission is handled by the Modal component
+		});
+
+		// Enhanced particles interaction on form focus
+		const formContainers = document.querySelectorAll('.animated-form-container') as NodeListOf<HTMLElement>;
+		
+		formContainers.forEach(container => {
+			const particles = container.querySelectorAll('.form-particle') as NodeListOf<HTMLElement>;
+			
+			container.addEventListener('mouseenter', () => {
+				particles.forEach(particle => {
+					particle.style.animationPlayState = 'running';
+					particle.style.transform = 'scale(1.1)';
+				});
+			});
+			
+			container.addEventListener('mouseleave', () => {
+				particles.forEach(particle => {
+					particle.style.transform = 'scale(1)';
+				});
+			});
+		});
+	});
+</script> 

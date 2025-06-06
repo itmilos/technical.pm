@@ -1,0 +1,198 @@
+---
+interface Props {
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'default' | 'footer' | 'hero';
+  href?: string;
+  showLink?: boolean;
+  class?: string;
+}
+
+const { 
+  size = 'md', 
+  variant = 'default', 
+  href = '/', 
+  showLink = true,
+  class: additionalClasses = ''
+} = Astro.props;
+
+// Size configurations
+const sizeClasses = {
+  sm: 'text-lg sm:text-xl',
+  md: 'text-xl sm:text-2xl',
+  lg: 'text-2xl sm:text-3xl md:text-4xl',
+  xl: 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl'
+};
+
+// Variant configurations
+const variantStyles = {
+  default: {
+    container: 'inline-block align-middle',
+    logo: 'logo-text',
+    accent: 'logo-accent'
+  },
+  footer: {
+    container: 'inline-block align-middle opacity-80 hover:opacity-100 transition-opacity duration-200',
+    logo: 'logo-text-footer',
+    accent: 'logo-accent-footer'
+  },
+  hero: {
+    container: 'inline-block align-middle',
+    logo: 'logo-text-hero',
+    accent: 'logo-accent-hero'
+  }
+};
+
+const currentVariant = variantStyles[variant];
+const logoClasses = `font-extrabold uppercase ${sizeClasses[size]} leading-none tracking-tight relative inline-block ${currentVariant.logo} ${additionalClasses}`;
+---
+
+{showLink ? (
+  <a href={href} aria-label="Technical.pm Home" class={currentVariant.container}>
+    <h1 class={logoClasses}>
+      T <span class={currentVariant.accent}>PM</span>
+    </h1>
+  </a>
+) : (
+  <div class={currentVariant.container}>
+    <h1 class={logoClasses}>
+      T <span class={currentVariant.accent}>PM</span>
+    </h1>
+  </div>
+)}
+
+<style>
+  /* Default logo styling - Aligned with brand palette */
+  .logo-text {
+    color: #6C3EA6; /* royal-purple-600 - Primary brand color for logos, headers, key buttons */
+    text-shadow: 
+      0.08em 0.08em 0 #FF4F58, /* neon-coral-500 - CTAs, badges, emphasis areas */
+      0.10em 0.10em 0 #FF4F58;
+    font-family: 'Space Grotesk', 'Montserrat', 'Oswald', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 8px rgba(108, 62, 166, 0.3));
+  }
+  
+  .logo-accent {
+    color: #B57EDC; /* electric-lavender-500 - Highlights, accents, hover states */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 1px rgba(181, 126, 220, 0.4));
+  }
+
+  /* Footer variant - Muted brand palette */
+  .logo-text-footer {
+    color: #6C3EA6; /* royal-purple-600 - Primary brand color, slightly muted */
+    opacity: 0.8;
+    text-shadow: 
+      0.06em 0.06em 0 #FF4F58, /* neon-coral-500 */
+      0.08em 0.08em 0 #FF4F58;
+    font-family: 'Space Grotesk', 'Montserrat', 'Oswald', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 4px rgba(108, 62, 166, 0.2));
+  }
+
+  .logo-accent-footer {
+    color: #B57EDC; /* electric-lavender-500 - Highlights, accents */
+    opacity: 0.7;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 3px rgba(181, 126, 220, 0.3));
+  }
+
+  /* Hero variant - Animated brand gradient like LoadingAnimation */
+  .logo-text-hero {
+    background: linear-gradient(135deg, #6C3EA6 0%, #B57EDC 25%, #FF4F58 50%, #0EC2A4 75%, #6C3EA6 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: gradient-shift 4s ease-in-out infinite;
+    text-shadow: none;
+    font-family: 'Space Grotesk', 'Montserrat', 'Oswald', sans-serif;
+    filter: drop-shadow(0 0 12px rgba(108, 62, 166, 0.4));
+  }
+
+  .logo-accent-hero {
+    background: linear-gradient(135deg, #B57EDC 0%, #0EC2A4 25%, #FF4F58 50%, #6C3EA6 75%, #B57EDC 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: gradient-shift 4s ease-in-out infinite 0.5s;
+    filter: drop-shadow(0 0 10px rgba(181, 126, 220, 0.4));
+  }
+
+  /* Hover effects - Brand palette transitions */
+  a:hover .logo-text {
+    color: #B57EDC; /* electric-lavender-500 - Highlights, accents, hover states */
+    text-shadow: 
+      0.08em 0.08em 0 #0EC2A4, /* cyber-teal-500 - UI elements, subtle accents */
+      0.10em 0.10em 0 #0EC2A4;
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 12px rgba(181, 126, 220, 0.5));
+  }
+
+  a:hover .logo-accent {
+    color: #0EC2A4; /* cyber-teal-500 - Charts, UI elements, subtle accents */
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(14, 194, 164, 0.5));
+  }
+
+  a:hover .logo-text-footer {
+    color: #B57EDC; /* electric-lavender-500 - Highlights, accents, hover states */
+    opacity: 1;
+    text-shadow: 
+      0.06em 0.06em 0 #0EC2A4, /* cyber-teal-500 */
+      0.08em 0.08em 0 #0EC2A4;
+    filter: drop-shadow(0 0 8px rgba(181, 126, 220, 0.4));
+  }
+
+  a:hover .logo-accent-footer {
+    color: #0EC2A4; /* cyber-teal-500 - Charts, UI elements, subtle accents */
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(14, 194, 164, 0.4));
+  }
+
+
+
+  /* Animations */
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .logo-text,
+    .logo-text-footer,
+    .logo-text-hero {
+      text-shadow: 
+        0.06em 0.06em 0 currentColor,
+        0.08em 0.08em 0 currentColor;
+    }
+  }
+
+  /* Focus accessibility - Brand palette */
+  a:focus-visible {
+    outline: 2px solid #B57EDC; /* electric-lavender-500 - Highlights, accents, hover states */
+    outline-offset: 4px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 4px rgba(181, 126, 220, 0.2);
+  }
+
+  /* Pulse effect for active states - matches LoadingAnimation */
+  a:active .logo-text,
+  a:active .logo-text-footer {
+    transform: scale(0.95);
+    filter: drop-shadow(0 0 6px rgba(108, 62, 166, 0.6));
+    animation: logo-pulse 0.3s ease-out;
+  }
+
+  @keyframes logo-pulse {
+    0% { transform: scale(0.95); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(0.95); }
+  }
+</style> 

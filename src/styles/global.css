@@ -1,49 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  /* CSS variables are now managed in theme.ts */
-
   body {
-    @apply font-primary bg-[rgb(var(--background))] text-[rgb(var(--foreground))] antialiased;
+    @apply font-primary bg-deep-charcoal-900 text-pale-blush-50 antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-accent;
-    background: linear-gradient(135deg, rgb(var(--primary)) 0%, rgb(var(--accent)) 100%);
+    background: linear-gradient(135deg, #6C3EA6 0%, #B57EDC 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 200% 200%;
     animation: gradient-shift 4s ease-in-out infinite;
-  }
-
-  /* Font size hierarchy with brand personality */
-  h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
-  }
-
-  h2 {
-    @apply text-3xl md:text-4xl font-bold tracking-tight;
-  }
-
-  h3 {
-    @apply text-2xl md:text-3xl font-semibold tracking-tight;
-  }
-
-  h4 {
-    @apply text-xl md:text-2xl font-semibold;
-  }
-
-  h5 {
-    @apply text-lg md:text-xl font-medium;
-  }
-
-  h6 {
-    @apply text-base md:text-lg font-medium;
   }
 
   /* Gradient animation for headings */
@@ -62,184 +35,21 @@
   }
 }
 
-@layer components {
-  .container {
-    @apply px-4 mx-auto max-w-7xl;
-  }
 
-  /* Brand Button Styles - Following color palette roles */
-  .btn-primary {
-    @apply px-6 py-3 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] font-medium rounded-lg shadow-lg hover:bg-[rgb(var(--accent))] transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95;
-  }
+	/* Target LastPass icon container */
+	[data-lastpass-icon-root] {
+		display: none !important;
+		opacity: 0 !important;
+		visibility: hidden !important;
+		position: absolute !important;
+		height: 0px !important;
+		width: 0px !important;
+		overflow: hidden !important;
+		pointer-events: none !important;
+		z-index: -1 !important;
+		padding: 5px;
+	}
 
-  .btn-secondary {
-    @apply px-6 py-3 bg-transparent border-2 border-[rgb(var(--primary))] text-[rgb(var(--primary))] font-medium rounded-lg hover:bg-[rgb(var(--primary))] hover:text-[rgb(var(--primary-foreground))] transition-all duration-300 hover:scale-105;
-  }
-
-  /* CTA Button using Neon Coral for energy and attention */
-  .btn-cta {
-    @apply px-6 py-3 bg-[rgb(var(--cta))] text-[rgb(var(--cta-foreground))] font-medium rounded-lg shadow-lg hover:bg-neon-coral-600 transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95;
-  }
-
-  /* UI Accent button using Cyber Teal for modern touches */
-  .btn-ui-accent {
-    @apply px-6 py-3 bg-[rgb(var(--ui-accent))] text-[rgb(var(--ui-accent-foreground))] font-medium rounded-lg shadow-lg hover:bg-cyber-teal-600 transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95;
-  }
-
-  /* Legacy coral button (keeping for backward compatibility) */
-  .btn-coral {
-    @apply px-6 py-3 bg-[rgb(var(--cta))] text-[rgb(var(--cta-foreground))] font-medium rounded-lg shadow-lg hover:bg-neon-coral-600 transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95;
-  }
-
-  /* Project Card Styles - Using Pale Blush for card backgrounds */
-  /* Project card styles are now managed in component-specific CSS for better encapsulation */
-
-  /* Brand-specific card variants using defined color roles */
-  .card-elite {
-    @apply bg-gradient-to-br from-[rgb(var(--card))] to-royal-purple-50 border-royal-purple-200;
-  }
-
-  .card-playful {
-    @apply bg-gradient-to-br from-[rgb(var(--card))] to-electric-lavender-50 border-electric-lavender-200;
-  }
-
-  .card-rebel {
-    @apply bg-gradient-to-br from-[rgb(var(--card))] to-cyber-teal-50 border-cyber-teal-200;
-  }
-
-  /* Badge styles using Neon Coral for emphasis */
-  .badge-emphasis {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[rgb(var(--cta))] text-[rgb(var(--cta-foreground))];
-  }
-
-  .badge-ui {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[rgb(var(--ui-accent))] text-[rgb(var(--ui-accent-foreground))];
-  }
-
-  /* Form Input Styles */
-  .form-input,
-  .form-select,
-  .form-textarea {
-    @apply w-full px-4 py-2.5 rounded-lg border shadow-sm transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-[var(--input-disabled)] disabled:cursor-not-allowed;
-    border-color: rgb(var(--input-border));
-    background-color: rgb(var(--background));
-    color: rgb(var(--foreground));
-  }
-
-  .form-input:hover,
-  .form-select:hover,
-  .form-textarea:hover {
-    border-color: rgb(var(--input-hover)); /* Electric Lavender hover */
-  }
-
-  .form-input:focus,
-  .form-select:focus,
-  .form-textarea:focus {
-    border-color: transparent;
-    --tw-ring-color: rgb(var(--input-focus)); /* Royal Purple focus */
-  }
-
-  .form-input::placeholder,
-  .form-textarea::placeholder {
-    color: rgb(var(--input-placeholder));
-  }
-
-  .form-select {
-    @apply appearance-none bg-no-repeat bg-right pr-10;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='rgb(var(--muted-foreground))' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  }
-
-  .form-label {
-    @apply block text-sm font-medium mb-1.5;
-    color: rgb(var(--foreground));
-  }
-
-  .form-error {
-    @apply mt-1 text-sm;
-    color: rgb(var(--cta)); /* Using Neon Coral for errors/emphasis */
-  }
-
-  .form-group {
-    @apply space-y-1.5;
-  }
-
-  /* Form Button Styles */
-  .form-button {
-    @apply w-full flex justify-center items-center px-4 py-2.5 text-sm font-medium rounded-lg shadow-sm transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-[var(--input-disabled)] disabled:cursor-not-allowed active:scale-[0.98];
-    background-color: rgb(var(--primary)); /* Royal Purple primary */
-    color: rgb(var(--primary-foreground));
-  }
-
-  .form-button:hover {
-    background-color: rgb(var(--accent)); /* Electric Lavender hover */
-  }
-
-  .form-button:focus {
-    --tw-ring-color: rgb(var(--primary)); /* Royal Purple focus */
-  }
-}
-
-/* Experience Timeline Canvas Styles */
-.experience-timeline-canvas {
-  @apply bg-[rgb(var(--muted))];
-  width: 40vw !important;
-  height: 40vw !important;
-  max-width: 200px !important;
-  max-height: 200px !important;
-  clip-path: circle(calc(50% - 1px));
-}
-
-/* Desktop styles */
-@media (min-width: 768px) {
-  .experience-timeline-canvas {
-    width: 20vw !important;
-    height: 20vw !important;
-    max-width: none !important;
-    max-height: none !important;
-  }
-}
-
-/* Custom scrollbar for different themes */
-[data-theme] ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-[data-theme] ::-webkit-scrollbar-track {
-  background: rgb(var(--secondary));
-}
-
-[data-theme] ::-webkit-scrollbar-thumb {
-  background: rgb(var(--muted-foreground)); /* Electric Lavender */
-  border-radius: 5px;
-}
-
-[data-theme] ::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--primary)); /* Royal Purple */
-}
-
-/* Smooth transitions for theme changes */
-* {
-  @apply transition-colors duration-200;
-}
-
-  /* Legacy color overrides for better theme consistency */
-  .bg-gray-50 {
-    @apply bg-[rgb(var(--secondary))];
-  }
-
-  .text-gray-700 {
-    @apply text-[rgb(var(--foreground))];
-  }
-
-  .bg-white {
-    @apply bg-[rgb(var(--card))];
-  }
-
-/* Validation icons positioning - inside input */
-.validation-icon {
-  top: -33px;
-  position: relative;
-  float: right;
-  padding-right: 12px;
-}
+	.error-message {
+		padding: 8px 12px;
+	}

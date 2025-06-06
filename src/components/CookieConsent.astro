@@ -3,12 +3,12 @@ import { Cookies } from '../utils/cookies';
 ---
 
 <!-- Cookie Consent Banner -->
-<div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg transform translate-y-full transition-transform duration-300 ease-in-out z-40">
+<div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-white/10 backdrop-blur-md border-t border-white/20 shadow-lg transform translate-y-full transition-transform duration-300 ease-in-out z-40">
   <div class="max-w-7xl mx-auto p-4 sm:px-6 lg:px-8">
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex-1">
-        <h3 class="text-lg font-semibold text-gray-900">Cookie Preferences</h3>
-        <p class="mt-1 text-sm text-gray-600">
+        <h3 class="text-lg font-semibold text-pale-blush-50">Cookie Preferences</h3>
+        <p class="mt-1 text-sm text-pale-blush-200">
           We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. 
           By clicking "Accept All", you consent to our use of cookies.
         </p>
@@ -16,13 +16,13 @@ import { Cookies } from '../utils/cookies';
       <div class="flex flex-col sm:flex-row gap-3">
         <button
           id="cookie-consent-customize"
-          class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+          class="inline-flex items-center px-4 py-2 border border-white/30 text-sm font-medium rounded-md text-pale-blush-100 bg-white/10 backdrop-blur-sm hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-royal-purple-500"
         >
           Customize
         </button>
         <button
           id="cookie-consent-accept"
-          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-royal-purple-600 hover:bg-electric-lavender-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-royal-purple-500"
         >
           Accept All
         </button>
@@ -32,15 +32,15 @@ import { Cookies } from '../utils/cookies';
 </div>
 
 <!-- Cookie Preferences Modal - Moved outside the banner -->
-<div id="cookie-preferences" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-[100]">
+<div id="cookie-preferences" class="hidden fixed inset-0 bg-deep-charcoal-900/75 backdrop-blur-sm transition-opacity z-[100]">
   <div class="fixed inset-0 z-[101] overflow-y-auto">
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-      <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+              <div class="relative transform overflow-hidden rounded-lg bg-white/10 backdrop-blur-md border border-white/20 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
         <div class="absolute right-0 top-0 pr-4 pt-4">
-          <button
+                      <button
             type="button"
             id="cookie-preferences-close"
-            class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+            class="rounded-md bg-white/10 text-pale-blush-200 hover:text-pale-blush-50 focus:outline-none focus:ring-2 focus:ring-royal-purple-500 focus:ring-offset-2"
           >
             <span class="sr-only">Close</span>
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -51,49 +51,70 @@ import { Cookies } from '../utils/cookies';
 
         <div class="sm:flex sm:items-start">
           <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-            <h3 class="text-lg font-semibold leading-6 text-gray-900">Cookie Preferences</h3>
+            <h3 class="text-lg font-semibold leading-6 text-pale-blush-50">Cookie Preferences</h3>
             <div class="mt-4 space-y-4">
               <div class="flex items-start">
-                <div class="flex items-center h-5">
+                <div class="animated-checkbox-wrapper">
                   <input
                     id="cookie-essential"
                     type="checkbox"
                     checked
                     disabled
-                    class="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    class="animated-checkbox"
                   />
+                  <label for="cookie-essential" class="checkbox-label">
+                    <span class="checkbox-custom">
+                      <svg class="checkbox-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </label>
                 </div>
-                <div class="ml-3">
-                  <label for="cookie-essential" class="font-medium text-gray-900">Essential Cookies</label>
-                  <p class="text-sm text-gray-500">Required for the website to function properly. Cannot be disabled.</p>
+                <div class="ml-4">
+                  <label for="cookie-essential" class="font-medium text-pale-blush-50 font-primary cursor-pointer">Essential Cookies 🔒</label>
+                  <p class="text-sm text-pale-blush-200 font-primary">Required for the website to function properly. Cannot be disabled.</p>
                 </div>
               </div>
 
               <div class="flex items-start">
-                <div class="flex items-center h-5">
+                <div class="animated-checkbox-wrapper">
                   <input
                     id="cookie-analytics"
                     type="checkbox"
-                    class="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    class="animated-checkbox"
                   />
+                  <label for="cookie-analytics" class="checkbox-label">
+                    <span class="checkbox-custom">
+                      <svg class="checkbox-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </label>
                 </div>
-                <div class="ml-3">
-                  <label for="cookie-analytics" class="font-medium text-gray-900">Analytics Cookies</label>
-                  <p class="text-sm text-gray-500">Help us understand how visitors interact with our website.</p>
+                <div class="ml-4">
+                  <label for="cookie-analytics" class="font-medium text-pale-blush-50 font-primary cursor-pointer">Analytics Cookies 📊</label>
+                  <p class="text-sm text-pale-blush-200 font-primary">Help us understand how visitors interact with our website.</p>
                 </div>
               </div>
 
               <div class="flex items-start">
-                <div class="flex items-center h-5">
+                <div class="animated-checkbox-wrapper">
                   <input
                     id="cookie-marketing"
                     type="checkbox"
-                    class="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    class="animated-checkbox"
                   />
+                  <label for="cookie-marketing" class="checkbox-label">
+                    <span class="checkbox-custom">
+                      <svg class="checkbox-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                        <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </label>
                 </div>
-                <div class="ml-3">
-                  <label for="cookie-marketing" class="font-medium text-gray-900">Marketing Cookies</label>
-                  <p class="text-sm text-gray-500">Used to track visitors across websites for marketing purposes.</p>
+                <div class="ml-4">
+                  <label for="cookie-marketing" class="font-medium text-pale-blush-50 font-primary cursor-pointer">Marketing Cookies 🎯</label>
+                  <p class="text-sm text-pale-blush-200 font-primary">Used to track visitors across websites for marketing purposes.</p>
                 </div>
               </div>
             </div>
@@ -102,7 +123,7 @@ import { Cookies } from '../utils/cookies';
               <button
                 type="button"
                 id="cookie-preferences-save"
-                class="inline-flex justify-center rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600"
+                class="inline-flex justify-center rounded-md bg-royal-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-electric-lavender-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal-purple-600"
               >
                 Save Preferences
               </button>
@@ -236,4 +257,131 @@ import { Cookies } from '../utils/cookies';
       });
     }
   });
-</script> 
+</script>
+
+<style>
+  /* Animated Checkbox Styling */
+  .animated-checkbox-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 20px;
+  }
+
+  .animated-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .animated-checkbox:disabled {
+    cursor: not-allowed;
+  }
+
+  .checkbox-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(243, 230, 248, 0.3);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .checkbox-custom::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 6px;
+    background: linear-gradient(45deg, #6C3EA6, #B57EDC, #0EC2A4);
+    background-size: 200% 200%;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+    animation: gradient-shift 3s ease-in-out infinite;
+  }
+
+  .checkbox-icon {
+    color: transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0);
+  }
+
+  /* Hover effects */
+  .animated-checkbox:not(:disabled):hover ~ .checkbox-label .checkbox-custom {
+    border-color: rgba(181, 126, 220, 0.6);
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(108, 62, 166, 0.2);
+  }
+
+  .animated-checkbox:not(:disabled):hover ~ .checkbox-label .checkbox-custom::before {
+    opacity: 0.2;
+  }
+
+  /* Checked state */
+  .animated-checkbox:checked ~ .checkbox-label .checkbox-custom {
+    border-color: #B57EDC;
+    background: linear-gradient(135deg, #6C3EA6, #B57EDC);
+    transform: scale(1);
+  }
+
+  .animated-checkbox:checked ~ .checkbox-label .checkbox-custom::before {
+    opacity: 0.5;
+  }
+
+  .animated-checkbox:checked ~ .checkbox-label .checkbox-icon {
+    color: white;
+    transform: scale(1);
+  }
+
+  /* Disabled state */
+  .animated-checkbox:disabled ~ .checkbox-label .checkbox-custom {
+    border-color: rgba(243, 230, 248, 0.5);
+    background: linear-gradient(135deg, rgba(108, 62, 166, 0.7), rgba(181, 126, 220, 0.7));
+    opacity: 0.8;
+  }
+
+  .animated-checkbox:disabled:checked ~ .checkbox-label .checkbox-icon {
+    color: rgba(255, 255, 255, 0.8);
+    transform: scale(1);
+  }
+
+  /* Focus state */
+  .animated-checkbox:focus ~ .checkbox-label .checkbox-custom {
+    outline: 2px solid rgba(181, 126, 220, 0.5);
+    outline-offset: 2px;
+  }
+
+  /* Animation keyframes */
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Label interaction */
+  .checkbox-label:hover .checkbox-custom {
+    transform: scale(1.02);
+  }
+
+  .animated-checkbox:active ~ .checkbox-label .checkbox-custom {
+    transform: scale(0.95);
+  }
+</style> 

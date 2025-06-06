@@ -29,7 +29,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
 
   <!-- Background overlay with blur effect -->
   <div 
-    class="fixed inset-0 bg-gray-500/75 backdrop-blur-sm transition-opacity" 
+    class="fixed inset-0 bg-deep-charcoal-900/80 backdrop-blur-md transition-opacity" 
     aria-hidden="true"
     onclick={`document.getElementById('${id}').classList.add('hidden')`}
   ></div>
@@ -37,8 +37,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
   <!-- Modal panel with enhanced interactivity -->
   <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
     <div 
-      class="relative transform overflow-hidden rounded-lg bg-white/95 backdrop-blur-sm px-4 pb-4 pt-5 text-left shadow-2xl transition-all duration-300 ease-out hover:shadow-purple-500/20 sm:my-8 sm:w-full sm:max-w-lg sm:p-6 group
-      dark:bg-gray-900/95"
+      class="relative transform overflow-hidden rounded-lg bg-white/10 backdrop-blur-md border border-white/20 px-4 pb-4 pt-5 text-left shadow-2xl transition-all duration-300 ease-out hover:shadow-royal-purple-500/20 sm:my-8 sm:w-full sm:max-w-lg sm:p-6 group"
       role="document"
       style="transform-style: preserve-3d; perspective: 1000px;"
     >
@@ -46,7 +45,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       <div class="absolute right-0 top-0 pr-4 pt-4">
         <button
           type="button"
-          class="rounded-md bg-white/80 backdrop-blur-sm text-gray-400 hover:text-purple-500 hover:bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transform hover:scale-110 focus:scale-110"
+          class="rounded-md bg-white/20 backdrop-blur-sm text-pale-blush-300 hover:text-royal-purple-600 hover:bg-white/30 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-royal-purple-500 focus:ring-offset-2 transform hover:scale-110 focus:scale-110"
           onclick={`document.getElementById('${id}').classList.add('hidden')`}
           aria-label="Close modal"
           id={`${id}-close-button`}
@@ -62,14 +61,14 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       <div class="sm:flex sm:items-start transform-gpu transition-transform duration-200">
         <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
           <h3 
-            class="text-2xl font-semibold leading-6 text-[rgb(var(--cta))] group-hover:text-[rgb(var(--foreground))] transition-colors duration-200" 
+            class="text-2xl font-semibold leading-6 text-neon-coral-500 group-hover:text-pale-blush-50 transition-colors duration-200" 
             id={`${id}-title`}
           >
             {title}
           </h3>
           {subtitle && (
             <div class="mt-2">
-              <p class="text-lg text-[rgb(var(--foreground))] group-hover:text-[rgb(var(--muted-foreground))] transition-colors duration-200">{subtitle}</p>
+              <p class="text-lg text-pale-blush-50 group-hover:text-pale-blush-200 transition-colors duration-200">{subtitle}</p>
             </div>
           )}
 
@@ -82,11 +81,11 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
             aria-live="polite"
           >
             <div class="flex items-center justify-center">
-              <svg class="animate-spin h-5 w-5 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg class="animate-spin h-5 w-5 text-royal-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              <span class="ml-2 text-gray-600 animate-pulse">Sending your message...</span>
+              <span class="ml-2 text-pale-blush-100 animate-pulse">Sending your message...</span>
             </div>
           </div>
 
@@ -98,11 +97,9 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
             aria-live="polite"
           >
             <div class="flex items-center">
-              <div class="validation-icon text-green-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
+              <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
               <p class="ml-2">Thank you for your message! I will get back to you shortly.</p>
             </div>
           </div>
@@ -115,11 +112,9 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
             aria-live="assertive"
           >
             <div class="flex items-center">
-              <div class="validation-icon text-red-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </div>
+              <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
               <p class="ml-2">Sorry, there was an error sending your message. Please try again or email me directly.</p>
             </div>
           </div>
@@ -222,14 +217,6 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
     @apply min-h-[80px] resize-y;
   }
 
-  /* Validation icons positioning - inside input */
-  .validation-icon {
-    @apply absolute right-3 -top-2 w-5 h-5 flex items-center justify-center pointer-events-none z-10;
-    top: -33px;
-    position: relative;
-    float: right;
-    padding-right: 12px;
-  }
 
   /* Character counter positioning - inside input */
   .char-counter {
@@ -285,13 +272,6 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
 
   .form-input:focus, .form-select:focus, .form-textarea:focus {
     animation: focusRing 1.5s ease-out infinite;
-  }
-
-  .validation-icon-success {
-    @apply absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 bg-green-500 rounded-full;
-    background-image: url('data:image/svg+xml;utf8,<svg ...>');
-    background-size: contain;
-    background-repeat: no-repeat;
   }
 
   .form-field-container {
@@ -538,10 +518,14 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
     });
 
     try {
-      // Show loading state
+      // Show loading state and reset feedback states
       loadingEl.classList.remove('hidden');
       successEl.classList.add('hidden');
+      successEl.classList.add('scale-95', 'opacity-0');
+      successEl.classList.remove('scale-100', 'opacity-100');
       errorEl.classList.add('hidden');
+      errorEl.classList.add('scale-95', 'opacity-0');
+      errorEl.classList.remove('scale-100', 'opacity-100');
       submitButton.disabled = true;
 
       const formData = new FormData(form);
@@ -606,17 +590,33 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       // Show success state
       form.reset();
       loadingEl.classList.add('hidden');
-      successEl.classList.remove('hidden');
+      showSuccess(modal);
       
-      // Close modal after 2 seconds
+      // Reset AnimatedContactForm labels
+      const floatingLabels = form.querySelectorAll('.floating-label') as NodeListOf<HTMLElement>;
+      floatingLabels.forEach(label => {
+        label.style.opacity = '';
+        label.style.transform = '';
+        label.style.pointerEvents = '';
+      });
+      
+      // Reset input wrapper states
+      const inputWrappers = form.querySelectorAll('.input-wrapper');
+      inputWrappers.forEach(wrapper => {
+        wrapper.classList.remove('valid', 'invalid');
+      });
+      
+      // Close modal after 3 seconds
       setTimeout(() => {
         modal.classList.add('hidden');
         successEl.classList.add('hidden');
-      }, 2000);
+        successEl.classList.add('scale-95', 'opacity-0');
+        successEl.classList.remove('scale-100', 'opacity-100');
+      }, 3000);
     } catch (error) {
       console.error('Error sending email:', error);
       loadingEl.classList.add('hidden');
-      errorEl.classList.remove('hidden');
+      showError(modal);
       
       if (error instanceof Error) {
         errorMessage.textContent = error.message;
@@ -684,25 +684,15 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
     input.classList.remove('border-red-500', 'border-green-500', 'bg-red-50/5', 'bg-green-50/5');
     
     // Remove existing validation icons and messages
-    const existingIcons = container.querySelectorAll('.validation-icon, .error-message');
+    const existingIcons = container.querySelectorAll('.error-message');
     existingIcons.forEach(icon => icon.remove());
     
     if (isDirty) {
       if (isValid) {
         input.classList.add('border-green-500', 'bg-green-50/5');
-        // Add success checkmark
-        const successIcon = document.createElement('div');
-        successIcon.className = 'validation-icon text-green-500';
-        successIcon.innerHTML = getCheckIconSVG();
-        container.appendChild(successIcon);
       } else {
         input.classList.add('border-red-500', 'bg-red-50/5');
-        // Add error icon
-        const errorIcon = document.createElement('div');
-        errorIcon.className = 'validation-icon text-red-500';
-        errorIcon.innerHTML = getErrorIconSVG();
-        container.appendChild(errorIcon);
-        
+  
         // Add error message below input
         const errorMessage = document.createElement('div');
         errorMessage.className = 'error-message';
@@ -803,85 +793,29 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
     }
   });
 
-  // Focus trap functionality
-  function setupFocusTrap(modalId: string) {
-    const modal = document.getElementById(modalId);
-    if (!modal) return;
-
-    const focusableElements = modal.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    const firstFocusableElement = focusableElements[0] as HTMLElement;
-    const lastFocusableElement = focusableElements[focusableElements.length - 1] as HTMLElement;
-    const closeButton = modal.querySelector(`#${modalId}-close-button`) as HTMLElement;
-
-    // Function to handle focus trap
-    function handleFocusTrap(e: KeyboardEvent) {
-      if (e.key !== 'Tab') return;
-
-      if (e.shiftKey) {
-        // If shift + tab
-        if (document.activeElement === firstFocusableElement) {
-          e.preventDefault();
-          lastFocusableElement.focus();
-        }
-      } else {
-        // If tab
-        if (document.activeElement === lastFocusableElement) {
-          e.preventDefault();
-          firstFocusableElement.focus();
-        }
-      }
-    }
-
-    // Function to handle modal open
-    function handleModalOpen() {
-      if (!modal) return;
-      modal.classList.remove('hidden');
-      // Focus the close button when modal opens
-      closeButton?.focus();
-      // Add focus trap event listener
-      modal.addEventListener('keydown', handleFocusTrap);
-    }
-
-    // Function to handle modal close
-    function handleModalClose() {
-      if (!modal) return;
-      modal.classList.add('hidden');
-      // Remove focus trap event listener
-      modal.removeEventListener('keydown', handleFocusTrap);
-    }
-
-    // Update click handlers to use the new functions
-    const openButtons = document.querySelectorAll(`[onclick*="getElementById('${modalId}').classList.remove('hidden')"]`);
-    openButtons.forEach(button => {
-      button.setAttribute('onclick', `document.getElementById('${modalId}')?.dispatchEvent(new CustomEvent('modal-open'))`);
-    });
-
-    // Add event listeners for modal open/close
-    modal.addEventListener('modal-open', handleModalOpen);
-    modal.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        handleModalClose();
-      }
-    });
-
-    // Update close button click handler
-    closeButton?.setAttribute('onclick', `document.getElementById('${modalId}')?.dispatchEvent(new CustomEvent('modal-close'))`);
-    modal.addEventListener('modal-close', handleModalClose);
-
-    // Update background overlay click handler
-    const overlay = modal.querySelector('.fixed.inset-0.bg-gray-500\\/75');
-    overlay?.setAttribute('onclick', `document.getElementById('${modalId}')?.dispatchEvent(new CustomEvent('modal-close'))`);
-  }
-
-  // Initialize focus trap when modal opens
+  // Simple focus management and form initialization - focus first input when modal opens
   document.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
-    if (target.matches('[onclick*="dispatchEvent(new CustomEvent(\'modal-open\')"]')) {
+    if (target.matches('[onclick*="classList.remove(\'hidden\')"]')) {
       const modalId = target.getAttribute('onclick')?.match(/getElementById\('([^']+)'\)/)?.[1];
       if (modalId) {
-        setupFocusTrap(modalId);
+        setTimeout(() => {
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            // Focus first input
+            const firstInput = modal.querySelector('input, textarea, select') as HTMLElement;
+            if (firstInput) {
+              firstInput.focus();
+            }
+            
+            // Trigger AnimatedContactForm initialization if needed
+            const animatedForms = modal.querySelectorAll('.animated-form-container form');
+            animatedForms.forEach(form => {
+              // Dispatch a custom event to reinitialize the form if needed
+              form.dispatchEvent(new CustomEvent('modal-opened'));
+            });
+          }
+        }, 150);
       }
     }
   });

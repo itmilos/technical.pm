@@ -1,0 +1,172 @@
+---
+import LoadingAnimation from './LoadingAnimation.astro';
+---
+
+<!-- Loading Animation Showcase -->
+<section class="container mx-auto px-4 py-16 max-w-6xl">
+  <h2 class="text-2xl font-semibold mb-8 text-center text-pale-blush-50 font-accent">Loading Animations</h2>
+  
+  <div class="space-y-12">
+    <!-- Inline Variants -->
+    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-8">
+      <h3 class="text-lg font-semibold mb-6 text-electric-lavender-500 font-accent">Inline Variants</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center p-4 bg-pale-blush-50/5 rounded-lg">
+          <p class="text-sm text-pale-blush-300 mb-4 font-primary">Small</p>
+          <LoadingAnimation variant="inline" size="sm" />
+        </div>
+        <div class="text-center p-4 bg-pale-blush-50/5 rounded-lg">
+          <p class="text-sm text-pale-blush-300 mb-4 font-primary">Medium</p>
+          <LoadingAnimation variant="inline" size="md" />
+        </div>
+        <div class="text-center p-4 bg-pale-blush-50/5 rounded-lg">
+          <p class="text-sm text-pale-blush-300 mb-4 font-primary">Large</p>
+          <LoadingAnimation variant="inline" size="lg" />
+        </div>
+        <div class="text-center p-4 bg-pale-blush-50/5 rounded-lg">
+          <p class="text-sm text-pale-blush-300 mb-4 font-primary">Extra Large</p>
+          <LoadingAnimation variant="inline" size="xl" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Minimal Variants -->
+    <div class="bg-gradient-to-r from-royal-purple-600/10 to-electric-lavender-500/10 backdrop-blur-md border border-royal-purple-600/30 rounded-lg p-8">
+      <h3 class="text-lg font-semibold mb-6 text-royal-purple-400 font-accent">Minimal Variants</h3>
+      <div class="flex flex-wrap items-center gap-8 justify-center">
+        <div class="text-center">
+          <p class="text-sm text-pale-blush-300 mb-4 font-primary">Small Minimal</p>
+          <LoadingAnimation variant="minimal" size="sm" />
+        </div>
+        <div class="text-center">
+          <p class="text-sm text-pale-blush-300 mb-4 font-primary">Medium Minimal</p>
+          <LoadingAnimation variant="minimal" size="md" />
+        </div>
+        <div class="text-center">
+          <p class="text-sm text-pale-blush-300 mb-4 font-primary">No Text</p>
+          <LoadingAnimation variant="minimal" size="md" showText={false} />
+        </div>
+      </div>
+    </div>
+
+    <!-- Color Palette Demo -->
+    <div class="bg-gradient-to-br from-neon-coral-500/10 to-cyber-teal-500/10 backdrop-blur-md border border-neon-coral-500/30 rounded-lg p-8">
+      <h3 class="text-lg font-semibold mb-6 text-neon-coral-400 font-accent">Brand Color Breakdown</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Primary Palette -->
+        <div class="space-y-4">
+          <h4 class="font-semibold text-royal-purple-400 font-accent">Primary Palette</h4>
+          <div class="space-y-3 text-sm text-pale-blush-200">
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 bg-royal-purple-600 rounded-full border border-white/20"></div>
+              <span class="font-primary">Royal Purple - Outer ring, headers</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 bg-electric-lavender-500 rounded-full border border-white/20"></div>
+              <span class="font-primary">Electric Lavender - Middle ring, accents</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 bg-deep-charcoal-900 rounded-full border border-pale-blush-300"></div>
+              <span class="font-primary">Deep Charcoal - Background, text</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accent Palette -->
+        <div class="space-y-4">
+          <h4 class="font-semibold text-neon-coral-400 font-accent">Accent Palette</h4>
+          <div class="space-y-3 text-sm text-pale-blush-200">
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 bg-neon-coral-500 rounded-full border border-white/20"></div>
+              <span class="font-primary">Neon Coral - Inner ring, CTAs</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 bg-cyber-teal-500 rounded-full border border-white/20"></div>
+              <span class="font-primary">Cyber Teal - Center pulse, particles</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="w-4 h-4 bg-pale-blush-300 rounded-full border border-white/20"></div>
+              <span class="font-primary">Pale Blush - Progress bars, cards</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Animation Details -->
+        <div class="space-y-4">
+          <h4 class="font-semibold text-cyber-teal-400 font-accent">Animation Details</h4>
+          <div class="space-y-3 text-sm text-pale-blush-200">
+            <div class="font-primary">• Multi-layered spinning rings</div>
+            <div class="font-primary">• Orbiting color particles</div>
+            <div class="font-primary">• Gradient progress bars</div>
+            <div class="font-primary">• Pulsing center element</div>
+            <div class="font-primary">• Floating background dots</div>
+            <div class="font-primary">• Animated text with dots</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Demo -->
+    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-8">
+      <h3 class="text-lg font-semibold mb-6 text-pale-blush-50 font-accent">Interactive Demo</h3>
+      <div class="text-center space-y-4">
+        <p class="text-pale-blush-200 font-primary">Test the full-screen loading animation</p>
+        <button 
+          onclick="showFullScreenLoader()"
+          class="px-6 py-3 bg-gradient-to-r from-royal-purple-600 to-electric-lavender-500 text-white font-semibold rounded-lg shadow hover:shadow-lg transition-all duration-300 hover:scale-105 font-accent"
+        >
+          Show Full Screen Loader
+        </button>
+      </div>
+    </div>
+
+    <!-- Usage Examples -->
+    <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-8">
+      <h3 class="text-lg font-semibold mb-6 text-pale-blush-50 font-accent">Usage Examples</h3>
+      <div class="space-y-4 text-sm font-mono">
+        <div class="bg-deep-charcoal-800 p-4 rounded-lg">
+          <p class="text-pale-blush-100 mb-2 font-primary">Full screen loading (auto-hide):</p>
+          <code class="text-cyber-teal-400">&lt;LoadingAnimation /&gt;</code>
+        </div>
+        <div class="bg-deep-charcoal-800 p-4 rounded-lg">
+          <p class="text-pale-blush-100 mb-2 font-primary">Inline loading with custom text:</p>
+          <code class="text-electric-lavender-400">&lt;LoadingAnimation variant="inline" text="Processing..." /&gt;</code>
+        </div>
+        <div class="bg-deep-charcoal-800 p-4 rounded-lg">
+          <p class="text-pale-blush-100 mb-2 font-primary">Minimal loading without text:</p>
+          <code class="text-neon-coral-400">&lt;LoadingAnimation variant="minimal" showText={false} /&gt;</code>
+        </div>
+        <div class="bg-deep-charcoal-800 p-4 rounded-lg">
+          <p class="text-pale-blush-100 mb-2 font-primary">Programmatic control:</p>
+          <div class="space-y-1">
+            <code class="text-royal-purple-400">showLoading(); // Show loading</code><br>
+            <code class="text-royal-purple-400">hideLoading(); // Hide loading</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Temporary full screen loader for demo -->
+<div id="demo-loader" class="fixed inset-0 z-50 bg-deep-charcoal-900/95 backdrop-blur-md hidden">
+  <LoadingAnimation variant="inline" size="xl" text="Demo Loading..." class="fixed inset-0" />
+</div>
+
+<script>
+  // Demo function to show full screen loader
+  function showFullScreenLoader() {
+    const demoLoader = document.getElementById('demo-loader');
+    if (demoLoader) {
+      demoLoader.classList.remove('hidden');
+      
+      // Hide after 3 seconds
+      setTimeout(() => {
+        demoLoader.classList.add('hidden');
+      }, 3000);
+    }
+  }
+
+  // Make function globally available
+  (window as any).showFullScreenLoader = showFullScreenLoader;
+</script> 

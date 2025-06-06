@@ -1,0 +1,60 @@
+---
+import ProcessCycleChart from './ProcessCycleChart.astro';
+
+const controlCycleSections = [
+	{
+		number: 1,
+		title: "Plan and Scope",
+		description: "Define objectives and establish control framework"
+	},
+	{
+		number: 2,
+		title: "Document Controls",
+		description: "Identify and document key control processes"
+	},
+	{
+		number: 3,
+		title: "Evaluate Design and Operating Effectiveness",
+		description: "Assess control design and test operational effectiveness"
+	},
+	{
+		number: 4,
+		title: "Identify, Assess and Correct Deficiencies",
+		description: "Find gaps and implement corrective actions"
+	},
+	{
+		number: 5,
+		title: "Report on Internal Control",
+		description: "Communicate findings and compliance status"
+	},
+	{
+		number: 6,
+		title: "Independent Internal Control Audit",
+		description: "Third-party validation and verification"
+	}
+];
+---
+
+<section class="py-16 px-4">
+	<div class="container mx-auto max-w-6xl">
+		<h2 class="text-3xl font-bold text-center mb-4 text-pale-blush-50">Internal Control Process</h2>
+		<p class="text-center text-pale-blush-100 mb-12 max-w-2xl mx-auto">
+			Our comprehensive approach to internal control management follows industry best practices and regulatory requirements.
+		</p>
+		
+		<ProcessCycleChart
+			centerTitle="SAP PROCESS CONTROL®"
+			middleRingTitle="INTERNAL CONTROL CYCLE"
+			sections={controlCycleSections}
+			theme="blue"
+			size="lg"
+		/>
+		
+		<div class="mt-12 text-center">
+			<p class="text-pale-blush-100 text-sm max-w-3xl mx-auto">
+				This cyclical approach ensures continuous improvement and compliance with regulatory standards, 
+				providing stakeholders with confidence in the organization's internal control environment.
+			</p>
+		</div>
+	</div>
+</section> 

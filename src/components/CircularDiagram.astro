@@ -1,0 +1,558 @@
+---
+interface Props {
+	centerTitle: string;
+	centerText: string;
+	leftTitle: string;
+	leftText: string;
+	rightTitle: string;
+	rightText: string;
+}
+
+const {
+	centerTitle,
+	centerText,
+	leftTitle,
+	leftText,
+	rightTitle,
+	rightText
+} = Astro.props;
+---
+
+<!-- Circular Diagram -->
+<div class="relative w-full max-w-5xl mx-auto mb-16">
+	<!-- Floating particles background -->
+	<div class="absolute inset-0 pointer-events-none">
+		<div class="floating-particle particle-1"></div>
+		<div class="floating-particle particle-2"></div>
+		<div class="floating-particle particle-3"></div>
+		<div class="floating-particle particle-4"></div>
+		<div class="floating-particle particle-5"></div>
+	</div>
+
+	<div class="circle-diagram relative mx-auto">
+		<!-- Center Circle - Why -->
+		<div class="absolute circle-center-position z-30">
+			<div class="circle-center group cursor-pointer" data-circle="why">
+				<div class="circle-glow"></div>
+				<div class="circle-content">
+					<h3 class="circle-title text-royal-purple-600">{centerTitle}</h3>
+					<p class="circle-text text-pale-blush-50">
+						{centerText}
+					</p>
+				</div>
+				<div class="circle-pulse"></div>
+			</div>
+		</div>
+
+		<!-- How Circle - Left -->
+		<div class="absolute circle-left-position z-20">
+			<div class="circle-satellite how-circle group cursor-pointer" data-circle="how">
+				<div class="circle-glow"></div>
+				<div class="circle-content">
+					<h3 class="circle-title-small text-electric-lavender-500">{leftTitle}</h3>
+					<p class="circle-text-small text-xs text-pale-blush-100">
+						{leftText}
+					</p>
+				</div>
+				<div class="circle-pulse"></div>
+			</div>
+		</div>
+
+		<!-- Because Circle - Right -->
+		<div class="absolute circle-right-position z-20">
+			<div class="circle-satellite because-circle group cursor-pointer" data-circle="because">
+				<div class="circle-glow"></div>
+				<div class="circle-content">
+					<h3 class="circle-title-small text-cyber-teal-500">{rightTitle}</h3>
+					<p class="circle-text-small text-xs text-pale-blush-100">
+						{rightText}
+					</p>
+				</div>
+				<div class="circle-pulse"></div>
+			</div>
+		</div>
+
+		<!-- Enhanced Connection Lines -->
+		<svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 500 400">
+			<defs>
+				<!-- Enhanced gradients with more stops -->
+				<linearGradient id="enhancedGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+					<stop offset="0%" style="stop-color:#6C3EA6;stop-opacity:0.8" />
+					<stop offset="50%" style="stop-color:#B57EDC;stop-opacity:0.6" />
+					<stop offset="100%" style="stop-color:#B57EDC;stop-opacity:0.4" />
+				</linearGradient>
+				<linearGradient id="enhancedGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+					<stop offset="0%" style="stop-color:#6C3EA6;stop-opacity:0.8" />
+					<stop offset="50%" style="stop-color:#0EC2A4;stop-opacity:0.6" />
+					<stop offset="100%" style="stop-color:#0EC2A4;stop-opacity:0.4" />
+				</linearGradient>
+				<linearGradient id="enhancedGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+					<stop offset="0%" style="stop-color:#B57EDC;stop-opacity:0.6" />
+					<stop offset="50%" style="stop-color:#0EC2A4;stop-opacity:0.8" />
+					<stop offset="100%" style="stop-color:#0EC2A4;stop-opacity:0.4" />
+				</linearGradient>
+				<!-- Glow effects -->
+				<filter id="glow">
+					<feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+					<feMerge> 
+						<feMergeNode in="coloredBlur"/>
+						<feMergeNode in="SourceGraphic"/>
+					</feMerge>
+				</filter>
+			</defs>
+			<!-- Curved connections -->
+			<path d="M 250 180 Q 180 280 120 320" stroke="url(#enhancedGradient1)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-1" filter="url(#glow)" />
+			<path d="M 250 180 Q 320 280 380 320" stroke="url(#enhancedGradient2)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-2" filter="url(#glow)" />
+			<path d="M 120 320 Q 250 380 380 320" stroke="url(#enhancedGradient3)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-3" filter="url(#glow)" />
+			
+			<!-- Animated flow dots -->
+			<circle r="4" fill="#6C3EA6" opacity="0.8" class="flow-dot dot-1">
+				<animateMotion dur="4s" repeatCount="indefinite" calcMode="linear">
+					<mpath href="#path1"/>
+				</animateMotion>
+			</circle>
+			<circle r="4" fill="#0EC2A4" opacity="0.8" class="flow-dot dot-2">
+				<animateMotion dur="4s" repeatCount="indefinite" calcMode="linear" begin="1.3s">
+					<mpath href="#path2"/>
+				</animateMotion>
+			</circle>
+			<circle r="4" fill="#B57EDC" opacity="0.8" class="flow-dot dot-3">
+				<animateMotion dur="4s" repeatCount="indefinite" calcMode="linear" begin="2.6s">
+					<mpath href="#path3"/>
+				</animateMotion>
+			</circle>
+			
+			<!-- Hidden paths for dot animation -->
+			<path id="path1" d="M 250 180 Q 180 280 120 320" opacity="0" />
+			<path id="path2" d="M 250 180 Q 320 280 380 320" opacity="0" />
+			<path id="path3" d="M 120 320 Q 250 380 380 320" opacity="0" />
+		</svg>
+
+		<!-- Interactive overlay for enhanced effects -->
+		<div class="absolute inset-0 pointer-events-none z-40">
+			<div class="connection-highlight highlight-1"></div>
+			<div class="connection-highlight highlight-2"></div>
+			<div class="connection-highlight highlight-3"></div>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* Enhanced Circular Diagram Styles */
+	.circle-diagram {
+		height: 450px;
+		width: 500px;
+		position: relative;
+	}
+
+	/* Floating particles background */
+	.floating-particle {
+		position: absolute;
+		width: 6px;
+		height: 6px;
+		background: radial-gradient(circle, rgba(108, 62, 166, 0.6), rgba(181, 126, 220, 0.3));
+		border-radius: 50%;
+		animation: float 6s ease-in-out infinite;
+	}
+
+	.particle-1 { top: 10%; left: 15%; animation-delay: 0s; }
+	.particle-2 { top: 25%; right: 20%; animation-delay: 1.2s; }
+	.particle-3 { bottom: 30%; left: 10%; animation-delay: 2.4s; }
+	.particle-4 { bottom: 15%; right: 15%; animation-delay: 3.6s; }
+	.particle-5 { top: 50%; left: 5%; animation-delay: 4.8s; }
+
+	/* Circle positioning */
+	.circle-center-position {
+		top: 20%;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.circle-left-position {
+		bottom: 10%;
+		left: 8%;
+	}
+
+	.circle-right-position {
+		bottom: 10%;
+		right: 8%;
+	}
+
+	/* Enhanced center circle */
+	.circle-center {
+		width: 180px;
+		height: 180px;
+		position: relative;
+		background: radial-gradient(circle at 30% 30%, 
+			rgba(108, 62, 166, 0.3) 0%, 
+			rgba(108, 62, 166, 0.15) 50%, 
+			rgba(108, 62, 166, 0.05) 100%);
+		backdrop-filter: blur(16px);
+		border: 3px solid rgba(108, 62, 166, 0.4);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 
+			0 8px 32px rgba(108, 62, 166, 0.2),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2);
+	}
+
+	.circle-center:hover {
+		transform: scale(1.08) translateY(-5px);
+		background: radial-gradient(circle at 30% 30%, 
+			rgba(108, 62, 166, 0.4) 0%, 
+			rgba(108, 62, 166, 0.2) 50%, 
+			rgba(108, 62, 166, 0.08) 100%);
+		border-color: rgba(108, 62, 166, 0.6);
+		box-shadow: 
+			0 16px 48px rgba(108, 62, 166, 0.3),
+			0 0 40px rgba(108, 62, 166, 0.2),
+			inset 0 1px 0 rgba(255, 255, 255, 0.3);
+	}
+
+	/* Enhanced satellite circles */
+	.circle-satellite {
+		width: 140px;
+		height: 140px;
+		position: relative;
+		background: radial-gradient(circle at 30% 30%, 
+			rgba(255, 255, 255, 0.2) 0%, 
+			rgba(255, 255, 255, 0.1) 50%, 
+			rgba(255, 255, 255, 0.05) 100%);
+		backdrop-filter: blur(12px);
+		border: 2px solid rgba(255, 255, 255, 0.25);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 
+			0 6px 24px rgba(0, 0, 0, 0.1),
+			inset 0 1px 0 rgba(255, 255, 255, 0.15);
+	}
+
+	.how-circle:hover {
+		transform: scale(1.12) translateY(-8px);
+		background: radial-gradient(circle at 30% 30%, 
+			rgba(181, 126, 220, 0.3) 0%, 
+			rgba(181, 126, 220, 0.15) 50%, 
+			rgba(255, 255, 255, 0.05) 100%);
+		border-color: rgba(181, 126, 220, 0.4);
+		box-shadow: 
+			0 12px 36px rgba(181, 126, 220, 0.2),
+			0 0 30px rgba(181, 126, 220, 0.15),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2);
+	}
+
+	.because-circle:hover {
+		transform: scale(1.12) translateY(-8px);
+		background: radial-gradient(circle at 30% 30%, 
+			rgba(14, 194, 164, 0.3) 0%, 
+			rgba(14, 194, 164, 0.15) 50%, 
+			rgba(255, 255, 255, 0.05) 100%);
+		border-color: rgba(14, 194, 164, 0.4);
+		box-shadow: 
+			0 12px 36px rgba(14, 194, 164, 0.2),
+			0 0 30px rgba(14, 194, 164, 0.15),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2);
+	}
+
+	/* Hide circle titles on hover */
+	.circle-center:hover .circle-title {
+		opacity: 0;
+		transform: translateY(-10px) scale(0.8);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.circle-satellite:hover .circle-title-small {
+		opacity: 0;
+		transform: translateY(-8px) scale(0.8);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	/* Enhanced hover effects for circle text */
+	.how-circle:hover .circle-text-small {
+		color: rgba(243, 230, 248, 1);
+		text-shadow: 
+			0 2px 4px rgba(0, 0, 0, 0.2),
+			0 0 12px rgba(181, 126, 220, 0.3);
+		letter-spacing: 0.03em;
+	}
+
+	.because-circle:hover .circle-text-small {
+		color: rgba(243, 230, 248, 1);
+		text-shadow: 
+			0 2px 4px rgba(0, 0, 0, 0.2),
+			0 0 12px rgba(14, 194, 164, 0.3);
+		letter-spacing: 0.03em;
+	}
+
+	/* Circle glow effects */
+	.circle-glow {
+		position: absolute;
+		inset: -20px;
+		border-radius: 50%;
+		background: radial-gradient(circle, transparent 40%, rgba(108, 62, 166, 0.1) 70%);
+		opacity: 0;
+		transition: opacity 0.4s ease;
+		pointer-events: none;
+	}
+
+	.circle-center:hover .circle-glow {
+		opacity: 1;
+		background: radial-gradient(circle, transparent 40%, rgba(108, 62, 166, 0.2) 70%);
+	}
+
+	.how-circle:hover .circle-glow {
+		opacity: 1;
+		background: radial-gradient(circle, transparent 40%, rgba(181, 126, 220, 0.15) 70%);
+	}
+
+	.because-circle:hover .circle-glow {
+		opacity: 1;
+		background: radial-gradient(circle, transparent 40%, rgba(14, 194, 164, 0.15) 70%);
+	}
+
+	/* Pulse animation */
+	.circle-pulse {
+		position: absolute;
+		inset: -10px;
+		border-radius: 50%;
+		border: 1px solid rgba(108, 62, 166, 0.3);
+		opacity: 0;
+		animation: pulse-ring 3s ease-out infinite;
+	}
+
+	/* Typography */
+	.circle-title {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin-bottom: 0.75rem;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.circle-title-small {
+		font-size: 1rem;
+		font-weight: 700;
+		margin-bottom: 0.5rem;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.circle-text {
+		font-size: 0.95rem;
+		line-height: 1.3;
+		font-weight: 500;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	}
+
+	
+
+	.circle-content {
+		padding: 1.5rem;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		z-index: 2;
+	}
+
+	/* Enhanced connection lines */
+	.connection-line {
+		transition: all 0.4s ease;
+		stroke-dasharray: 300;
+		stroke-dashoffset: 300;
+		animation: draw-line 2s ease-out forwards;
+	}
+
+	.line-1 { animation-delay: 0.5s; }
+	.line-2 { animation-delay: 1s; }
+	.line-3 { animation-delay: 1.5s; }
+
+	.circle-diagram:hover .connection-line {
+		opacity: 0.9 !important;
+		stroke-width: 4;
+		filter: drop-shadow(0 0 8px currentColor);
+	}
+
+	/* Flow dots */
+	.flow-dot {
+		filter: drop-shadow(0 0 6px currentColor);
+	}
+
+	/* Responsive design */
+	@media (max-width: 768px) {
+		.circle-diagram {
+			height: 350px;
+			width: 380px;
+		}
+
+		.circle-center {
+			width: 140px;
+			height: 140px;
+		}
+
+		.circle-satellite {
+			width: 110px;
+			height: 110px;
+		}
+
+		.circle-title { 
+			font-size: 1.1rem;
+			margin-bottom: 0.5rem;
+		}
+		.circle-title-small { 
+			font-size: 0.9rem;
+			margin-bottom: 0.4rem;
+		}
+		.circle-text { 
+			font-size: 0.85rem;
+			line-height: 1.4;
+		}
+		
+		.circle-text-small {
+			font-size: 0.8rem !important;
+			line-height: 1.35;
+			letter-spacing: 0.01em;
+			font-weight: 500;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.circle-diagram {
+			height: 300px;
+			width: 320px;
+		}
+
+		.circle-center {
+			width: 120px;
+			height: 120px;
+		}
+
+		.circle-satellite {
+			width: 95px;
+			height: 95px;
+		}
+
+		.circle-content {
+			padding: 0.8rem;
+		}
+
+		.circle-title { 
+			font-size: 1rem;
+			margin-bottom: 0.4rem;
+			line-height: 1.2;
+		}
+		
+		.circle-title-small { 
+			font-size: 0.85rem;
+			margin-bottom: 0.35rem;
+			line-height: 1.2;
+		}
+		
+		.circle-text { 
+			font-size: 0.8rem;
+			line-height: 1.4;
+		}
+		
+		.circle-text-small {
+			font-size: 0.75rem !important;
+			line-height: 1.3;
+			letter-spacing: 0.005em;
+			font-weight: 500;
+			word-spacing: 0.02em;
+		}
+	}
+
+	/* Extra small mobile devices */
+	@media (max-width: 480px) {
+		.circle-diagram {
+			height: 280px;
+			width: 300px;
+		}
+
+		.circle-center {
+			width: 110px;
+			height: 110px;
+		}
+
+		.circle-satellite {
+			width: 85px;
+			height: 85px;
+		}
+
+		.circle-content {
+			padding: 0.6rem;
+		}
+
+		.circle-title { 
+			font-size: 0.95rem;
+			margin-bottom: 0.3rem;
+			line-height: 1.1;
+		}
+		
+		.circle-title-small { 
+			font-size: 0.8rem;
+			margin-bottom: 0.25rem;
+			line-height: 1.1;
+		}
+		
+		.circle-text { 
+			font-size: 0.75rem;
+			line-height: 1.35;
+		}
+		
+		.circle-text-small {
+			font-family: Inter, system-ui, sans-serif;
+			font-size: 0.55rem !important;
+			line-height: 1.25;
+			letter-spacing: 0;
+			font-weight: 500;
+			word-spacing: 0.01em;
+		}
+	}
+
+	/* Animations */
+	@keyframes float {
+		0%, 100% { 
+			transform: translateY(0px) rotate(0deg);
+			opacity: 0.7;
+		}
+		50% { 
+			transform: translateY(-20px) rotate(180deg);
+			opacity: 1;
+		}
+	}
+
+	@keyframes pulse-ring {
+		0% {
+			transform: scale(0.8);
+			opacity: 1;
+		}
+		100% {
+			transform: scale(1.4);
+			opacity: 0;
+		}
+	}
+
+	@keyframes draw-line {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	/* Interactive effects */
+	.circle-center[data-circle="why"]:hover ~ .circle-left-position .circle-satellite,
+	.circle-center[data-circle="why"]:hover ~ .circle-right-position .circle-satellite {
+		transform: scale(1.05);
+		box-shadow: 0 8px 32px rgba(108, 62, 166, 0.15);
+	}
+</style> 
