@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Disallow API endpoints and private content
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_admin/
+Disallow: /private/
+
+# Allow important assets
+Allow: /images/
+Allow: /icons/
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /_astro/
+
+# Sitemap location
+Sitemap: https://technical.pm/sitemap-index.xml
+Sitemap: https://technical.pm/sitemap-0.xml
+
+# Crawl delay (optional - prevents overwhelming server)
+Crawl-delay: 1 

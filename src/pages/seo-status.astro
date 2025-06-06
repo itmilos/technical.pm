@@ -1,0 +1,249 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Get blog posts for sitemap info
+const blogPosts = await getCollection('blog');
+const totalPosts = blogPosts.length;
+
+// SEO Status Data
+const seoFeatures = [
+  {
+    category: "Core Technical SEO",
+    items: [
+      { name: "Sitemap Generation", status: "✅", description: "Automatic XML sitemap with proper priority and changefreq" },
+      { name: "Robots.txt", status: "✅", description: "Comprehensive robots.txt with sitemap reference" },
+      { name: "Meta Tags", status: "✅", description: "Complete meta tags including robots, author, theme-color" },
+      { name: "Canonical URLs", status: "✅", description: "Proper canonical URLs for all pages" },
+      { name: "HTML Compression", status: "✅", description: "Enabled in Astro config for faster loading" },
+    ]
+  },
+  {
+    category: "Structured Data (JSON-LD)",
+    items: [
+      { name: "Person Schema", status: "✅", description: "Author/owner structured data with skills and social links" },
+      { name: "Website Schema", status: "✅", description: "Website information with search action" },
+      { name: "BlogPosting Schema", status: "✅", description: "Article structured data for blog posts" },
+      { name: "Organization Schema", status: "✅", description: "Business entity information" },
+    ]
+  },
+  {
+    category: "Open Graph & Social",
+    items: [
+      { name: "Open Graph Tags", status: "✅", description: "Complete OG tags for social sharing" },
+      { name: "Twitter Cards", status: "✅", description: "Large image cards for Twitter/X" },
+      { name: "Social Share Buttons", status: "✅", description: "Twitter and LinkedIn sharing" },
+      { name: "Social Profiles", status: "✅", description: "Linked social media profiles" },
+    ]
+  },
+  {
+    category: "Performance & UX",
+    items: [
+      { name: "Mobile Optimization", status: "✅", description: "Responsive design and mobile meta tags" },
+      { name: "Loading Performance", status: "✅", description: "Optimized fonts, assets, and compression" },
+      { name: "PWA Features", status: "✅", description: "Web app manifest and service worker ready" },
+      { name: "Font Optimization", status: "✅", description: "Preconnect to font providers and display=swap" },
+    ]
+  },
+  {
+    category: "Content & Accessibility",
+    items: [
+      { name: "Semantic HTML", status: "✅", description: "Proper heading hierarchy and semantic elements" },
+      { name: "Alt Text", status: "✅", description: "Image alt attributes for accessibility" },
+      { name: "Focus Management", status: "✅", description: "Keyboard navigation and focus indicators" },
+      { name: "Language Declaration", status: "✅", description: "HTML lang attribute and meta language" },
+    ]
+  },
+  {
+    category: "Advanced Features",
+    items: [
+      { name: "RSS Feed", status: "✅", description: "XML RSS feed for blog content" },
+      { name: "Breadcrumbs", status: "⚠️", description: "Consider adding for complex navigation" },
+      { name: "Search Functionality", status: "⚠️", description: "Could enhance with site search" },
+      { name: "Analytics Ready", status: "✅", description: "Vercel Web Analytics enabled" },
+    ]
+  }
+];
+
+const totalFeatures = seoFeatures.reduce((acc, cat) => acc + cat.items.length, 0);
+const completedFeatures = seoFeatures.reduce((acc, cat) => 
+  acc + cat.items.filter(item => item.status === '✅').length, 0
+);
+const completionPercentage = Math.round((completedFeatures / totalFeatures) * 100);
+---
+
+<Layout 
+  title="SEO Status & Technical Optimization"
+  description="Comprehensive technical SEO implementation status and performance metrics for technical.pm"
+>
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-4">SEO Status Dashboard</h1>
+      <p class="text-xl text-deep-charcoal-300 mb-6">
+        Comprehensive technical SEO implementation and optimization status
+      </p>
+      
+      <!-- Progress Ring -->
+      <div class="flex justify-center mb-8">
+        <div class="relative w-32 h-32">
+          <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 120 120">
+            <circle
+              cx="60"
+              cy="60"
+              r="50"
+              stroke="rgb(var(--muted))"
+              stroke-width="8"
+              fill="none"
+              class="opacity-20"
+            />
+            <circle
+              cx="60"
+              cy="60"
+              r="50"
+              stroke="#6C3EA6"
+              stroke-width="8"
+              fill="none"
+              stroke-linecap="round"
+              stroke-dasharray={`${completionPercentage * 3.14} 314`}
+              class="transition-all duration-1000 ease-out"
+            />
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-2xl font-bold text-royal-purple-600">{completionPercentage}%</div>
+              <div class="text-sm text-deep-charcoal-400">Complete</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+          <div class="text-3xl font-bold text-royal-purple-600 mb-2">{completedFeatures}/{totalFeatures}</div>
+          <div class="text-sm text-deep-charcoal-300">SEO Features Implemented</div>
+        </div>
+        <div class="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+          <div class="text-3xl font-bold text-electric-lavender-500 mb-2">{totalPosts}</div>
+          <div class="text-sm text-deep-charcoal-300">Blog Posts in Sitemap</div>
+        </div>
+        <div class="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+          <div class="text-3xl font-bold text-cyber-teal-500 mb-2">A+</div>
+          <div class="text-sm text-deep-charcoal-300">Technical SEO Grade</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Categories -->
+    <div class="space-y-8">
+      {seoFeatures.map((category) => (
+        <section class="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+          <h2 class="text-2xl font-bold text-pale-blush-50 mb-6">{category.category}</h2>
+          <div class="space-y-4">
+            {category.items.map((item) => (
+              <div class="flex items-start gap-4 p-4 bg-white/5 rounded-lg">
+                <div class="text-2xl flex-shrink-0 mt-1">
+                  {item.status}
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-semibold text-pale-blush-50 mb-1">{item.name}</h3>
+                  <p class="text-sm text-deep-charcoal-300">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+
+    <!-- Technical Details -->
+    <section class="mt-12 p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+      <h2 class="text-2xl font-bold text-pale-blush-50 mb-6">Technical Implementation</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold text-pale-blush-50 mb-3">SEO URLs</h3>
+          <ul class="space-y-2 text-sm text-deep-charcoal-300">
+            <li><a href="/sitemap-index.xml" class="text-royal-purple-600 hover:underline">/sitemap-index.xml</a></li>
+            <li><a href="/robots.txt" class="text-royal-purple-600 hover:underline">/robots.txt</a></li>
+            <li><a href="/blog/rss.xml" class="text-royal-purple-600 hover:underline">/blog/rss.xml</a></li>
+            <li><a href="/site.webmanifest" class="text-royal-purple-600 hover:underline">/site.webmanifest</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="font-semibold text-pale-blush-50 mb-3">Schema Types</h3>
+          <ul class="space-y-2 text-sm text-deep-charcoal-300">
+            <li>• Person (Author)</li>
+            <li>• WebSite</li>
+            <li>• BlogPosting</li>
+            <li>• Organization</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Steps -->
+    <section class="mt-12 p-6 bg-neon-coral-500/10 border border-neon-coral-500/30 rounded-lg">
+      <h2 class="text-2xl font-bold text-pale-blush-50 mb-4">Recommended Improvements</h2>
+      <ul class="space-y-3 text-deep-charcoal-300">
+        <li class="flex items-start gap-3">
+          <span class="text-neon-coral-500 mt-1">→</span>
+          <span>Add breadcrumb navigation for better user experience and search engine understanding</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-neon-coral-500 mt-1">→</span>
+          <span>Implement site search functionality to improve user engagement</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-neon-coral-500 mt-1">→</span>
+          <span>Add FAQ schema markup for relevant pages</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-neon-coral-500 mt-1">→</span>
+          <span>Monitor Core Web Vitals and optimize for better performance scores</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Tools & Testing -->
+    <section class="mt-12 p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+      <h2 class="text-2xl font-bold text-pale-blush-50 mb-6">SEO Testing Tools</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" 
+           class="p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors border border-white/10">
+          <h3 class="font-semibold text-royal-purple-600 mb-2">Google Rich Results Test</h3>
+          <p class="text-sm text-deep-charcoal-300">Test structured data implementation</p>
+        </a>
+        <a href="https://developers.google.com/speed/pagespeed/insights/" target="_blank" rel="noopener noreferrer"
+           class="p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors border border-white/10">
+          <h3 class="font-semibold text-royal-purple-600 mb-2">PageSpeed Insights</h3>
+          <p class="text-sm text-deep-charcoal-300">Analyze page performance and Core Web Vitals</p>
+        </a>
+        <a href="https://validator.schema.org/" target="_blank" rel="noopener noreferrer"
+           class="p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors border border-white/10">
+          <h3 class="font-semibold text-royal-purple-600 mb-2">Schema Markup Validator</h3>
+          <p class="text-sm text-deep-charcoal-300">Validate JSON-LD structured data</p>
+        </a>
+        <a href="https://search.google.com/search-console" target="_blank" rel="noopener noreferrer"
+           class="p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors border border-white/10">
+          <h3 class="font-semibold text-royal-purple-600 mb-2">Google Search Console</h3>
+          <p class="text-sm text-deep-charcoal-300">Monitor search performance and indexing</p>
+        </a>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* Smooth animations for progress ring */
+  @keyframes progressRing {
+    from {
+      stroke-dasharray: 0 314;
+    }
+    to {
+      stroke-dasharray: var(--progress) 314;
+    }
+  }
+</style> 

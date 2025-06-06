@@ -11,10 +11,15 @@ export default defineConfig({
     tailwind(),
     react(),
     sitemap({
-      // Customize sitemap options
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date(),
+      filter: (page) => {
+        // Exclude API routes and private pages from sitemap
+        return !page.includes('/api/') && !page.includes('/admin');
+      },
+      customPages: [
+        'https://technical.pm',
+        'https://technical.pm/blog',
+        'https://technical.pm/brand-strategy'
+      ],
       i18n: {
         defaultLocale: 'en',
         locales: {
@@ -33,7 +38,8 @@ export default defineConfig({
     maxDuration: 10
   }),
   build: {
-    inlineStylesheets: 'auto'
+    inlineStylesheets: 'auto',
+    assets: '_astro'
   },
   server: {
     port: Number(process.env.PORT) || 3000,

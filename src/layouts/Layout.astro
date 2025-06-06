@@ -66,8 +66,22 @@ const shouldHideContact = hideContact || isBlogPage;
       }}
       extend={{
         meta: [
-          { name: 'robots', content: 'index, follow' },
+          { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
           { name: 'author', content: 'Milos Rujevic' },
+          { name: 'copyright', content: `© ${new Date().getFullYear()} Milos Rujevic. All rights reserved.` },
+          { name: 'language', content: 'English' },
+          { name: 'revisit-after', content: '7 days' },
+          { name: 'distribution', content: 'web' },
+          { name: 'rating', content: 'general' },
+          { httpEquiv: 'Content-Type', content: 'text/html; charset=utf-8' },
+          { httpEquiv: 'X-UA-Compatible', content: 'IE=edge' },
+          { name: 'format-detection', content: 'telephone=no' },
+          { name: 'theme-color', content: '#6C3EA6' },
+          { name: 'msapplication-TileColor', content: '#6C3EA6' },
+          { name: 'msapplication-config', content: '/browserconfig.xml' },
+          { name: 'apple-mobile-web-app-capable', content: 'yes' },
+          { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+          { name: 'apple-mobile-web-app-title', content: 'Technical PM' },
         ],
         link: [
           { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -77,20 +91,70 @@ const shouldHideContact = hideContact || isBlogPage;
             href: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&display=swap'
           },
           { href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap', rel: 'stylesheet' },
+          { rel: 'canonical', href: canonicalURL },
+          { rel: 'alternate', type: 'application/rss+xml', title: 'Technical PM Blog RSS', href: '/blog/rss.xml' },
+          { rel: 'sitemap', type: 'application/xml', href: '/sitemap-index.xml' },
+          { rel: 'manifest', href: '/site.webmanifest' },
+          { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+          { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+          { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+          { rel: 'mask-icon', href: '/safari-pinned-tab.svg' },
         ],
       }}
     />
 
+    <!-- Enhanced Structured Data -->
     <script type="application/ld+json">
       {JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Milos Rujevic",
         "jobTitle": "Technical Product Manager",
+        "description": "Expert Technical Product Manager specializing in AI/ML, cloud infrastructure, and data-driven product strategy",
         "url": "https://technical.pm",
+        "image": "https://technical.pm/images/milos-rujevic.jpg",
+        "email": "hello@technical.pm",
+        "knowsAbout": [
+          "Product Management",
+          "Technical Strategy", 
+          "AI/ML Products",
+          "Cloud Computing",
+          "Data Analytics",
+          "Azure",
+          "Python",
+          "JavaScript"
+        ],
         "sameAs": [
-          "https://www.linkedin.com/in/aitechpm/"
-        ]
+          "https://www.linkedin.com/in/aitechpm/",
+          "https://github.com/mikeruje",
+          "https://twitter.com/MikeTechnicalPM"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Technical Product Management"
+        }
+      })}
+    </script>
+
+    <!-- Website Schema -->
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Technical Product Manager - Milos Rujevic",
+        "description": "Technical Product Manager portfolio showcasing expertise in AI/ML, cloud infrastructure, and strategic product development",
+        "url": "https://technical.pm",
+        "inLanguage": "en-US",
+        "copyrightYear": new Date().getFullYear(),
+        "author": {
+          "@type": "Person",
+          "name": "Milos Rujevic"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://technical.pm/blog?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
       })}
     </script>
   </head>
