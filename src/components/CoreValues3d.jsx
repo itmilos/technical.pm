@@ -38,7 +38,9 @@ export default function CoreValues3D() {
       document.head.appendChild(link);
     }
 
-    const width = mountRef.current.clientWidth * 0.6; // 60% of client width
+    // Calculate responsive width
+    const isMobile = window.innerWidth <= 768;
+    const width = mountRef.current.clientWidth * (isMobile ? 0.8 : 0.6); // 85% on mobile, 60% on desktop
     const height = 500;
     const scene = new THREE.Scene();
 
@@ -63,7 +65,7 @@ export default function CoreValues3D() {
 
     // Camera
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 2000);
-    camera.position.z = 350;
+    camera.position.z = isMobile ? 385 : 350; // Even closer camera on mobile
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
@@ -94,8 +96,8 @@ export default function CoreValues3D() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
     controls.enablePan = false;
-    controls.minDistance = 200;
-    controls.maxDistance = 600;
+    controls.minDistance = isMobile ? 120 : 200;
+    controls.maxDistance = isMobile ? 300 : 600;
     controls.enableZoom = true;
     controls.enableRotate = true;
     controls.autoRotate = true;
@@ -158,7 +160,8 @@ export default function CoreValues3D() {
     scene.add(solarSystem);
 
     // Central sphere (Royal Purple)
-    const centerGeometry = new THREE.SphereGeometry(40, 48, 48);
+    const centerSize = isMobile ? 22 : 40; // Even smaller center sphere on mobile
+    const centerGeometry = new THREE.SphereGeometry(centerSize, 48, 48);
     const centerMaterial = new THREE.MeshStandardMaterial({
       color: COLORS.royalPurple,
       roughness: 0.3,
@@ -170,7 +173,7 @@ export default function CoreValues3D() {
     solarSystem.add(centerSphere);
 
     // Glow effect for center (Electric Lavender)
-    const glowGeometry = new THREE.SphereGeometry(44, 48, 48);
+    const glowGeometry = new THREE.SphereGeometry(centerSize + 3, 48, 48);
     const glowMaterial = new THREE.MeshBasicMaterial({
       color: COLORS.electricLavender,
       transparent: true,
@@ -185,23 +188,24 @@ export default function CoreValues3D() {
     centerDiv.textContent = 'Core Values';
     centerDiv.style.color = COLORS.paleBlush;
     centerDiv.style.fontWeight = 'bold';
-    centerDiv.style.fontSize = '1.1rem';
+    centerDiv.style.fontSize = isMobile ? '0.75rem' : '1.1rem';
     centerDiv.style.textAlign = 'center';
     centerDiv.style.textShadow = `0 2px 8px ${COLORS.royalPurple}`;
     centerDiv.style.background = 'rgba(60,20,100,0.7)';
     centerDiv.style.borderRadius = '8px';
-    centerDiv.style.padding = '6px 12px';
+    centerDiv.style.padding = isMobile ? '3px 6px' : '6px 12px';
     centerDiv.style.fontFamily = fontFamily;
     const centerLabel = new CSS2DObject(centerDiv);
     centerLabel.position.set(0, 0, 50);
     centerSphere.add(centerLabel);
 
     // Orbiting spheres and labels
-    const orbitRadius = 120;
+    const orbitRadius = isMobile ? 65 : 120; // Even smaller orbit radius on mobile
     const spheres = [];
     coreValues.forEach((val, i) => {
       const angle = (i / coreValues.length) * Math.PI * 2;
-      const geometry = new THREE.SphereGeometry(25, 48, 48);
+      const sphereSize = isMobile ? 14 : 25; // Even smaller orbiting spheres on mobile
+      const geometry = new THREE.SphereGeometry(sphereSize, 48, 48);
       const material = new THREE.MeshStandardMaterial({
         color: val.color,
         roughness: 0.25,
@@ -212,7 +216,7 @@ export default function CoreValues3D() {
       const sphere = new THREE.Mesh(geometry, material);
 
       // Glow effect for each sphere (Electric Lavender for all)
-      const glowGeometry = new THREE.SphereGeometry(28, 48, 48);
+      const glowGeometry = new THREE.SphereGeometry(sphereSize + 2, 48, 48);
       const glowMaterial = new THREE.MeshBasicMaterial({
         color: COLORS.electricLavender,
         transparent: true,
@@ -234,12 +238,12 @@ export default function CoreValues3D() {
       labelDiv.textContent = val.value;
       labelDiv.style.color = COLORS.deepCharcoal;
       labelDiv.style.fontWeight = 'bold';
-      labelDiv.style.fontSize = '0.95rem';
+      labelDiv.style.fontSize = isMobile ? '0.65rem' : '0.95rem';
       labelDiv.style.textAlign = 'center';
       labelDiv.style.textShadow = `0 2px 8px ${COLORS.paleBlush}`;
       labelDiv.style.background = COLORS.paleBlush;
       labelDiv.style.borderRadius = '8px';
-      labelDiv.style.padding = '4px 10px';
+      labelDiv.style.padding = isMobile ? '2px 6px' : '4px 10px';
       labelDiv.style.pointerEvents = 'none';
       labelDiv.style.fontFamily = fontFamily;
       const label = new CSS2DObject(labelDiv);
@@ -339,6 +343,24 @@ export default function CoreValues3D() {
   }, []);
 
   return (
-    <div ref={mountRef} className="mx-auto" style={{ width: '60%', height: 500, position: 'relative' }} />
+    <>
+      <style>
+        {`
+          .core-values-container {
+            width: 60%;
+            height: 500px;
+            position: relative;
+            margin: 0 auto;
+          }
+          @media (max-width: 768px) {
+            .core-values-container {
+              width: 85%;
+              margin: 0 auto;
+            }
+          }
+        `}
+      </style>
+      <div ref={mountRef} className="core-values-container" />
+    </>
   );
 }
