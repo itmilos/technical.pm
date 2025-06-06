@@ -38,7 +38,7 @@ export default function CoreValues3D() {
       document.head.appendChild(link);
     }
 
-    const width = mountRef.current.clientWidth;
+    const width = mountRef.current.clientWidth * 0.6; // 60% of client width
     const height = 500;
     const scene = new THREE.Scene();
 
@@ -69,6 +69,9 @@ export default function CoreValues3D() {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
     renderer.setClearColor(COLORS.deepCharcoal, 1);
     renderer.setSize(width, height);
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.left = '50%';
+    renderer.domElement.style.transform = 'translateX(-50%)';
     mountRef.current.appendChild(renderer.domElement);
 
     // CSS2DRenderer for labels
@@ -76,7 +79,8 @@ export default function CoreValues3D() {
     labelRenderer.setSize(width, height);
     labelRenderer.domElement.style.position = 'absolute';
     labelRenderer.domElement.style.top = '0';
-    labelRenderer.domElement.style.left = '0';
+    labelRenderer.domElement.style.left = '50%';
+    labelRenderer.domElement.style.transform = 'translateX(-50%)';
     mountRef.current.appendChild(labelRenderer.domElement);
 
     // Lighting
@@ -335,6 +339,6 @@ export default function CoreValues3D() {
   }, []);
 
   return (
-    <div ref={mountRef} style={{ width: '100%', height: 500, position: 'relative' }} />
+    <div ref={mountRef} className="mx-auto" style={{ width: '60%', height: 500, position: 'relative' }} />
   );
 }
