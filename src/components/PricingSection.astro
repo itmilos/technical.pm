@@ -22,7 +22,6 @@ const { tiers } = Astro.props;
         <h3 class="font-bold text-lg sm:text-xl mb-2 text-pale-blush-50 group-hover:text-royal-purple-600 transition-colors duration-200">{tier.title}</h3>
         <p class="text-xl sm:text-2xl font-semibold mb-2 text-pale-blush-50 group-hover:scale-110 transition-transform duration-300">
           {tier.price}
-          {tier.price.includes('/hr') && <span class="text-base font-normal">/hr</span>}
         </p>
         <ul class="mb-4 text-pale-blush-100 space-y-2 text-sm sm:text-base">
           {tier.features.map((feature) => (
