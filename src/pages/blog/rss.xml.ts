@@ -18,7 +18,7 @@ export const GET: APIRoute = async (context) => {
       title: post.data.title,
       pubDate: new Date(post.data.date),
       description: post.data.description,
-      author: `${post.data.author} (hello@technical.pm)`,
+      author: `${post.data.author} (magic@technical.pm)`,
       link: `/blog/${post.slug}/`,
       categories: post.data.tags,
       customData: post.data.lastModified ? 
@@ -27,8 +27,8 @@ export const GET: APIRoute = async (context) => {
     })),
     customData: `
       <language>en-us</language>
-      <managingEditor>hello@technical.pm (Milos Rujevic)</managingEditor>
-      <webMaster>hello@technical.pm (Milos Rujevic)</webMaster>
+      <managingEditor>magic@technical.pm (Milos Rujevic)</managingEditor>
+      <webMaster>magic@technical.pm (Milos Rujevic)</webMaster>
       <copyright>© ${new Date().getFullYear()} Milos Rujevic. All rights reserved.</copyright>
       <category>Technology</category>
       <category>Product Management</category>

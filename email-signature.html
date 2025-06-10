@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Signature - Milos Rujevic</title>
+    <style>
+        /* Reset styles for email clients */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Main signature container */
+        .signature-container {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            max-width: 500px;
+            border: none;
+            background: #ffffff;
+            color: #1E1E1E;
+            line-height: 1.4;
+        }
+        
+        /* Main signature table */
+        .signature-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        
+        /* Logo cell */
+        .logo-cell {
+            width: 60px;
+            padding-right: 15px;
+            vertical-align: top;
+        }
+        
+        /* Logo styling */
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #6C3EA6, #B57EDC);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(108, 62, 166, 0.2);
+        }
+        
+        /* Content cell */
+        .content-cell {
+            vertical-align: top;
+            padding-left: 0;
+        }
+        
+        /* Name styling */
+        .name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1E1E1E;
+            margin: 0 0 2px 0;
+            text-decoration: none;
+        }
+        
+        /* Title styling */
+        .title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #6C3EA6;
+            margin: 0 0 8px 0;
+        }
+        
+        /* Contact info styling */
+        .contact-info {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .contact-info a {
+            color: #6C3EA6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .contact-info a:hover {
+            color: #B57EDC;
+            text-decoration: underline;
+        }
+        
+        /* Separator */
+        .separator {
+            color: #b0b0b0;
+            margin: 0 6px;
+        }
+        
+        /* Website link */
+        .website {
+            color: #6C3EA6;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        
+        .website:hover {
+            color: #B57EDC;
+            text-decoration: underline;
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            font-size: 11px;
+            color: #888888;
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px solid #e7e7e7;
+            line-height: 1.3;
+        }
+        
+        /* Responsive adjustments */
+        @media only screen and (max-width: 480px) {
+            .signature-container {
+                max-width: 100%;
+            }
+            
+            .logo-cell {
+                width: 50px;
+                padding-right: 12px;
+            }
+            
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .name {
+                font-size: 16px;
+            }
+            
+            .title {
+                font-size: 13px;
+            }
+            
+            .contact-info {
+                font-size: 12px;
+            }
+            
+            .website {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signature-container">
+        <table class="signature-table" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td class="logo-cell">
+                    <a href="https://technical.pm" class="logo" style="display: block; width: 50px; height: 50px; background: linear-gradient(135deg, #6C3EA6, #B57EDC); border-radius: 12px; text-align: center; line-height: 50px; color: white; font-weight: 700; font-size: 18px; text-decoration: none; box-shadow: 0 2px 8px rgba(108, 62, 166, 0.2);">
+                        MR
+                    </a>
+                </td>
+                <td class="content-cell">
+                    <div class="name">Milos Rujevic</div>
+                    <div class="title">Technical Product Manager</div>
+                    <div class="contact-info">
+                        <a href="mailto:hello@technical.pm">magic@technical.pm</a>
+                        <span class="separator">•</span>
+                        <a href="tel:+381-64-123-4567">+1 470 519 4730</a>
+                    </div>
+                    <a href="https://technical.pm" class="website">technical.pm</a>
+                    <div class="disclaimer">
+                        This email and any attachments are confidential and may be privileged. If you are not the intended recipient, please notify the sender immediately and delete this email.
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html> 
