@@ -418,24 +418,143 @@ const {
 		}
 	}
 
+	/* Timeline layout for mobile */
 	@media (max-width: 640px) {
 		.circle-diagram {
-			height: 400px;
-			width: 440px;
+			height: auto;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+			padding: 2rem 1rem;
+		}
+
+		/* Hide SVG connections on mobile */
+		.circle-diagram svg {
+			display: none;
+		}
+
+		/* Disable animations on mobile */
+		.floating-particle {
+			animation: none;
+			opacity: 0;
+		}
+
+		.shape-pulse,
+		.circle-pulse {
+			animation: none;
+			opacity: 0;
+		}
+
+		/* Timeline positioning */
+		.circle-center-position,
+		.circle-left-position,
+		.circle-right-position {
+			position: relative;
+			top: auto;
+			left: auto;
+			right: auto;
+			bottom: auto;
+			transform: none;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+		}
+
+		/* Timeline items */
+		.circle-center,
+		.shape-satellite {
+			width: 280px;
+			height: auto;
+			min-height: 120px;
+			border-radius: 16px;
+			position: relative;
+			margin: 0;
 		}
 
 		.circle-center {
-			width: 160px;
-			height: 160px;
+			width: 200px;
+			height: 200px;
+			min-height: 200px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, 
+				rgba(108, 62, 166, 0.2) 0%, 
+				rgba(108, 62, 166, 0.1) 100%);
+			border: 2px solid rgba(108, 62, 166, 0.4);
 		}
 
-		.shape-satellite {
-			width: 130px;
-			height: 130px;
+		.square-satellite,
+		.rectangle-satellite {
+			background: linear-gradient(135deg, 
+				rgba(255, 255, 255, 0.15) 0%, 
+				rgba(255, 255, 255, 0.05) 100%);
+			border-radius: 16px;
+		}
+
+		.square-satellite {
+			border: 2px solid rgba(181, 126, 220, 0.4);
+		}
+
+		.rectangle-satellite {
+			border: 2px solid rgba(14, 194, 164, 0.4);
+		}
+
+		/* Timeline connector */
+		.circle-center-position::after,
+		.circle-left-position::after {
+			content: '';
+			position: absolute;
+			left: 50%;
+			bottom: -2rem;
+			width: 2px;
+			height: 2rem;
+			background: linear-gradient(to bottom, 
+				rgba(108, 62, 166, 0.6) 0%,
+				rgba(181, 126, 220, 0.4) 50%,
+				rgba(14, 194, 164, 0.6) 100%);
+			transform: translateX(-50%);
+			z-index: 1;
+		}
+
+		/* Timeline dots */
+		.circle-center::before,
+		.square-satellite::before,
+		.rectangle-satellite::before {
+			content: '';
+			position: absolute;
+			top: -12px;
+			left: 50%;
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			transform: translateX(-50%);
+			z-index: 10;
+		}
+
+		.circle-center::before {
+			display: none;
+		}
+
+		.square-satellite::before {
+			background: rgba(181, 126, 220, 0.8);
+			box-shadow: 0 0 0 4px rgba(181, 126, 220, 0.2);
+		}
+
+		.rectangle-satellite::before {
+			background: rgba(14, 194, 164, 0.8);
+			box-shadow: 0 0 0 4px rgba(14, 194, 164, 0.2);
 		}
 
 		.circle-content {
-			padding: 0.1rem;
+			padding: 1.5rem;
+			text-align: center;
+			align-items: center;
+		}
+
+		.square-satellite .circle-content,
+		.rectangle-satellite .circle-content {
+			text-align: center;
+			align-items: center;
 		}
 
 		.circle-title { 
@@ -445,44 +564,52 @@ const {
 		}
 		
 		.circle-title-small { 
-			font-size: 0.85rem;
-			margin-bottom: 0.3rem;
+			font-size: 1rem;
+			margin-bottom: 0.5rem;
 			line-height: 1.1;
 		}
 		
 		.circle-text { 
-			font-size: 0.8rem;
+			font-size: 0.875rem;
 			line-height: 1.4;
 		}
 		
 		.circle-text-small {
-			font-size: 0.6rem !important;
-			line-height: 1.2;
+			font-size: 0.875rem !important;
+			line-height: 1.4;
 			letter-spacing: 0.005em;
 			font-weight: 500;
 			word-spacing: 0.02em;
+		}
+
+		/* Disable hover effects on mobile */
+		.circle-center:hover,
+		.shape-satellite:hover {
+			transform: none;
 		}
 	}
 
 	/* Extra small mobile devices */
 	@media (max-width: 480px) {
 		.circle-diagram {
-			height: 340px;
-			width: 380px;
+			padding: 1.5rem 0.75rem;
+			gap: 1.5rem;
 		}
 
 		.circle-center {
-			width: 130px;
-			height: 130px;
+			width: 160px;
+			height: 160px;
+			min-height: 160px;
 		}
 
 		.shape-satellite {
-			width: 105px;
-			height: 105px;
+			width: 100%;
+			max-width: 300px;
+			min-height: 100px;
 		}
 
 		.circle-content {
-			padding: 0.3rem;
+			padding: 1.25rem;
 		}
 
 		.circle-title { 
@@ -492,23 +619,29 @@ const {
 		}
 		
 		.circle-title-small { 
-			font-size: 0.7rem;
-			margin-bottom: 0.2rem;
+			font-size: 0.9rem;
+			margin-bottom: 0.4rem;
 			line-height: 1.05;
 		}
 		
 		.circle-text { 
-			font-size: 0.75rem;
+			font-size: 0.8rem;
 			line-height: 1.35;
 		}
 		
 		.circle-text-small {
-			font-family: Inter, system-ui, sans-serif;
-			font-size: 0.48rem !important;
-			line-height: 1.1;
+			font-size: 0.8rem !important;
+			line-height: 1.3;
 			letter-spacing: 0;
 			font-weight: 500;
 			word-spacing: 0.01em;
+		}
+
+		/* Smaller timeline connectors on very small screens */
+		.circle-center-position::after,
+		.circle-left-position::after {
+			bottom: -1.5rem;
+			height: 1.5rem;
 		}
 	}
 

@@ -123,13 +123,52 @@ const {
 <style>
 	/* Animated Form Container */
 	.animated-form-container {
-		@apply glass-primary;
-		background: none;
-		backdrop-filter: none;
+		background: linear-gradient(135deg, 
+			rgba(255, 255, 255, 0.12) 0%,
+			rgba(255, 255, 255, 0.08) 50%,
+			rgba(255, 255, 255, 0.05) 100%);
+		backdrop-filter: blur(24px) saturate(180%);
+		-webkit-backdrop-filter: blur(24px) saturate(180%);
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		box-shadow: 
+			0 8px 32px rgba(0, 0, 0, 0.15),
+			inset 0 1px 0 rgba(255, 255, 255, 0.3),
+			inset 0 -1px 0 rgba(255, 255, 255, 0.1);
 		position: relative;
+		overflow: hidden;
 		padding: 8px;
 		border-radius: 20px;
 		animation: glass-pulse 4s ease-in-out infinite;
+	}
+
+	.animated-form-container::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, 
+			transparent 0%, 
+			rgba(255, 255, 255, 0.1) 50%, 
+			transparent 100%);
+		transition: left 0.6s ease-in-out;
+		pointer-events: none;
+	}
+
+	.animated-form-container:hover::before {
+		left: 100%;
+	}
+
+	@keyframes glass-pulse {
+		0%, 100% { 
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% { 
+			opacity: 0.95;
+			transform: scale(1.002);
+		}
 	}
 
 	/* Enhanced Floating background particles */
@@ -184,10 +223,45 @@ const {
 	}
 
 	.input-wrapper {
-		@apply glass-input;
+		background: linear-gradient(135deg, 
+			rgba(255, 255, 255, 0.08) 0%,
+			rgba(255, 255, 255, 0.05) 50%,
+			rgba(255, 255, 255, 0.03) 100%);
+		backdrop-filter: blur(18px) saturate(150%);
+		-webkit-backdrop-filter: blur(18px) saturate(150%);
+		border: 1.5px solid rgba(255, 255, 255, 0.2);
+		box-shadow: 
+			0 4px 20px rgba(0, 0, 0, 0.1),
+			inset 0 1px 0 rgba(255, 255, 255, 0.25);
+		transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		position: relative;
 		border-radius: 16px;
 		overflow: hidden;
+	}
+
+	.input-wrapper:hover {
+		background: linear-gradient(135deg, 
+			rgba(255, 255, 255, 0.12) 0%,
+			rgba(255, 255, 255, 0.08) 50%,
+			rgba(255, 255, 255, 0.05) 100%);
+		border-color: rgba(181, 126, 220, 0.4);
+		box-shadow: 
+			0 8px 32px rgba(108, 62, 166, 0.15),
+			inset 0 1px 0 rgba(255, 255, 255, 0.3);
+		transform: translateY(-2px);
+	}
+
+	.input-wrapper:focus-within {
+		background: linear-gradient(135deg, 
+			rgba(255, 255, 255, 0.15) 0%,
+			rgba(255, 255, 255, 0.1) 50%,
+			rgba(255, 255, 255, 0.07) 100%);
+		border-color: rgba(181, 126, 220, 0.6);
+		box-shadow: 
+			0 12px 40px rgba(108, 62, 166, 0.25),
+			0 0 0 4px rgba(181, 126, 220, 0.1),
+			inset 0 1px 0 rgba(255, 255, 255, 0.35);
+		transform: translateY(-1px);
 	}
 
 	/* Enhanced Animated Inputs */
@@ -374,10 +448,20 @@ const {
 
 	/* Enhanced Animated Submit Button */
 	.animated-submit-btn {
-		@apply glass-button;
+		background: linear-gradient(135deg, 
+			rgba(255, 255, 255, 0.1) 0%,
+			rgba(255, 255, 255, 0.08) 50%,
+			rgba(255, 255, 255, 0.06) 100%);
+		backdrop-filter: blur(20px) saturate(180%);
+		-webkit-backdrop-filter: blur(20px) saturate(180%);
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		box-shadow: 
+			0 6px 24px rgba(0, 0, 0, 0.12),
+			inset 0 1px 0 rgba(255, 255, 255, 0.3);
+		transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		overflow: hidden;
 		position: relative;
 		padding: 18px 36px;
-		border: none;
 		border-radius: 16px;
 		color: white;
 		font-size: 16px;
@@ -385,7 +469,26 @@ const {
 		font-family: var(--font-accent);
 		cursor: pointer;
 		min-width: 220px;
-		box-shadow: 0 8px 32px rgba(108, 62, 166, 0.3);
+	}
+
+	.animated-submit-btn::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, 
+			transparent 0%, 
+			rgba(255, 255, 255, 0.15) 50%, 
+			transparent 100%);
+		transition: left 0.5s ease;
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.animated-submit-btn:hover::before {
+		left: 100%;
 	}
 
 	.btn-background {
@@ -429,8 +532,15 @@ const {
 	}
 
 	.animated-submit-btn:hover {
+		background: linear-gradient(135deg, 
+			rgba(255, 255, 255, 0.15) 0%,
+			rgba(255, 255, 255, 0.12) 50%,
+			rgba(255, 255, 255, 0.09) 100%);
+		border-color: rgba(255, 255, 255, 0.35);
+		box-shadow: 
+			0 12px 36px rgba(0, 0, 0, 0.18),
+			inset 0 1px 0 rgba(255, 255, 255, 0.4);
 		transform: translateY(-4px);
-		box-shadow: 0 16px 48px rgba(108, 62, 166, 0.4);
 	}
 
 	.animated-submit-btn:hover .btn-background {
@@ -442,7 +552,7 @@ const {
 	}
 
 	.animated-submit-btn:active {
-		transform: translateY(-2px);
+		transform: translateY(0px);
 		transition: transform 0.1s ease;
 	}
 
