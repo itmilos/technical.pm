@@ -18,7 +18,7 @@ const { testimonials } = Astro.props;
   <h2 class="text-3xl font-semibold mb-8 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">What Others Say</h2>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
     {testimonials.map((testimonial) => (
-      <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-lg shadow-lg hover:bg-white/15 hover:border-white/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group flex flex-col min-h-[260px]">
+      <div class="glass-card p-6 rounded-lg group flex flex-col min-h-[260px]">
                   <div class="flex items-center mb-4">
             <div class="w-12 h-12 bg-royal-purple-600/20 backdrop-blur-sm rounded-full flex items-center justify-center text-royal-purple-300 font-bold text-xl group-hover:scale-110 transition-transform duration-300">
               {testimonial.initials}

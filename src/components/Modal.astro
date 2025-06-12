@@ -29,7 +29,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
 
   <!-- Background overlay with blur effect -->
   <div 
-    class="fixed inset-0 bg-deep-charcoal-900/80 backdrop-blur-md transition-opacity" 
+    class="fixed inset-0 bg-deep-charcoal-900/85 backdrop-blur-xl transition-opacity" 
     aria-hidden="true"
     onclick={`document.getElementById('${id}').classList.add('hidden')`}
   ></div>
@@ -37,7 +37,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
   <!-- Modal panel with enhanced interactivity -->
   <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
     <div 
-      class="relative transform overflow-hidden rounded-lg bg-white/10 backdrop-blur-md border border-white/20 px-4 pb-4 pt-5 text-left shadow-2xl transition-all duration-300 ease-out hover:shadow-royal-purple-500/20 sm:my-8 sm:w-full sm:max-w-lg sm:p-6 group"
+      class="glass-modal relative transform overflow-hidden rounded-xl px-4 pb-4 pt-5 text-left transition-all duration-300 ease-out hover:shadow-royal-purple-500/20 sm:my-8 sm:w-full sm:max-w-lg sm:p-6 group"
       role="document"
       style="transform-style: preserve-3d; perspective: 1000px;"
     >
@@ -45,7 +45,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       <div class="absolute right-0 top-0 pr-4 pt-4">
         <button
           type="button"
-          class="rounded-md bg-white/20 backdrop-blur-sm text-pale-blush-300 hover:text-royal-purple-600 hover:bg-white/30 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-royal-purple-500 focus:ring-offset-2 transform hover:scale-110 focus:scale-110"
+          class="glass-button rounded-md text-pale-blush-300 hover:text-royal-purple-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-royal-purple-500 focus:ring-offset-2 transform hover:scale-110 focus:scale-110"
           onclick={`document.getElementById('${id}').classList.add('hidden')`}
           aria-label="Close modal"
           id={`${id}-close-button`}

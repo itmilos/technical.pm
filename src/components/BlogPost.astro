@@ -141,7 +141,7 @@ const articleSchema = {
       </p>
 
       <!-- Author Bio -->
-      <div class="flex items-center gap-4 p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg mb-8 shadow-lg">
+      <div class="flex items-center gap-4 p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg mb-8 shadow-lg">
         <img 
           src={authorImage} 
           alt={author}
@@ -156,7 +156,7 @@ const articleSchema = {
 
     <!-- Table of Contents -->
     {toc.length > 0 && (
-      <nav class="mb-8 p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg">
+      <nav class="mb-8 p-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg shadow-lg">
         <h2 class="text-lg font-semibold mb-3 text-pale-blush-50">Table of Contents</h2>
         <ul class="space-y-2">
           {toc.map(({ level, text, slug }) => (

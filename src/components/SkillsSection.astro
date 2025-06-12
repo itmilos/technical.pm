@@ -10,7 +10,7 @@ const { technicalSkills, softSkills } = Astro.props;
 <section id="skills" class="mb-20 px-4">
   <h2 class="text-3xl font-semibold mb-8 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">Core Competencies</h2>
   <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-lg hover:bg-white/15 hover:border-white/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group shadow-lg">
+    <div class="glass-card p-6 rounded-lg group">
       <h3 class="font-semibold mb-4 text-pale-blush-50 group-hover:text-royal-purple-600 transition-colors duration-200">Technical</h3>
       <div class="flex flex-wrap gap-2">
         {technicalSkills.map((skill) => (
@@ -27,7 +27,7 @@ const { technicalSkills, softSkills } = Astro.props;
         ))}
       </div>
     </div>
-    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-lg hover:bg-white/15 hover:border-white/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group shadow-lg">
+    <div class="glass-card p-6 rounded-lg group">
       <h3 class="font-semibold mb-4 text-pale-blush-50 group-hover:text-royal-purple-600 transition-colors duration-200">Soft Skills</h3>
       <div class="flex flex-wrap gap-2">
         {softSkills.map((skill) => (

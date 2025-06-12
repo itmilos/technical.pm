@@ -23,19 +23,19 @@ const { projects } = Astro.props;
     {projects.map((project, index) => {
       const { title, description, link, rotation = 'left' } = project;
       return (
-        <div class={`group cursor-pointer project-card flex flex-col ${rotation === 'left' ? 'project-card--rotate-left' : 'project-card--rotate-right'}`}>
+        <a href={link} class={`group cursor-pointer project-card flex flex-col ${rotation === 'left' ? 'project-card--rotate-left' : 'project-card--rotate-right'} block`}>
           <div class="project-card__content flex-1 flex flex-col">
             <h3 class="project-card__title group-hover:text-royal-purple-600">{title}</h3>
             <p class="project-card__description group-hover:text-pale-blush-50">{description}</p>
             <div class="flex-1"></div>
-            <a href={link} class="project-card__link group-hover:translate-x-1 mt-auto">
+            <div class="project-card__link group-hover:translate-x-1 mt-auto">
               View Project
               <svg xmlns="http://www.w3.org/2000/svg" class="project-card__arrow group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </div>
           </div>
-        </div>
+        </a>
       );
     })}
   </div>
@@ -46,7 +46,7 @@ const { projects } = Astro.props;
     position: relative;
     padding: 1.5rem;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(1px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 0.5rem;
     transition: all 0.3s ease;

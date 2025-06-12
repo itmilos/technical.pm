@@ -9,44 +9,56 @@ const totalPosts = blogPosts.length;
 // SEO Status Data
 const seoFeatures = [
   {
-    category: "Core Technical SEO",
+    category: "Core SEO",
     items: [
-      { name: "Sitemap Generation", status: "✅", description: "Automatic XML sitemap with proper priority and changefreq" },
-      { name: "Robots.txt", status: "✅", description: "Comprehensive robots.txt with sitemap reference" },
-      { name: "Meta Tags", status: "✅", description: "Complete meta tags including robots, author, theme-color" },
-      { name: "Canonical URLs", status: "✅", description: "Proper canonical URLs for all pages" },
-      { name: "HTML Compression", status: "✅", description: "Enabled in Astro config for faster loading" },
+      { name: "Title Tags", status: "✅", description: "Unique, descriptive titles under 60 characters" },
+      { name: "Meta Descriptions", status: "✅", description: "Compelling descriptions under 160 characters" },
+      { name: "URL Structure", status: "✅", description: "Clean, descriptive URLs with proper hierarchy" },
+      { name: "Canonical URLs", status: "✅", description: "Proper canonical tags to prevent duplicate content" },
+      { name: "Header Tags", status: "✅", description: "Proper H1-H6 hierarchy for content structure" },
     ]
   },
   {
-    category: "Structured Data (JSON-LD)",
+    category: "Technical SEO",
     items: [
-      { name: "Person Schema", status: "✅", description: "Author/owner structured data with skills and social links" },
-      { name: "Website Schema", status: "✅", description: "Website information with search action" },
-      { name: "BlogPosting Schema", status: "✅", description: "Article structured data for blog posts" },
-      { name: "Organization Schema", status: "✅", description: "Business entity information" },
+      { name: "XML Sitemap", status: "✅", description: "Auto-generated sitemap with all pages and blog posts" },
+      { name: "Robots.txt", status: "✅", description: "Proper crawling directives for search engines" },
+      { name: "Schema Markup", status: "✅", description: "JSON-LD structured data for rich snippets" },
+      { name: "Internal Linking", status: "✅", description: "Strategic internal link structure" },
+      { name: "Image Optimization", status: "✅", description: "Compressed images with proper alt text" },
+      { name: "Mobile Friendly", status: "✅", description: "Responsive design that works on all devices" },
+      { name: "Page Speed", status: "✅", description: "Fast loading times and optimized assets" },
     ]
   },
   {
-    category: "Open Graph & Social",
+    category: "Content & UX",
     items: [
-      { name: "Open Graph Tags", status: "✅", description: "Complete OG tags for social sharing" },
-      { name: "Twitter Cards", status: "✅", description: "Large image cards for Twitter/X" },
-      { name: "Social Share Buttons", status: "✅", description: "Twitter and LinkedIn sharing" },
-      { name: "Social Profiles", status: "✅", description: "Linked social media profiles" },
+      { name: "Quality Content", status: "✅", description: "Technical PM insights and comprehensive guides" },
+      { name: "Blog Structure", status: "✅", description: "Well-organized blog with categories and tags" },
+      { name: "User Experience", status: "✅", description: "Intuitive navigation and clean design" },
+      { name: "Loading Performance", status: "✅", description: "Optimized for Core Web Vitals" },
     ]
   },
   {
-    category: "Performance & UX",
+    category: "Social & Sharing",
     items: [
-      { name: "Mobile Optimization", status: "✅", description: "Responsive design and mobile meta tags" },
-      { name: "Loading Performance", status: "✅", description: "Optimized fonts, assets, and compression" },
-      { name: "PWA Features", status: "✅", description: "Web app manifest and service worker ready" },
-      { name: "Font Optimization", status: "✅", description: "Preconnect to font providers and display=swap" },
+      { name: "Open Graph", status: "✅", description: "Facebook and LinkedIn sharing optimization" },
+      { name: "Twitter Cards", status: "✅", description: "Rich Twitter preview cards" },
+      { name: "Social Icons", status: "✅", description: "Professional social media presence" },
+      { name: "Contact Information", status: "✅", description: "Clear contact methods and professional email" },
     ]
   },
   {
-    category: "Content & Accessibility",
+    category: "Security & Trust",
+    items: [
+      { name: "HTTPS", status: "✅", description: "SSL certificate for secure connections" },
+      { name: "Privacy Policy", status: "✅", description: "Clear privacy and cookie policies" },
+      { name: "Professional Design", status: "✅", description: "Clean, modern, and trustworthy appearance" },
+      { name: "Contact Forms", status: "✅", description: "Secure contact forms with validation" },
+    ]
+  },
+  {
+    category: "Accessibility",
     items: [
       { name: "Semantic HTML", status: "✅", description: "Proper heading hierarchy and semantic elements" },
       { name: "Alt Text", status: "✅", description: "Image alt attributes for accessibility" },
@@ -120,15 +132,15 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
 
       <!-- Quick Stats -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div class="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+        <div class="glass-card p-6 rounded-lg">
           <div class="text-3xl font-bold text-royal-purple-600 mb-2">{completedFeatures}/{totalFeatures}</div>
           <div class="text-sm text-deep-charcoal-300">SEO Features Implemented</div>
         </div>
-        <div class="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+        <div class="glass-card p-6 rounded-lg">
           <div class="text-3xl font-bold text-electric-lavender-500 mb-2">{totalPosts}</div>
           <div class="text-sm text-deep-charcoal-300">Blog Posts in Sitemap</div>
         </div>
-        <div class="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+        <div class="glass-card p-6 rounded-lg">
           <div class="text-3xl font-bold text-cyber-teal-500 mb-2">A+</div>
           <div class="text-sm text-deep-charcoal-300">Technical SEO Grade</div>
         </div>
@@ -138,7 +150,7 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
     <!-- SEO Categories -->
     <div class="space-y-8">
       {seoFeatures.map((category) => (
-        <section class="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+        <section class="glass-card p-6 rounded-lg">
           <h2 class="text-2xl font-bold text-pale-blush-50 mb-6">{category.category}</h2>
           <div class="space-y-4">
             {category.items.map((item) => (
@@ -158,7 +170,7 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
     </div>
 
     <!-- Technical Details -->
-    <section class="mt-12 p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+    <section class="glass-card mt-12 p-6 rounded-lg">
       <h2 class="text-2xl font-bold text-pale-blush-50 mb-6">Technical Implementation</h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -185,7 +197,7 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
     </section>
 
     <!-- Next Steps -->
-    <section class="mt-12 p-6 bg-neon-coral-500/10 border border-neon-coral-500/30 rounded-lg">
+    <section class="glass-primary mt-12 p-6 bg-neon-coral-500/10 rounded-lg">
       <h2 class="text-2xl font-bold text-pale-blush-50 mb-4">Recommended Improvements</h2>
       <ul class="space-y-3 text-deep-charcoal-300">
         <li class="flex items-start gap-3">
@@ -208,7 +220,7 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
     </section>
 
     <!-- Tools & Testing -->
-    <section class="mt-12 p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+    <section class="glass-card mt-12 p-6 rounded-lg">
       <h2 class="text-2xl font-bold text-pale-blush-50 mb-6">SEO Testing Tools</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" 

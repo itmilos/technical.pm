@@ -106,21 +106,19 @@ console.log('Debug - Post links:', postLinks);
     <div class="grid gap-8 md:grid-cols-2">
       {sortedPosts.map((post: CollectionEntry<'blog'>) => (
         <article class="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-105">
-          <div class="p-6">
+          <a href={`/blog/${post.slug}`} class="block p-6 group">
             <div class="flex flex-wrap gap-2 mb-4">
               {post.data.tags.map((tag: string) => (
-                <a
-                  href={`/blog?tag=${encodeURIComponent(tag)}`}
-                  class="px-2 py-1 bg-[rgb(var(--accent))]/20 text-[rgb(var(--accent))] text-xs rounded-full hover:bg-[rgb(var(--accent))]/30 transition-colors duration-200"
+                <span
+                  onclick={`event.stopPropagation(); window.location.href='/blog?tag=${encodeURIComponent(tag)}';`}
+                  class="px-2 py-1 bg-[rgb(var(--accent))]/20 text-[rgb(var(--accent))] text-xs rounded-full hover:bg-[rgb(var(--accent))]/30 transition-colors duration-200 cursor-pointer"
                 >
                   {tag}
-                </a>
+                </span>
               ))}
             </div>
-            <h2 class="text-xl font-bold mb-2">
-              <a href={`/blog/${post.slug}`} class="hover:text-[rgb(var(--primary))] transition-colors duration-200">
-                {post.data.title}
-              </a>
+            <h2 class="text-xl font-bold mb-2 group-hover:text-[rgb(var(--primary))] transition-colors duration-200">
+              {post.data.title}
             </h2>
             <p class="text-[rgb(var(--muted-foreground))] mb-4">
               {post.data.description}
@@ -135,7 +133,7 @@ console.log('Debug - Post links:', postLinks);
               </time>
               <span>{post.data.author}</span>
             </div>
-          </div>
+          </a>
         </article>
       ))}
     </div>
