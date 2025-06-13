@@ -53,10 +53,17 @@
   let mouseY = 0;
   let targetX = 0;
   let targetY = 0;
+  let scrollY = 0;
+  let targetScrollY = 0;
 
   document.addEventListener('mousemove', (event) => {
     mouseX = (event.clientX / window.innerWidth) * 2 - 1;
     mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  // Add scroll event listener
+  window.addEventListener('scroll', () => {
+    targetScrollY = window.scrollY * 0.0005; // Adjust multiplier to control scroll sensitivity
   });
 
   // Animation loop
@@ -66,10 +73,14 @@
     targetX = mouseX * 0.5;
     targetY = mouseY * 0.5;
 
+    // Smooth scroll interpolation
+    scrollY += (targetScrollY - scrollY) * 0.05;
+
     particles.rotation.x += 0.0005;
     particles.rotation.y += 0.0005;
 
-    particles.rotation.x += (targetY - particles.rotation.x) * 0.05;
+    // Combine mouse and scroll movement
+    particles.rotation.x += (targetY - particles.rotation.x + scrollY) * 0.05;
     particles.rotation.y += (targetX - particles.rotation.y) * 0.05;
 
     renderer.render(scene, camera);

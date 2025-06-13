@@ -1,0 +1,256 @@
+---
+interface Props {
+	centerTitle: string;
+	centerText: string;
+	leftTitle: string;
+	leftText: string;
+	rightTitle: string;
+	rightText: string;
+}
+
+const {
+	centerTitle,
+	centerText,
+	leftTitle,
+	leftText,
+	rightTitle,
+	rightText
+} = Astro.props;
+---
+
+<!-- Circular Diagram - Mobile Version -->
+<div class="relative w-full max-w-6xl mx-auto mb-20 md:hidden">
+	<div class="mobile-diagram relative mx-auto">
+		<!-- Center Circle - Why -->
+		<div class="mobile-item-container center-item-container">
+			<div class="mobile-center-item" data-circle="why">
+				<div class="mobile-content">
+					<h3 class="mobile-title text-royal-purple-600 text-pretty text-decoration-underline text-decoration-royal-purple-400 text-decoration-dotted text-decoration-2 text-underline-offset-4 text-transform-uppercase text-overflow-ellipsis text-wrap-balance text-indent-4">{centerTitle}</h3>
+					<p class="mobile-text text-pale-blush-50 text-pretty text-decoration-underline text-decoration-pale-blush-200 text-decoration-wavy text-decoration-1 text-underline-offset-2 text-transform-none text-overflow-clip text-wrap-pretty text-indent-2">
+						{centerText}
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Connector Line -->
+		<div class="connector-line"></div>
+
+		<!-- How Item - Left -->
+		<div class="mobile-item-container">
+			<div class="mobile-item square-item" data-circle="how">
+				<div class="mobile-dot"></div>
+				<div class="mobile-content">
+					<h3 class="mobile-title-small text-electric-lavender-500 text-pretty text-decoration-underline text-decoration-electric-lavender-300 text-decoration-dashed text-decoration-2 text-underline-offset-3 text-transform-capitalize text-overflow-ellipsis text-wrap-balance text-indent-2">{leftTitle}</h3>
+					<p class="mobile-text-small text-pale-blush-100 text-pretty text-decoration-underline text-decoration-pale-blush-100 text-decoration-dotted text-decoration-1 text-underline-offset-1 text-transform-none text-overflow-clip text-wrap-pretty text-indent-1">
+						{leftText}
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Connector Line -->
+		<div class="connector-line"></div>
+
+		<!-- What Item - Right -->
+		<div class="mobile-item-container">
+			<div class="mobile-item rectangle-item" data-circle="what">
+				<div class="mobile-dot"></div>
+				<div class="mobile-content">
+					<h3 class="mobile-title-small text-cyber-teal-500 text-pretty text-decoration-underline text-decoration-cyber-teal-300 text-decoration-dashed text-decoration-2 text-underline-offset-3 text-transform-capitalize text-overflow-ellipsis text-wrap-balance text-indent-2">{rightTitle}</h3>
+					<p class="mobile-text-small text-pale-blush-100 text-pretty text-decoration-underline text-decoration-pale-blush-100 text-decoration-dotted text-decoration-1 text-underline-offset-1 text-transform-none text-overflow-clip text-wrap-pretty text-indent-1">
+						{rightText}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* Mobile Diagram Styles */
+	.mobile-diagram {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem;
+		padding: 2rem 1rem;
+	}
+
+	.mobile-item-container {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		position: relative;
+	}
+
+	/* Center item styling */
+	.mobile-center-item {
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, 
+			rgba(108, 62, 166, 0.2) 0%, 
+			rgba(108, 62, 166, 0.1) 100%);
+		border: 2px solid rgba(108, 62, 166, 0.4);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		box-shadow: 0 8px 24px rgba(108, 62, 166, 0.15);
+	}
+
+	/* Mobile items styling */
+	.mobile-item {
+		width: 280px;
+		min-height: 120px;
+		border-radius: 16px;
+		background: linear-gradient(135deg, 
+			rgba(255, 255, 255, 0.15) 0%, 
+			rgba(255, 255, 255, 0.05) 100%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		position: relative;
+	}
+
+	.square-item {
+		border: 2px solid rgba(181, 126, 220, 0.4);
+		box-shadow: 0 8px 24px rgba(181, 126, 220, 0.15);
+	}
+
+	.rectangle-item {
+		border: 2px solid rgba(14, 194, 164, 0.4);
+		box-shadow: 0 8px 24px rgba(14, 194, 164, 0.15);
+	}
+
+	/* Connector lines */
+	.connector-line {
+		width: 2px;
+		height: 2rem;
+		background: linear-gradient(to bottom, 
+			rgba(108, 62, 166, 0.6) 0%,
+			rgba(181, 126, 220, 0.4) 50%,
+			rgba(14, 194, 164, 0.6) 100%);
+	}
+
+	/* Mobile dots */
+	.mobile-dot {
+		position: absolute;
+		top: -12px;
+		left: 50%;
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+	}
+
+	.square-item .mobile-dot {
+		background: rgba(181, 126, 220, 0.8);
+		box-shadow: 0 0 0 4px rgba(181, 126, 220, 0.2);
+	}
+
+	.rectangle-item .mobile-dot {
+		background: rgba(14, 194, 164, 0.8);
+		box-shadow: 0 0 0 4px rgba(14, 194, 164, 0.2);
+	}
+
+	/* Typography */
+	.mobile-content {
+		padding: 1.5rem;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+
+	.mobile-title {
+		font-size: 1.125rem;
+		font-weight: 700;
+		margin-bottom: 0.5rem;
+		line-height: 1.2;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	}
+	
+	.mobile-title-small {
+		font-size: 1rem;
+		font-weight: 700;
+		margin-bottom: 0.5rem;
+		line-height: 1.1;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	}
+	
+	.mobile-text {
+		font-size: 0.875rem;
+		line-height: 1.4;
+		font-weight: 100;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	}
+	
+	.mobile-text-small {
+		font-size: 0.875rem;
+		line-height: 1.4;
+		letter-spacing: 0.001em;
+		font-weight: 100;
+		word-spacing: 0.02em;
+	}
+
+	/* Extra small mobile devices */
+	@media (max-width: 480px) {
+		.mobile-diagram {
+			padding: 1.5rem 0.75rem;
+			gap: 1.5rem;
+		}
+
+		.mobile-center-item {
+			width: 220px;
+			height: 220px;
+		}
+
+		.mobile-item {
+			width: 100%;
+			max-width: 300px;
+			min-height: 100px;
+		}
+
+		.mobile-content {
+			padding: 1.25rem;
+		}
+
+		.mobile-title {
+			font-size: 1rem;
+			margin-bottom: 0.4rem;
+			line-height: 1.1;
+		}
+		
+		.mobile-title-small {
+			font-size: 0.9rem;
+			margin-bottom: 0.4rem;
+			line-height: 1.05;
+		}
+		
+		.mobile-text {
+			font-size: 1rem;
+			line-height: 1.35;
+		}
+		
+		.mobile-text-small {
+			font-size: 0.9rem;
+			line-height: 1.3;
+			letter-spacing: 0;
+			font-weight: 500;
+			word-spacing: 0.01em;
+		}
+
+		/* Smaller connector lines */
+		.connector-line {
+			height: 1.5rem;
+		}
+	}
+</style>

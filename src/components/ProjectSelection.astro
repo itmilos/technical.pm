@@ -26,7 +26,7 @@ const { projects } = Astro.props;
         <a href={link} class={`group cursor-pointer project-card flex flex-col ${rotation === 'left' ? 'project-card--rotate-left' : 'project-card--rotate-right'} block`}>
           <div class="project-card__content flex-1 flex flex-col">
             <h3 class="project-card__title group-hover:text-royal-purple-600">{title}</h3>
-            <p class="project-card__description group-hover:text-pale-blush-50">{description}</p>
+            <p class="project-card__description group-hover:text-pale-blush-50 text-pretty indent-2">{description}</p>
             <div class="flex-1"></div>
             <div class="project-card__link group-hover:translate-x-1 mt-auto">
               View Project
