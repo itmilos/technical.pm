@@ -19,10 +19,10 @@ const {
 ---
 
 <!-- Circular Diagram - Mobile Version -->
-<div class="relative w-full max-w-6xl mx-auto mb-20 md:hidden">
-	<div class="mobile-diagram relative mx-auto">
+<div id="mobile-diagram-container" class="relative w-full max-w-6xl mx-auto md:hidden">
+	<div class="mobile-diagram">
 		<!-- Center Circle - Why -->
-		<div class="mobile-item-container center-item-container">
+		<div class="mobile-item-container center-item-container snap-center">
 			<div class="mobile-center-item" data-circle="why">
 				<div class="mobile-content">
 					<h3 class="mobile-title text-royal-purple-600 text-pretty text-decoration-underline text-decoration-royal-purple-400 text-decoration-dotted text-decoration-2 text-underline-offset-4 text-transform-uppercase text-overflow-ellipsis text-wrap-balance text-indent-4">{centerTitle}</h3>
@@ -33,13 +33,10 @@ const {
 			</div>
 		</div>
 
-		<!-- Connector Line -->
-		<div class="connector-line"></div>
-
 		<!-- How Item - Left -->
-		<div class="mobile-item-container">
+		<div class="mobile-item-container snap-center">
 			<div class="mobile-item square-item" data-circle="how">
-				<div class="mobile-dot"></div>
+				<!-- <div class="mobile-dot"></div> -->
 				<div class="mobile-content">
 					<h3 class="mobile-title-small text-electric-lavender-500 text-pretty text-decoration-underline text-decoration-electric-lavender-300 text-decoration-dashed text-decoration-2 text-underline-offset-3 text-transform-capitalize text-overflow-ellipsis text-wrap-balance text-indent-2">{leftTitle}</h3>
 					<p class="mobile-text-small text-pale-blush-100 text-pretty text-decoration-underline text-decoration-pale-blush-100 text-decoration-dotted text-decoration-1 text-underline-offset-1 text-transform-none text-overflow-clip text-wrap-pretty text-indent-1">
@@ -49,13 +46,10 @@ const {
 			</div>
 		</div>
 
-		<!-- Connector Line -->
-		<div class="connector-line"></div>
-
 		<!-- What Item - Right -->
-		<div class="mobile-item-container">
+		<div class="mobile-item-container snap-center">
 			<div class="mobile-item rectangle-item" data-circle="what">
-				<div class="mobile-dot"></div>
+				<!-- <div class="mobile-dot"></div> -->
 				<div class="mobile-content">
 					<h3 class="mobile-title-small text-cyber-teal-500 text-pretty text-decoration-underline text-decoration-cyber-teal-300 text-decoration-dashed text-decoration-2 text-underline-offset-3 text-transform-capitalize text-overflow-ellipsis text-wrap-balance text-indent-2">{rightTitle}</h3>
 					<p class="mobile-text-small text-pale-blush-100 text-pretty text-decoration-underline text-decoration-pale-blush-100 text-decoration-dotted text-decoration-1 text-underline-offset-1 text-transform-none text-overflow-clip text-wrap-pretty text-indent-1">
@@ -64,6 +58,9 @@ const {
 				</div>
 			</div>
 		</div>
+
+		<!-- Observer target element -->
+		<div id="diagram-end-observer" class="h-1 w-full"></div>
 	</div>
 </div>
 
@@ -71,18 +68,30 @@ const {
 	/* Mobile Diagram Styles */
 	.mobile-diagram {
 		width: 100%;
+		height: 80vh;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		gap: 2rem;
-		padding: 2rem 1rem;
+		overflow-y: auto;
+		scroll-snap-type: y mandatory;
+		scroll-behavior: smooth;
+		-webkit-overflow-scrolling: touch;
+		transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+	}
+
+	.mobile-diagram.fade-out {
+		opacity: 0;
+		transform: translateY(-20px);
+		pointer-events: none;
 	}
 
 	.mobile-item-container {
 		width: 100%;
+		height: 100vh;
 		display: flex;
 		justify-content: center;
+		align-items: center;
 		position: relative;
+		flex-shrink: 0;
 	}
 
 	/* Center item styling */
@@ -204,13 +213,16 @@ const {
 	/* Extra small mobile devices */
 	@media (max-width: 480px) {
 		.mobile-diagram {
-			padding: 1.5rem 0.75rem;
-			gap: 1.5rem;
+			height: calc(100vh - 64px);
+		}
+
+		.mobile-item-container {
+			height: calc(100vh - 64px);
 		}
 
 		.mobile-center-item {
-			width: 220px;
-			height: 220px;
+			width: 300px;
+			height: 300px;
 		}
 
 		.mobile-item {
@@ -224,24 +236,24 @@ const {
 		}
 
 		.mobile-title {
-			font-size: 1rem;
+			font-size: 2rem;
 			margin-bottom: 0.4rem;
 			line-height: 1.1;
 		}
 		
 		.mobile-title-small {
-			font-size: 0.9rem;
+			font-size: 1.5rem;
 			margin-bottom: 0.4rem;
 			line-height: 1.05;
 		}
 		
 		.mobile-text {
-			font-size: 1rem;
+			font-size: 1.5rem;
 			line-height: 1.35;
 		}
 		
 		.mobile-text-small {
-			font-size: 0.9rem;
+			font-size: 1.5rem;
 			line-height: 1.3;
 			letter-spacing: 0;
 			font-weight: 500;
@@ -253,4 +265,65 @@ const {
 			height: 1.5rem;
 		}
 	}
+
+	/* Add scroll indicator */
+	.mobile-diagram::after {
+		content: '';
+		position: fixed;
+		bottom: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 30px;
+		height: 30px;
+		background: linear-gradient(180deg, 
+			rgba(255, 255, 255, 0.2) 0%,
+			rgba(255, 255, 255, 0.1) 100%);
+		border-radius: 50%;
+		animation: bounce 2s infinite;
+		pointer-events: none;
+		z-index: 100;
+	}
+
+	@keyframes bounce {
+		0%, 20%, 50%, 80%, 100% {
+			transform: translateY(0) translateX(-50%);
+		}
+		40% {
+			transform: translateY(-10px) translateX(-50%);
+		}
+		60% {
+			transform: translateY(-5px) translateX(-50%);
+		}
+	}
 </style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const container = document.getElementById('mobile-diagram-container');
+		const diagram = container?.querySelector('.mobile-diagram');
+		const observerTarget = document.getElementById('diagram-end-observer');
+
+		if (!container || !diagram || !observerTarget) return;
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					// When the observer target is visible (user has scrolled past all sections)
+					diagram.classList.add('fade-out');
+					
+					// Remove the element after animation
+					container.style.display = 'none';
+
+					
+					// Disconnect the observer since we don't need it anymore
+					observer.disconnect();
+				}
+			});
+		}, {
+			threshold: 0.6, // Trigger when 50% of the target is visible
+			rootMargin: '0px'
+		});
+
+		observer.observe(observerTarget);
+	});
+</script>
