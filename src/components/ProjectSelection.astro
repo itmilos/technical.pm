@@ -2,8 +2,11 @@
 import '../styles/global.css';
 
 export interface Project {
+  id: string;
   title: string;
   description: string;
+  technologies?: string[];
+  image?: string;
   link: string;
   rotation?: 'left' | 'right';
 }
@@ -16,17 +19,24 @@ const { projects } = Astro.props;
 ---
 
 <section id="projects" class="mb-16 sm:mb-20 px-4">
-  <h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">
+  <h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center transition-colors duration-200 cursor-default" style="color: var(--text-primary);">
     Signature Projects
   </h2>
   <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
     {projects.map((project, index) => {
-      const { title, description, link, rotation = 'left' } = project;
+      const { title, description, link, rotation = index % 2 === 0 ? 'left' : 'right' } = project;
       return (
         <a href={link} class={`group cursor-pointer project-card flex flex-col ${rotation === 'left' ? 'project-card--rotate-left' : 'project-card--rotate-right'} block`}>
           <div class="project-card__content flex-1 flex flex-col">
-            <h3 class="project-card__title group-hover:text-royal-purple-600">{title}</h3>
-            <p class="project-card__description group-hover:text-pale-blush-50 text-pretty indent-2">{description}</p>
+            <h3 class="project-card__title group-hover:transition-colors duration-200">{title}</h3>
+            <p class="project-card__description group-hover:transition-colors duration-200 text-pretty indent-2">{description}</p>
+            {project.technologies && (
+              <div class="project-card__technologies flex flex-wrap gap-2 mt-3">
+                {project.technologies.map((tech) => (
+                  <span class="tech-tag">{tech}</span>
+                ))}
+              </div>
+            )}
             <div class="flex-1"></div>
             <div class="project-card__link group-hover:translate-x-1 mt-auto">
               View Project
@@ -80,7 +90,7 @@ const { projects } = Astro.props;
   .project-card__border-top-right,
   .project-card__border-bottom-left {
     position: absolute;
-    background: #6C3EA6;
+    background: var(--accent-primary);
     transition: transform 0.3s ease;
   }
 
@@ -113,7 +123,7 @@ const { projects } = Astro.props;
     margin-bottom: 0.75rem;
     transition: color 0.3s ease;
     line-height: 1.3;
-    color: #F3E6F8;
+    color: var(--text-primary);
   }
 
   @media (min-width: 640px) {
@@ -124,7 +134,7 @@ const { projects } = Astro.props;
   }
 
   .project-card__description {
-    color: rgba(243, 230, 248, 0.8);
+    color: var(--text-secondary);
     margin-bottom: 1rem;
     transition: color 0.3s ease;
     font-size: 0.9rem;
@@ -138,10 +148,29 @@ const { projects } = Astro.props;
     }
   }
 
+  .project-card__technologies {
+    margin-bottom: 1rem;
+  }
+
+  .tech-tag {
+    background: var(--accent-tertiary);
+    color: var(--accent-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .tech-tag:hover {
+    background: var(--accent-primary);
+    color: white;
+  }
+
   .project-card__link {
     display: inline-flex;
     align-items: center;
-    color: #6C3EA6;
+    color: var(--accent-primary);
     font-weight: 500;
     transition: transform 0.3s ease;
   }
@@ -160,5 +189,36 @@ const { projects } = Astro.props;
 
   .project-card--rotate-right:hover {
     transform: translateY(-4px) rotate(1deg);
+  }
+
+  /* Light theme adjustments */
+  [data-theme="light"] .project-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-secondary);
+  }
+
+  [data-theme="light"] .project-card:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-tertiary);
+  }
+
+  [data-theme="light"] .project-card__title {
+    color: var(--text-primary);
+  }
+
+  [data-theme="light"] .project-card__description {
+    color: var(--text-secondary);
+  }
+
+  [data-theme="light"] .tech-tag {
+    background: var(--accent-tertiary);
+    color: var(--accent-primary);
+  }
+
+  [data-theme="light"] .tech-tag:hover {
+    background: var(--accent-primary);
+    color: white;
   }
 </style> 

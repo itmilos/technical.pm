@@ -4,37 +4,37 @@ const targetAudiences = [
 		title: 'Small Companies',
 		description: 'Nimble organizations ready to scale efficiently',
 		size: '1-20 employees',
-		color: 'bg-cyber-teal-500'
+		color: 'var(--accent-tertiary)'
 	},
 	{
 		title: 'Startups',
 		description: 'High-growth companies needing strategic guidance',
 		size: 'Early to growth stage',
-		color: 'bg-neon-coral-500'
+		color: 'var(--accent-secondary)'
 	},
 	{
 		title: 'Medium Companies',
 		description: 'Established businesses optimizing for scale',
 		size: 'Up to 100 people',
-		color: 'bg-royal-purple-600'
+		color: 'var(--accent-primary)'
 	}
 ];
 ---
 
 <!-- Target Audiences Section -->
 <section id="audiences" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10 pt-24 sm:pt-0">
-	<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">If you are</h2>
+	<h2 class="text-2xl sm:text-3xl font-semibold mb-8 text-center transition-colors duration-200 cursor-default" style="color: var(--text-primary);">If you are</h2>
 	<div class="grid md:grid-cols-3 gap-8">
 		{targetAudiences.map((audience) => (
 			<div class="glass-card rounded-lg p-6">
-				<div class={`w-12 h-12 ${audience.color} rounded-lg flex items-center justify-center mb-4 mx-auto`}>
+				<div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto" style="background: {audience.color};">
 					<span class="text-white font-bold text-lg font-accent">
 						{audience.title.charAt(0)}
 					</span>
 				</div>
-				<h3 class="text-lg font-semibold mb-2 text-center text-pale-blush-50 font-accent">{audience.title}</h3>
-				<p class="text-pale-blush-100 text-sm mb-3 text-center leading-relaxed font-primary">{audience.description}</p>
-				<div class="text-xs text-royal-purple-600 font-medium text-center font-accent">{audience.size}</div>
+				<h3 class="text-lg font-semibold mb-2 text-center font-accent" style="color: var(--text-primary);">{audience.title}</h3>
+				<p class="text-sm mb-3 text-center leading-relaxed font-primary" style="color: var(--text-secondary);">{audience.description}</p>
+				<div class="text-xs font-medium text-center font-accent" style="color: var(--accent-primary);">{audience.size}</div>
 			</div>
 		))}
 	</div>

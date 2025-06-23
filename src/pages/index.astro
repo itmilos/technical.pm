@@ -103,8 +103,8 @@ const pricingTiers = [
 ---
 
 <Layout 
-	title="Why"
-	description="People deserve tech that works for them, not the other way around."
+	title="Technical Product Manager - Milos Rujevic"
+	description="Expert Technical Product Manager specializing in AI/ML, cloud infrastructure, and data-driven product strategy. Transform your technology with strategic product thinking."
 	image="/seo/og-image.png"
 >
 	<WebGLBackground />
@@ -126,7 +126,8 @@ const pricingTiers = [
 		<a 
 			href="#"
 			onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;"
-			class="inline-block px-6 sm:px-8 py-3 bg-royal-purple-600 text-white font-semibold rounded-lg shadow hover:bg-electric-lavender-500 transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group text-sm sm:text-base"
+			class="inline-block px-6 sm:px-8 py-3 font-semibold rounded-lg shadow transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group text-sm sm:text-base"
+			style="background: var(--accent-primary); color: white;"
 		>
 			Get in Touch
 			<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
@@ -134,14 +135,12 @@ const pricingTiers = [
 	</section>
 
 	<section id="experience" class="relative w-full mb-16 sm:mb-20 px-4">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center hover:text-[rgb(var(--primary))] transition-colors duration-200 cursor-default">Experience</h2>
+		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center transition-colors duration-200 cursor-default" style="color: var(--text-primary);">Experience</h2>
 		<div class="flex justify-center items-center min-h-[250px] sm:min-h-[300px]">
 			
 				<GlobeAnimation  client:load />
 		</div>
 	</section>
-
-
 
 	<!-- Projects Section -->
 	<ProjectSelection  projects={projects}/>
@@ -158,43 +157,49 @@ const pricingTiers = [
 
 	<!-- Contact Section -->
 	<section id="contact" class="mb-10 px-4">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center hover:text-royal-purple-600 transition-colors duration-200 cursor-default">Ready to Elevate Your Project?</h2>
+		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center transition-colors duration-200 cursor-default" style="color: var(--text-primary);">Ready to Elevate Your Project?</h2>
 		<div class="flex flex-col items-center max-w-4xl mx-auto text-center">
-			<p class="mb-6 text-base sm:text-lg text-deep-charcoal-300 hover:text-pale-blush-50 transition-colors duration-200 cursor-default max-w-2xl leading-relaxed">Let's collaborate to build impactful, cutting-edge solutions.</p>
+			<p class="mb-6 text-base sm:text-lg transition-colors duration-200 cursor-default max-w-2xl leading-relaxed" style="color: var(--text-secondary);">Let's collaborate to build impactful, cutting-edge solutions.</p>
 			<a onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;" 
-			   class="inline-block px-6 sm:px-8 py-3 bg-royal-purple-600 text-white font-semibold rounded-lg shadow hover:bg-electric-lavender-500 transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group mb-4 cursor-pointer text-sm sm:text-base">
+			   class="inline-block px-6 sm:px-8 py-3 font-semibold rounded-lg shadow transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group mb-4 cursor-pointer text-sm sm:text-base"
+			   style="background: var(--accent-primary); color: white;">
 				Start a Conversation
 				<span class="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
 			</a>
 		</div>
 	</section>
 
-	<!-- Contact Form Modal -->
+	<!-- Contact Modal -->
 	<Modal id="contact-modal" title="Get in Touch" subtitle="Let's discuss how we can work together">
 		<AnimatedContactForm 
 			formId="contact-form"
 			buttonText="Send Message"
+			fields={[
+				{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
+				{ type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true },
+				{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4 }
+			]}
 		/>
 	</Modal>
 
-	<!-- Consultation Form Modal -->
-	<Modal id="consultation-modal" title="Book a Consultation" subtitle="Schedule a strategic technical consultation">
+	<!-- Consultation Modal -->
+	<Modal id="consultation-modal" title="Book a Consultation" subtitle="Get expert guidance on your technical strategy">
 		<AnimatedContactForm 
 			formId="contact-form-consultation"
 			buttonText="Book Consultation"
 			fields={[
 				{ type: 'text', id: 'consultation-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
 				{ type: 'email', id: 'consultation-email', name: 'email', label: 'Email Address', icon: '📧', required: true },
-				{ type: 'textarea', id: 'consultation-goals', name: 'message', label: 'What would you like to discuss?', icon: '🎯', required: true, rows: 4 }
+				{ type: 'textarea', id: 'consultation-goals', name: 'message', label: 'What are your consultation goals?', icon: '🎯', required: true, rows: 4 }
 			]}
 		/>
 	</Modal>
 
-	<!-- Project Form Modal -->
-	<Modal id="project-modal" title="Project Discussion" subtitle="Let's discuss your project needs">
+	<!-- Project Modal -->
+	<Modal id="project-modal" title="Start a Project" subtitle="Let's build something amazing together">
 		<AnimatedContactForm 
 			formId="contact-form-project"
-			buttonText="Submit Project Request"
+			buttonText="Start Project"
 			fields={[
 				{ type: 'text', id: 'project-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
 				{ type: 'email', id: 'project-email', name: 'email', label: 'Email Address', icon: '📧', required: true },
@@ -209,8 +214,8 @@ const pricingTiers = [
 		/>
 	</Modal>
 
-	<!-- Engagement Form Modal -->
-	<Modal id="engagement-modal" title="Full Engagement" subtitle="Let's discuss a long-term partnership">
+	<!-- Engagement Modal -->
+	<Modal id="engagement-modal" title="Begin Partnership" subtitle="Let's build a long-term strategic relationship">
 		<AnimatedContactForm 
 			formId="contact-form-engagement"
 			buttonText="Start Partnership Discussion"
@@ -228,12 +233,12 @@ const pricingTiers = [
 		/>
 	</Modal>
 
-	<footer class="text-center text-deep-charcoal-400 text-sm py-6 relative">
+	<footer class="text-center text-sm py-6 relative" style="color: var(--text-secondary);">
 		<div class="flex flex-col sm:flex-row items-center justify-center gap-2">
-			<span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default">© 2025 Milos Rujevic. All rights reserved.</span>
-			<span class="text-pale-blush-200 hidden sm:inline">•</span>
-			<span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default">Powered by Creativity and Free Will</span>
-			<span class="text-pale-blush-200 hidden sm:inline">•</span>
+			<span class="transition-colors duration-200 cursor-default" style="color: var(--text-secondary);">© 2025 Milos Rujevic. All rights reserved.</span>
+			<span class="hidden sm:inline" style="color: var(--text-secondary);">•</span>
+			<span class="transition-colors duration-200 cursor-default" style="color: var(--text-secondary);">Powered by Creativity and Free Will</span>
+			<span class="hidden sm:inline" style="color: var(--text-secondary);">•</span>
 			<div class="hover:scale-110 transition-transform duration-300">
 				<WhiteRabbit />
 			</div>

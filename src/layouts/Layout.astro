@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import CookieConsent from '../components/CookieConsent.astro';
 import Logo from '../components/Logo.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import { SEO } from 'astro-seo';
 import LoadingAnimation from '../components/LoadingAnimation.astro';
 
@@ -30,7 +31,7 @@ const shouldHideContact = hideContact || isBlogPage;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -76,8 +77,8 @@ const shouldHideContact = hideContact || isBlogPage;
           { httpEquiv: 'Content-Type', content: 'text/html; charset=utf-8' },
           { httpEquiv: 'X-UA-Compatible', content: 'IE=edge' },
           { name: 'format-detection', content: 'telephone=no' },
-          { name: 'theme-color', content: '#6C3EA6' },
-          { name: 'msapplication-TileColor', content: '#6C3EA6' },
+          { name: 'theme-color', content: '#1E1E1E' },
+          { name: 'msapplication-TileColor', content: '#1E1E1E' },
           { name: 'msapplication-config', content: '/browserconfig.xml' },
           { name: 'apple-mobile-web-app-capable', content: 'yes' },
           { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
@@ -158,8 +159,8 @@ const shouldHideContact = hideContact || isBlogPage;
       })}
     </script>
   </head>
-  <body class="min-h-screen font-primary antialiased transition-colors duration-200 bg-deep-charcoal-900 text-pale-blush-50">
-    <nav class="sticky top-0 z-20 bg-deep-charcoal-900/80 backdrop-blur border-b border-deep-charcoal-700 shadow-sm">
+  <body class="min-h-screen font-primary antialiased transition-colors duration-200">
+    <nav class="sticky top-0 z-20 backdrop-blur border-b transition-all duration-200" style="background: var(--bg-primary); border-color: var(--border-primary);">
       <div class="container mx-auto flex items-center justify-between px-4 py-3 max-w-4xl">
         <div class="flex items-center gap-4">
           <LoadingAnimation variant="minimal" speed='slow' showText={false} size="sm" />
@@ -168,11 +169,12 @@ const shouldHideContact = hideContact || isBlogPage;
         
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center gap-6">
-          <ul class="flex items-center gap-6 text-deep-charcoal-300 font-medium">
+          <ul class="flex items-center gap-6 font-medium" style="color: var(--text-secondary);">
             <li>
               <a
                 href="/blog"
-                class="menu-link hover:text-royal-purple-600 transition-colors duration-200"
+                class="menu-link hover:transition-colors duration-200"
+                style="color: var(--text-secondary);"
               >
                 Blog
               </a>
@@ -181,93 +183,100 @@ const shouldHideContact = hideContact || isBlogPage;
               <li>
                 <a
                   onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;"
-                  class="menu-link hover:text-royal-purple-600 transition-colors duration-200 cursor-pointer"
+                  class="menu-link hover:transition-colors duration-200 cursor-pointer"
+                  style="color: var(--text-secondary);"
                 >
                   Contact
                 </a>
               </li>
             )}
           </ul>
+          <ThemeToggle />
         </div>
 
         <!-- Mobile Menu Button -->
-        <button
-          type="button"
-          id="mobile-menu-button"
-          class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-deep-charcoal-400 hover:text-pale-blush-50 hover:bg-deep-charcoal-700 transition-colors duration-200"
-          aria-controls="mobile-menu"
-          aria-expanded="false"
-        >
-          <span class="sr-only">Open main menu</span>
-          <svg
-            class="block h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
+        <div class="md:hidden flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            type="button"
+            id="mobile-menu-button"
+            class="inline-flex items-center justify-center p-2 rounded-md transition-colors duration-200"
+            style="color: var(--text-tertiary);"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="block h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
 
-        <!-- Mobile Menu -->
-        <div
-          id="mobile-menu"
-          class="hidden fixed inset-0 z-50 md:hidden"
-        >
-          <div class="fixed inset-0 bg-deep-charcoal-900/50" aria-hidden="true"></div>
-          <div class="fixed top-0 right-0 w-full max-w-sm h-full bg-deep-charcoal-800 shadow-xl">
-            <div class="flex items-center justify-between p-4 border-b border-deep-charcoal-700">
-              <h2 class="text-lg font-semibold text-pale-blush-50">Menu</h2>
-              <button
-                id="close-menu-button"
-                type="button"
-                                 class="rounded-md p-2 text-deep-charcoal-400 hover:text-pale-blush-50 hover:bg-deep-charcoal-700 transition-colors"
-              >
-                <span class="sr-only">Close menu</span>
-                <svg
-                  class="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+          <!-- Mobile Menu -->
+          <div
+            id="mobile-menu"
+            class="hidden fixed inset-0 z-50 md:hidden"
+          >
+            <div class="fixed inset-0 transition-opacity" style="background: var(--bg-primary); opacity: 0.5;" aria-hidden="true"></div>
+            <div class="fixed top-0 right-0 w-full max-w-sm h-full shadow-xl transition-all duration-200" style="background: var(--bg-secondary);">
+              <div class="flex items-center justify-between p-4 border-b transition-colors duration-200" style="border-color: var(--border-primary);">
+                <h2 class="text-lg font-semibold transition-colors duration-200" style="color: var(--text-primary);">Menu</h2>
+                <button
+                  id="close-menu-button"
+                  type="button"
+                  class="rounded-md p-2 transition-colors duration-200"
+                  style="color: var(--text-tertiary);"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <ul class="flex flex-col p-4 space-y-4 text-pale-blush-50 font-medium bg-deep-charcoal-800/95">
-                <li>
-                  <a
-                    href="/blog"
-                    class="menu-link block py-2 hover:text-royal-purple-600 transition-colors duration-200"
-                    onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+                  <span class="sr-only">Close menu</span>
+                  <svg
+                    class="h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    Blog
-                  </a>
-                </li>
-                {!shouldHideContact && (
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <ul class="flex flex-col p-4 space-y-4 font-medium transition-colors duration-200" style="color: var(--text-secondary); background: var(--bg-secondary);">
                   <li>
-                    <a 
-                      class="menu-link block py-2 hover:text-royal-purple-600 transition-colors duration-200 cursor-pointer"
-                      onclick="document.getElementById('contact-modal').classList.remove('hidden'); document.getElementById('mobile-menu').classList.add('hidden'); return false;"
+                    <a
+                      href="/blog"
+                      class="menu-link block py-2 hover:transition-colors duration-200"
+                      onclick="document.getElementById('mobile-menu').classList.add('hidden')"
                     >
-                      Contact
+                      Blog
                     </a>
                   </li>
-                )}
-            </ul>
+                  {!shouldHideContact && (
+                    <li>
+                      <a 
+                        class="menu-link block py-2 hover:transition-colors duration-200 cursor-pointer"
+                        onclick="document.getElementById('contact-modal').classList.remove('hidden'); document.getElementById('mobile-menu').classList.add('hidden'); return false;"
+                      >
+                        Contact
+                      </a>
+                    </li>
+                  )}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -326,5 +335,21 @@ const shouldHideContact = hideContact || isBlogPage;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 200ms;
+  }
+
+  /* Theme-specific hover effects */
+  .menu-link:hover {
+    color: var(--accent-primary) !important;
+  }
+
+  /* Mobile menu button hover */
+  #mobile-menu-button:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary) !important;
+  }
+
+  #close-menu-button:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary) !important;
   }
 </style> 

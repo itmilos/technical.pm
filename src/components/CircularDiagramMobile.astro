@@ -25,8 +25,8 @@ const {
 		<div class="mobile-item-container center-item-container snap-center">
 			<div class="mobile-center-item" data-circle="why">
 				<div class="mobile-content">
-					<h3 class="mobile-title text-royal-purple-600 text-pretty text-decoration-underline text-decoration-royal-purple-400 text-decoration-dotted text-decoration-2 text-underline-offset-4 text-transform-uppercase text-overflow-ellipsis text-wrap-balance text-indent-4">{centerTitle}</h3>
-					<p class="mobile-text text-pale-blush-50 text-pretty text-decoration-underline text-decoration-pale-blush-200 text-decoration-wavy text-decoration-1 text-underline-offset-2 text-transform-none text-overflow-clip text-wrap-pretty text-indent-2">
+					<h3 class="mobile-title text-pretty text-decoration-underline text-decoration-dotted text-decoration-2 text-underline-offset-4 text-transform-uppercase text-overflow-ellipsis text-wrap-balance text-indent-4" style="color: var(--accent-primary);">{centerTitle}</h3>
+					<p class="mobile-text text-pretty text-decoration-underline text-decoration-wavy text-decoration-1 text-underline-offset-2 text-transform-none text-overflow-clip text-wrap-pretty text-indent-2" style="color: var(--text-primary);">
 						{centerText}
 					</p>
 				</div>
@@ -38,8 +38,8 @@ const {
 			<div class="mobile-item square-item" data-circle="how">
 				<!-- <div class="mobile-dot"></div> -->
 				<div class="mobile-content">
-					<h3 class="mobile-title-small text-electric-lavender-500 text-pretty text-decoration-underline text-decoration-electric-lavender-300 text-decoration-dashed text-decoration-2 text-underline-offset-3 text-transform-capitalize text-overflow-ellipsis text-wrap-balance text-indent-2">{leftTitle}</h3>
-					<p class="mobile-text-small text-pale-blush-100 text-pretty text-decoration-underline text-decoration-pale-blush-100 text-decoration-dotted text-decoration-1 text-underline-offset-1 text-transform-none text-overflow-clip text-wrap-pretty text-indent-1">
+					<h3 class="mobile-title-small text-pretty text-decoration-underline text-decoration-dashed text-decoration-2 text-underline-offset-3 text-transform-capitalize text-overflow-ellipsis text-wrap-balance text-indent-2" style="color: var(--accent-secondary);">{leftTitle}</h3>
+					<p class="mobile-text-small text-pretty text-decoration-underline text-decoration-dotted text-decoration-1 text-underline-offset-1 text-transform-none text-overflow-clip text-wrap-pretty text-indent-1" style="color: var(--text-secondary);">
 						{leftText}
 					</p>
 				</div>
@@ -51,8 +51,8 @@ const {
 			<div class="mobile-item rectangle-item" data-circle="what">
 				<!-- <div class="mobile-dot"></div> -->
 				<div class="mobile-content">
-					<h3 class="mobile-title-small text-cyber-teal-500 text-pretty text-decoration-underline text-decoration-cyber-teal-300 text-decoration-dashed text-decoration-2 text-underline-offset-3 text-transform-capitalize text-overflow-ellipsis text-wrap-balance text-indent-2">{rightTitle}</h3>
-					<p class="mobile-text-small text-pale-blush-100 text-pretty text-decoration-underline text-decoration-pale-blush-100 text-decoration-dotted text-decoration-1 text-underline-offset-1 text-transform-none text-overflow-clip text-wrap-pretty text-indent-1">
+					<h3 class="mobile-title-small text-pretty text-decoration-underline text-decoration-dashed text-decoration-2 text-underline-offset-3 text-transform-capitalize text-overflow-ellipsis text-wrap-balance text-indent-2" style="color: var(--accent-tertiary);">{rightTitle}</h3>
+					<p class="mobile-text-small text-pretty text-decoration-underline text-decoration-dotted text-decoration-1 text-underline-offset-1 text-transform-none text-overflow-clip text-wrap-pretty text-indent-1" style="color: var(--text-secondary);">
 						{rightText}
 					</p>
 				</div>
@@ -294,6 +294,39 @@ const {
 		60% {
 			transform: translateY(-5px) translateX(-50%);
 		}
+	}
+
+	/* Light theme adjustments */
+	[data-theme="light"] .mobile-center-item {
+		background: linear-gradient(135deg, 
+			rgba(59, 130, 246, 0.2) 0%, 
+			rgba(59, 130, 246, 0.1) 100%);
+		border: 2px solid rgba(59, 130, 246, 0.4);
+		box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+	}
+
+	[data-theme="light"] .mobile-item {
+		background: linear-gradient(135deg, 
+			rgba(255, 255, 255, 0.8) 0%, 
+			rgba(255, 255, 255, 0.6) 100%);
+		border: 1px solid var(--border-primary);
+		box-shadow: var(--shadow-secondary);
+	}
+
+	[data-theme="light"] .square-item {
+		border: 2px solid rgba(29, 78, 216, 0.4);
+		box-shadow: 0 8px 24px rgba(29, 78, 216, 0.15);
+	}
+
+	[data-theme="light"] .rectangle-item {
+		border: 2px solid rgba(14, 116, 144, 0.4);
+		box-shadow: 0 8px 24px rgba(14, 116, 144, 0.15);
+	}
+
+	[data-theme="light"] .mobile-diagram::after {
+		background: linear-gradient(180deg, 
+			rgba(0, 0, 0, 0.2) 0%,
+			rgba(0, 0, 0, 0.1) 100%);
 	}
 </style>
 

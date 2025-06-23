@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Middle Out Test</title>
+    <style>
+        body { 
+            background: #1E1E1E; 
+            margin: 0; 
+            padding: 20px; 
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function drawMultiLines({
+            lines = ["LINE 1", "LINE 2", "LINE 3", "LINE 4", "LINE 5"],
+            canvasSize = 768,
+            font = "bold 100px Arial Narrow, Arial, sans-serif",
+            textColor = "#1E1E1E",
+            letterSpacing = -5
+        }) {
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = canvasSize;
+            const ctx = canvas.getContext('2d');
+
+            ctx.font = font;
+            ctx.fillStyle = textColor;
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "left";
+
+            const n = lines.length;
+            for (let i = 0; i < n; i++) {
+                const text = lines[i];
+                const y = canvasSize * (0.1 + 0.8 * (i / (n - 1)));
+
+                let totalWidth = 0;
+                for (let c = 0; c < text.length; c++) {
+                    totalWidth += ctx.measureText(text[c]).width;
+                    if (c < text.length - 1) totalWidth += letterSpacing;
+                }
+                let x = (canvasSize - totalWidth) / 2;
+
+                for (let c = 0; c < text.length; c++) {
+                    ctx.fillText(text[c], x, y);
+                    x += ctx.measureText(text[c]).width + letterSpacing;
+                }
+            }
+
+            document.body.appendChild(canvas);
+        }
+
+        // Run it
+        drawMultiLines({
+            lines: [
+                "-DTI-RBT-CARDANO", "", "-PUBLICS-SAP-USAID-", "", "WOLFRAM-ALPHA-"
+            ],
+            canvasSize: 768,
+            font: "bold 100px Arial Narrow, Arial, sans-serif",
+            letterSpacing: -5
+        });
+
+        // drawMultiLines({
+//     lines: [
+//         "", "-NICKY-SAP-PUBLICIS-", "", "-AMRES-NICKY-PUBLICIS-", ""
+//     ],
+//     canvasSize: 768,
+//     font: "bold 100px Arial Narrow, Arial, sans-serif",
+//     letterSpacing: -5 // Try -10, -5, or 0 for different tightness
+// });
+    </script>
+</body>
+</html>

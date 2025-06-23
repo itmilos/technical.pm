@@ -1,5 +1,24 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+
+// Theme-aware color function
+const getThemeColors = () => {
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  
+  if (isDark) {
+    return {
+      background: '#1E1E1E',
+      accent: '#6C3EA6',
+      secondary: '#B57EDC',
+    };
+  } else {
+    return {
+      background: '#FFFFFF',
+      accent: '#3B82F6',
+      secondary: '#1D4ED8',
+    };
+  }
+};
 
 // Remove global styles since they're now in global.css
 let camera: THREE.OrthographicCamera;
@@ -8,7 +27,21 @@ let renderer: THREE.WebGLRenderer;
 let mesh: THREE.Mesh;
 let mesh2: THREE.Mesh;
 
-function init(container: HTMLDivElement) {
+function getTexturePaths(theme: string) {
+  if (theme === 'dark') {
+    return {
+      out: './images/out-light.png',
+      middle: './images/middle-light.png',
+    };
+  } else {
+    return {
+      out: './images/out-dark.png',
+      middle: './images/middle-dark.png',
+    };
+  }
+}
+
+function init(container: HTMLDivElement, theme: string) {
   renderer = new THREE.WebGLRenderer({ alpha: true });
   // Set initial size based on viewport width - smaller on mobile
   const size = window.innerWidth < 768 ? Math.min(window.innerWidth * 0.4, 200) : window.innerWidth * 0.2;
@@ -22,10 +55,11 @@ function init(container: HTMLDivElement) {
   scene = new THREE.Scene();
   camera = new THREE.OrthographicCamera(-10, 10, 10, -10, -10, 10);
 
-  // Load textures
+  // Load textures based on theme
   const textureLoader = new THREE.TextureLoader();
-  const texture = textureLoader.load('./images/out.png');
-  const texture2 = textureLoader.load('./images/middle.png');
+  const texturePaths = getTexturePaths(theme);
+  const texture = textureLoader.load(texturePaths.out);
+  const texture2 = textureLoader.load(texturePaths.middle);
 
   const material = new THREE.MeshBasicMaterial({
     map: texture,
@@ -63,13 +97,37 @@ function render() {
 
 export default function GlobeAnimation() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
+    // Theme detection
+    const updateTheme = () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      setTheme(currentTheme);
+    };
+
+    // Initial theme detection
+    updateTheme();
+
+    // Watch for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+          updateTheme();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+
     const container = containerRef.current;
     if (!container) return;
 
-    // Initialize Three.js
-    init(container);
+    // Initialize Three.js with theme
+    init(container, theme);
     animate();
 
     // Mouse move handler
@@ -105,6 +163,7 @@ export default function GlobeAnimation() {
 
     // Cleanup
     return () => {
+      observer.disconnect();
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('touchmove', handleMouseMove);
       container.removeEventListener('touchstart', handleMouseMove);
@@ -117,7 +176,7 @@ export default function GlobeAnimation() {
         }
       }
     };
-  }, []);
+  }, [theme]); // Re-run when theme changes
 
   return (
     <div 

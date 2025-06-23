@@ -1,25 +1,46 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-// Brand Colors
-const COLORS = {
-  royalPurple: '#6C3EA6',
-  electricLavender: '#B57EDC',
-  deepCharcoal: '#1E1E1E',
-  neonCoral: '#FF4F58',
-  cyberTeal: '#0EC2A4',
-  paleBlush: '#F3E6F8',
+// Theme-aware color function
+const getThemeColors = () => {
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+  
+  if (isDark) {
+    return {
+      royalPurple: '#6C3EA6',
+      electricLavender: '#B57EDC',
+      deepCharcoal: '#1E1E1E',
+      neonCoral: '#FF4F58',
+      cyberTeal: '#0EC2A4',
+      paleBlush: '#F3E6F8',
+      background: '#1E1E1E',
+      textPrimary: '#F3E6F8',
+      textSecondary: '#1E1E1E',
+    };
+  } else {
+    return {
+      royalPurple: '#3B82F6',
+      electricLavender: '#1D4ED8',
+      deepCharcoal: '#1F2937',
+      neonCoral: '#EF4444',
+      cyberTeal: '#0EA5E9',
+      paleBlush: '#1E293B',
+      background: '#FFFFFF',
+      textPrimary: '#1F2937',
+      textSecondary: '#FFFFFF',
+    };
+  }
 };
 
 const coreValues = [
-  { value: 'Results-Oriented', color: COLORS.neonCoral },
-  { value: 'Efficiency', color: COLORS.cyberTeal },
-  { value: 'Self-Sustaining Solutions', color: COLORS.electricLavender },
-  { value: 'Dedication', color: COLORS.royalPurple },
-  { value: 'Transparency', color: COLORS.paleBlush },
-  { value: 'Innovation', color: COLORS.deepCharcoal },
+  { value: 'Results-Oriented', colorKey: 'neonCoral' },
+  { value: 'Efficiency', colorKey: 'cyberTeal' },
+  { value: 'Self-Sustaining Solutions', colorKey: 'electricLavender' },
+  { value: 'Dedication', colorKey: 'royalPurple' },
+  { value: 'Transparency', colorKey: 'paleBlush' },
+  { value: 'Innovation', colorKey: 'deepCharcoal' },
 ];
 
 // Use a Google Font for labels
@@ -27,8 +48,38 @@ const fontFamily = `'Montserrat', 'Inter', 'Segoe UI', Arial, sans-serif`;
 
 export default function CoreValues3D() {
   const mountRef = useRef();
+  const [theme, setTheme] = useState('dark');
+  const sceneRef = useRef();
+  const rendererRef = useRef();
+  const labelRendererRef = useRef();
+  const spheresRef = useRef([]);
+  const centerLabelRef = useRef();
+  const centerSphereRef = useRef();
 
   useEffect(() => {
+    // Theme detection
+    const updateTheme = () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      setTheme(currentTheme);
+    };
+
+    // Initial theme detection
+    updateTheme();
+
+    // Watch for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+          updateTheme();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+
     // Inject Google Fonts if not already present
     if (!document.getElementById('core-values-google-font')) {
       const link = document.createElement('link');
@@ -43,9 +94,13 @@ export default function CoreValues3D() {
     const width = mountRef.current.clientWidth * (isMobile ? 0.8 : 0.6); // 85% on mobile, 60% on desktop
     const height = 500;
     const scene = new THREE.Scene();
+    sceneRef.current = scene;
+
+    // Get current theme colors
+    const COLORS = getThemeColors();
 
     // Set background color
-    scene.background = new THREE.Color(COLORS.deepCharcoal);
+    scene.background = new THREE.Color(COLORS.background);
 
     // Starfield background (Electric Lavender)
     const starGeometry = new THREE.BufferGeometry();
@@ -69,12 +124,13 @@ export default function CoreValues3D() {
 
     // Renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setClearColor(COLORS.deepCharcoal, 1);
+    renderer.setClearColor(COLORS.background, 1);
     renderer.setSize(width, height);
     renderer.domElement.style.position = 'absolute';
     renderer.domElement.style.left = '50%';
     renderer.domElement.style.transform = 'translateX(-50%)';
     mountRef.current.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
 
     // CSS2DRenderer for labels
     const labelRenderer = new CSS2DRenderer();
@@ -84,6 +140,7 @@ export default function CoreValues3D() {
     labelRenderer.domElement.style.left = '50%';
     labelRenderer.domElement.style.transform = 'translateX(-50%)';
     mountRef.current.appendChild(labelRenderer.domElement);
+    labelRendererRef.current = labelRenderer;
 
     // Lighting
     scene.add(new THREE.AmbientLight(0xffffff, 0.5));
@@ -171,6 +228,7 @@ export default function CoreValues3D() {
     });
     const centerSphere = new THREE.Mesh(centerGeometry, centerMaterial);
     solarSystem.add(centerSphere);
+    centerSphereRef.current = centerSphere;
 
     // Glow effect for center (Electric Lavender)
     const glowGeometry = new THREE.SphereGeometry(centerSize + 3, 48, 48);
@@ -186,7 +244,7 @@ export default function CoreValues3D() {
     const centerDiv = document.createElement('div');
     centerDiv.className = 'label';
     centerDiv.textContent = 'Core Values';
-    centerDiv.style.color = COLORS.paleBlush;
+    centerDiv.style.color = COLORS.textPrimary;
     centerDiv.style.fontWeight = 'bold';
     centerDiv.style.fontSize = isMobile ? '0.75rem' : '1.1rem';
     centerDiv.style.textAlign = 'center';
@@ -198,19 +256,21 @@ export default function CoreValues3D() {
     const centerLabel = new CSS2DObject(centerDiv);
     centerLabel.position.set(0, 0, 50);
     centerSphere.add(centerLabel);
+    centerLabelRef.current = centerLabel;
 
     // Orbiting spheres and labels
     const orbitRadius = isMobile ? 65 : 120; // Even smaller orbit radius on mobile
     const spheres = [];
+    spheresRef.current = spheres;
     coreValues.forEach((val, i) => {
       const angle = (i / coreValues.length) * Math.PI * 2;
       const sphereSize = isMobile ? 14 : 25; // Even smaller orbiting spheres on mobile
       const geometry = new THREE.SphereGeometry(sphereSize, 48, 48);
       const material = new THREE.MeshStandardMaterial({
-        color: val.color,
+        color: COLORS[val.colorKey],
         roughness: 0.25,
         metalness: 0.8,
-        emissive: val.color,
+        emissive: COLORS[val.colorKey],
         emissiveIntensity: 0.08,
       });
       const sphere = new THREE.Mesh(geometry, material);
@@ -236,7 +296,7 @@ export default function CoreValues3D() {
       const labelDiv = document.createElement('div');
       labelDiv.className = 'label';
       labelDiv.textContent = val.value;
-      labelDiv.style.color = COLORS.deepCharcoal;
+      labelDiv.style.color = COLORS.textSecondary;
       labelDiv.style.fontWeight = 'bold';
       labelDiv.style.fontSize = isMobile ? '0.65rem' : '0.95rem';
       labelDiv.style.textAlign = 'center';
@@ -249,6 +309,9 @@ export default function CoreValues3D() {
       const label = new CSS2DObject(labelDiv);
       label.position.set(0, 0, 30);
       sphere.add(label);
+
+      // Store label reference for theme updates
+      sphere.userData = { label, labelDiv, colorKey: val.colorKey };
 
       // Orbit line (Electric Lavender)
       const orbitSegments = 128;
@@ -330,6 +393,7 @@ export default function CoreValues3D() {
 
     // Cleanup
     return () => {
+      observer.disconnect();
       renderer.domElement.removeEventListener('pointermove', onPointerMove);
       renderer.domElement.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('pointerup', handlePointerUp);
@@ -340,7 +404,47 @@ export default function CoreValues3D() {
       mountRef.current.removeChild(renderer.domElement);
       mountRef.current.removeChild(labelRenderer.domElement);
     };
-  }, []);
+  }, []); // Remove theme dependency to prevent recreation
+
+  // Update colors when theme changes
+  useEffect(() => {
+    if (!sceneRef.current || !rendererRef.current || !labelRendererRef.current) return;
+
+    const COLORS = getThemeColors();
+    
+    // Update scene background
+    sceneRef.current.background = new THREE.Color(COLORS.background);
+    
+    // Update renderer clear color
+    rendererRef.current.setClearColor(COLORS.background, 1);
+    
+    // Update center sphere material
+    if (centerSphereRef.current) {
+      centerSphereRef.current.material.color.setHex(COLORS.royalPurple.replace('#', '0x'));
+      centerSphereRef.current.material.emissive.setHex(COLORS.royalPurple.replace('#', '0x'));
+    }
+    
+    // Update center label
+    if (centerLabelRef.current) {
+      const centerDiv = centerLabelRef.current.element;
+      centerDiv.style.color = COLORS.textPrimary;
+      centerDiv.style.textShadow = `0 2px 8px ${COLORS.royalPurple}`;
+    }
+    
+    // Update orbiting spheres and their labels
+    spheresRef.current.forEach((sphere) => {
+      const colorKey = sphere.userData.colorKey;
+      sphere.material.color.setHex(COLORS[colorKey].replace('#', '0x'));
+      sphere.material.emissive.setHex(COLORS[colorKey].replace('#', '0x'));
+      
+      // Update label
+      const labelDiv = sphere.userData.labelDiv;
+      labelDiv.style.color = COLORS.textSecondary;
+      labelDiv.style.background = COLORS.paleBlush;
+      labelDiv.style.textShadow = `0 2px 8px ${COLORS.paleBlush}`;
+    });
+    
+  }, [theme]); // Only update colors when theme changes
 
   return (
     <>
