@@ -450,21 +450,126 @@ export default function CoreValues3D() {
     <>
       <style>
         {`
-          .core-values-container {
+          .core-values-wrapper {
             width: 60%;
+            margin: 0 auto;
+            padding: 24px;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #6C3EA6, #B57EDC, #0EC2A4) 1;
+            border-radius: 16px;
+            background: rgba(108, 62, 166, 0.05);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(108, 62, 166, 0.2);
+            transition: all 0.3s ease;
+          }
+          
+          .core-values-wrapper:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(108, 62, 166, 0.3);
+          }
+          
+          .core-values-container {
+            width: 100%;
             height: 500px;
             position: relative;
-            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
           }
+          
+          .controls-hint {
+            text-align: center;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(108, 62, 166, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(108, 62, 166, 0.3);
+          }
+          
+          .controls-hint h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-primary, #F3E6F8);
+          }
+          
+          .controls-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary, rgba(243, 230, 248, 0.8));
+            line-height: 1.4;
+          }
+          
+          .controls-desktop {
+            display: block;
+          }
+          
+          .controls-mobile {
+            display: none;
+          }
+          
           @media (max-width: 768px) {
-            .core-values-container {
-              width: 85%;
-              margin: 0 auto;
+            .core-values-wrapper {
+              width: 90%;
+              padding: 16px;
             }
+            
+            .controls-desktop {
+              display: none;
+            }
+            
+            .controls-mobile {
+              display: block;
+            }
+            
+            .controls-hint h3 {
+              font-size: 1rem;
+            }
+            
+            .controls-text {
+              font-size: 0.85rem;
+            }
+          }
+          
+          /* Light theme adjustments */
+          :root[data-theme="light"] .core-values-wrapper {
+            border-image: linear-gradient(135deg, #3B82F6, #1D4ED8, #0EA5E9) 1;
+            background: rgba(59, 130, 246, 0.05);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+          }
+          
+          :root[data-theme="light"] .core-values-wrapper:hover {
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.3);
+          }
+          
+          :root[data-theme="light"] .controls-hint {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+          }
+          
+          :root[data-theme="light"] .controls-hint h3 {
+            color: var(--text-primary, #1F2937);
+          }
+          
+          :root[data-theme="light"] .controls-text {
+            color: var(--text-secondary, rgba(31, 41, 55, 0.8));
           }
         `}
       </style>
-      <div ref={mountRef} className="core-values-container" />
+      <div className="core-values-wrapper">
+        <div className="controls-hint">
+          <h3>🎮 Interactive 3D Experience</h3>
+          <div className="controls-desktop">
+            <div className="controls-text">
+              <strong>Mouse:</strong> Click and drag to rotate • Scroll to zoom in/out • Hover over values to highlight
+            </div>
+          </div>
+          <div className="controls-mobile">
+            <div className="controls-text">
+              <strong>Touch:</strong> Swipe to rotate • Pinch to zoom • Tap values to highlight
+            </div>
+          </div>
+        </div>
+        <div ref={mountRef} className="core-values-container" />
+      </div>
     </>
   );
 }

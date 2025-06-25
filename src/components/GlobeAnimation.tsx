@@ -179,13 +179,140 @@ export default function GlobeAnimation() {
   }, [theme]); // Re-run when theme changes
 
   return (
-    <div 
-      ref={containerRef} 
-      className="relative flex items-center justify-center w-full h-full mx-12"
-      style={{ 
-        touchAction: 'pan-left pan-right pan-up pan-down',
-        minHeight: '300px' // Minimum height for the section
-      }}
-    />
+    <>
+      <style>
+        {`
+          .globe-wrapper {
+            width: 60%;
+            margin: 0 auto;
+            padding: 24px;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #6C3EA6, #B57EDC, #0EC2A4) 1;
+            border-radius: 16px;
+            background: rgba(108, 62, 166, 0.05);
+            box-shadow: 0 8px 32px rgba(108, 62, 166, 0.2);
+            transition: all 0.3s ease;
+          }
+          
+          .globe-wrapper:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(108, 62, 166, 0.3);
+          }
+          
+          .globe-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            touch-action: pan-left pan-right pan-up pan-down;
+          }
+          
+          .globe-controls-hint {
+            text-align: center;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(108, 62, 166, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(108, 62, 166, 0.3);
+          }
+          
+          .globe-controls-hint h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-primary, #F3E6F8);
+          }
+          
+          .globe-controls-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary, rgba(243, 230, 248, 0.8));
+            line-height: 1.4;
+          }
+          
+          .globe-controls-desktop {
+            display: block;
+          }
+          
+          .globe-controls-mobile {
+            display: none;
+          }
+          
+          @media (max-width: 768px) {
+            .globe-wrapper {
+              width: 90%;
+              padding: 16px;
+            }
+            
+            .globe-container {
+              min-height: 250px;
+            }
+            
+            .globe-controls-desktop {
+              display: none;
+            }
+            
+            .globe-controls-mobile {
+              display: block;
+            }
+            
+            .globe-controls-hint h3 {
+              font-size: 1rem;
+            }
+            
+            .globe-controls-text {
+              font-size: 0.85rem;
+            }
+          }
+          
+          /* Light theme adjustments */
+          :root[data-theme="light"] .globe-wrapper {
+            border-image: linear-gradient(135deg, #3B82F6, #1D4ED8, #0EA5E9) 1;
+            background: rgba(59, 130, 246, 0.05);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+          }
+          
+          :root[data-theme="light"] .globe-wrapper:hover {
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.3);
+          }
+          
+          :root[data-theme="light"] .globe-controls-hint {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+          }
+          
+          :root[data-theme="light"] .globe-controls-hint h3 {
+            color: var(--text-primary, #1F2937);
+          }
+          
+          :root[data-theme="light"] .globe-controls-text {
+            color: var(--text-secondary, rgba(31, 41, 55, 0.8));
+          }
+        `}
+      </style>
+      <div className="globe-wrapper">
+        <div className="globe-controls-hint">
+          <h3>🌍 Interactive Globe Experience</h3>
+          <div className="globe-controls-desktop">
+            <div className="globe-controls-text">
+              <strong>Mouse:</strong> Move cursor over the globe to control rotation and perspective
+            </div>
+          </div>
+          <div className="globe-controls-mobile">
+            <div className="globe-controls-text">
+              <strong>Touch:</strong> Move finger across the globe to control rotation and perspective
+            </div>
+          </div>
+        </div>
+        <div 
+          ref={containerRef} 
+          className="globe-container"
+        />
+      </div>
+    </>
   );
 }
