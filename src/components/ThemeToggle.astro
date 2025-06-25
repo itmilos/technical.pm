@@ -55,6 +55,13 @@
     background: var(--bg-secondary);
     border: 1px solid var(--border-primary);
     color: var(--text-secondary);
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    /* Ensure it's above other elements */
+    position: relative;
+    z-index: 100;
   }
 
   .theme-toggle-btn:hover {
@@ -66,6 +73,52 @@
   .theme-toggle-btn:focus {
     outline: none;
     box-shadow: 0 0 0 3px var(--accent-tertiary);
+  }
+
+  .theme-toggle-btn:active {
+    transform: scale(0.95);
+    background: var(--bg-tertiary);
+  }
+
+  /* Mobile-specific styles */
+  @media (hover: none) and (pointer: coarse) {
+    .theme-toggle-btn {
+      min-height: 44px;
+      min-width: 44px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      /* Ensure it's always on top on mobile */
+      position: relative !important;
+      z-index: 9999 !important;
+      /* Ensure it's always interactive */
+      pointer-events: auto !important;
+    }
+    
+    .theme-toggle-btn:hover {
+      transform: none;
+    }
+    
+    .theme-toggle-btn:active {
+      transform: scale(0.95);
+      background: var(--accent-primary);
+      color: white;
+    }
+  }
+
+  /* Remove tap highlights on mobile */
+  .theme-toggle-btn {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Visual feedback for touch */
+  .theme-toggle-btn:active {
+    transition: transform 0.1s ease;
   }
 
   .icon-wrapper {
@@ -116,94 +169,141 @@
 </style>
 
 <script>
-  // Theme management
-  class ThemeManager {
-    private static instance: ThemeManager;
-    private currentTheme: string = 'dark';
-
-    private constructor() {
-      this.init();
-    }
-
-    public static getInstance(): ThemeManager {
-      if (!ThemeManager.instance) {
-        ThemeManager.instance = new ThemeManager();
-      }
-      return ThemeManager.instance;
-    }
-
-    private init(): void {
-      // Get saved theme or default to dark
-      this.currentTheme = localStorage.getItem('theme') || 'dark';
+  // Simple and reliable theme toggle function
+  function toggleTheme() {
+    try {
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       
-      // Apply theme
-      this.applyTheme(this.currentTheme);
-      
-      // Set up event listeners
-      this.setupEventListeners();
-    }
-
-    private setupEventListeners(): void {
-      const toggleBtn = document.getElementById('theme-toggle');
-      if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-          this.toggleTheme();
-        });
-      }
-
-      // Listen for system theme changes
-      if (window.matchMedia) {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        mediaQuery.addEventListener('change', (e) => {
-          if (!localStorage.getItem('theme')) {
-            this.applyTheme(e.matches ? 'dark' : 'light');
-          }
-        });
-      }
-    }
-
-    private applyTheme(theme: string): void {
-      this.currentTheme = theme;
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
+      // Apply theme immediately
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
       
       // Update meta theme-color
       const metaThemeColor = document.querySelector('meta[name="theme-color"]');
       if (metaThemeColor) {
-        metaThemeColor.setAttribute('content', theme === 'dark' ? '#1E1E1E' : '#ffffff');
+        metaThemeColor.setAttribute('content', newTheme === 'dark' ? '#1E1E1E' : '#ffffff');
       }
-    }
-
-    public toggleTheme(): void {
-      const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
-      this.applyTheme(newTheme);
       
-      // Add animation class
+      console.log('Theme toggled to:', newTheme);
+      
+      // Add visual feedback
       const toggleBtn = document.getElementById('theme-toggle');
       if (toggleBtn) {
-        toggleBtn.classList.add('theme-switching');
+        toggleBtn.style.transform = 'scale(0.9)';
+        toggleBtn.style.background = newTheme === 'dark' ? '#6C3EA6' : '#3b82f6';
         setTimeout(() => {
-          toggleBtn.classList.remove('theme-switching');
-        }, 300);
+          toggleBtn.style.transform = '';
+          toggleBtn.style.background = '';
+        }, 200);
       }
-    }
-
-    public getCurrentTheme(): string {
-      return this.currentTheme;
+    } catch (error) {
+      console.error('Error toggling theme:', error);
     }
   }
 
-  // Initialize theme manager when DOM is loaded
-  document.addEventListener('DOMContentLoaded', () => {
-    ThemeManager.getInstance();
-  });
+  // Initialize theme on page load
+  function initTheme() {
+    try {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      
+      // Update meta theme-color
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+      if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', savedTheme === 'dark' ? '#1E1E1E' : '#ffffff');
+      }
+    } catch (error) {
+      console.error('Error initializing theme:', error);
+    }
+  }
 
-  // Also initialize immediately if DOM is already loaded
+  // Attach event listeners with retry logic
+  function attachEventListeners() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) {
+      // Retry if button not found yet
+      setTimeout(attachEventListeners, 100);
+      return;
+    }
+
+    // Remove any existing listeners to prevent duplicates
+    toggleBtn.removeEventListener('click', handleClick);
+    toggleBtn.removeEventListener('touchstart', handleTouchStart);
+    toggleBtn.removeEventListener('touchend', handleTouchEnd);
+    
+    let touchStarted = false;
+    
+    // Handle click events (desktop and mobile fallback)
+    function handleClick(e: Event) {
+      if (touchStarted) {
+        // If touch was used, ignore the click event
+        touchStarted = false;
+        return;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      toggleTheme();
+      console.log('Theme toggled via click');
+    }
+    
+    // Handle touch start
+    function handleTouchStart(e: TouchEvent) {
+      touchStarted = true;
+      e.stopPropagation();
+      console.log('Touch start detected on theme toggle');
+    }
+    
+    // Handle touch end
+    function handleTouchEnd(e: TouchEvent) {
+      if (touchStarted) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleTheme();
+        console.log('Theme toggled via touch');
+        
+        // Reset after a short delay
+        setTimeout(() => {
+          touchStarted = false;
+        }, 300);
+      }
+    }
+    
+    // Add all event listeners
+    toggleBtn.addEventListener('click', handleClick);
+    toggleBtn.addEventListener('touchstart', handleTouchStart, { passive: false });
+    toggleBtn.addEventListener('touchend', handleTouchEnd, { passive: false });
+    
+    console.log('Theme toggle event listeners attached successfully');
+  }
+
+  // Initialize everything
+  function init() {
+    initTheme();
+    attachEventListeners();
+  }
+
+  // Run initialization immediately if DOM is ready, otherwise wait
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      ThemeManager.getInstance();
-    });
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    ThemeManager.getInstance();
+    init();
+  }
+
+  // Listen for system theme changes (optional enhancement)
+  if (window.matchMedia) {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', (e) => {
+      // Only auto-switch if user hasn't manually set a preference
+      if (!localStorage.getItem('theme')) {
+        const newTheme = e.matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor) {
+          metaThemeColor.setAttribute('content', newTheme === 'dark' ? '#1E1E1E' : '#ffffff');
+        }
+      }
+    });
   }
 </script> 

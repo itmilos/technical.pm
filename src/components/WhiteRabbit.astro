@@ -8,21 +8,21 @@
   class="inline-block group"
   aria-label="Visit Fleek Site"
 >
-  <div class="relative w-6 h-6 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:shadow-xl border border-white/30">
+  <div class="rabbit-container relative w-6 h-6 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:shadow-xl">
     <!-- Rabbit ears -->
     <div class="absolute -top-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-              <div class="w-1 h-3 bg-white/90 rounded-t-full transform -rotate-12"></div>
-        <div class="w-1 h-3 bg-white/90 rounded-t-full transform rotate-12"></div>
+              <div class="rabbit-ear w-1 h-3 rounded-t-full transform -rotate-12"></div>
+        <div class="rabbit-ear w-1 h-3 rounded-t-full transform rotate-12"></div>
     </div>
     <!-- Rabbit face -->
     <div class="relative">
       <!-- Eyes -->
       <div class="flex space-x-1 mb-0.5">
-        <div class="w-0.5 h-0.5 rounded-full" style="background: var(--accent-primary);"></div>
-        <div class="w-0.5 h-0.5 rounded-full" style="background: var(--accent-primary);"></div>
+        <div class="rabbit-eyes w-0.5 h-0.5 rounded-full" style="background: var(--accent-primary);"></div>
+        <div class="rabbit-eyes w-0.5 h-0.5 rounded-full" style="background: var(--accent-primary);"></div>
       </div>
       <!-- Nose -->
-      <div class="w-1 h-0.5 rounded-full mx-auto" style="background: var(--accent-secondary);"></div>
+      <div class="rabbit-nose w-1 h-0.5 rounded-full mx-auto" style="background: var(--accent-secondary);"></div>
     </div>
     <!-- Bounce animation on hover -->
     <div class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300" style="background: var(--accent-primary);"></div>
@@ -34,6 +34,35 @@
 </a>
 
 <style>
+  /* Default (dark theme) - White rabbit */
+  .rabbit-container {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .rabbit-ear {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Light theme - Blue rabbit */
+  :root[data-theme="light"] .rabbit-container {
+    background: var(--accent-primary);
+    border: 1px solid var(--accent-secondary);
+  }
+
+  :root[data-theme="light"] .rabbit-ear {
+    background: var(--accent-primary);
+  }
+
+  /* Light theme - Eyes and nose should be white for contrast */
+  :root[data-theme="light"] .rabbit-eyes {
+    background: white !important;
+  }
+
+  :root[data-theme="light"] .rabbit-nose {
+    background: white !important;
+  }
+
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-2px); }

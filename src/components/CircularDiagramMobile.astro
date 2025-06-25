@@ -20,9 +20,9 @@ const {
 
 <!-- Circular Diagram - Mobile Version -->
 <div id="mobile-diagram-container" class="relative w-full max-w-6xl mx-auto md:hidden">
-	<div class="mobile-diagram">
+	<div class="mobile-diagram custom-scrollbar">
 		<!-- Center Circle - Why -->
-		<div class="mobile-item-container center-item-container snap-center">
+		<div class="mobile-item-container snap-center">
 			<div class="mobile-center-item" data-circle="why">
 				<div class="mobile-content">
 					<h3 class="mobile-title text-pretty text-decoration-underline text-decoration-dotted text-decoration-2 text-underline-offset-4 text-transform-uppercase text-overflow-ellipsis text-wrap-balance text-indent-4" style="color: var(--accent-primary);">{centerTitle}</h3>
@@ -76,6 +76,11 @@ const {
 		scroll-behavior: smooth;
 		-webkit-overflow-scrolling: touch;
 		transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+		/* Ensure it doesn't interfere with header elements */
+		position: relative;
+		z-index: 1;
+		/* Prevent touch event propagation issues */
+		touch-action: pan-y;
 	}
 
 	.mobile-diagram.fade-out {

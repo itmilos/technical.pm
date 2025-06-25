@@ -8,21 +8,24 @@ import { Cookies } from '../utils/cookies';
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex-1">
         <h3 class="text-lg font-semibold text-pale-blush-50">Cookie Preferences</h3>
-        <p class="mt-1 text-sm text-pale-blush-200">
+        <p class="mt-1 text-sm">
           We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. 
-          By clicking "Accept All", you consent to our use of cookies.
+          <br>By clicking "Accept All", you consent to our use of cookies.
         </p>
       </div>
       <div class="flex flex-col sm:flex-row gap-3">
+        
         <button
           id="cookie-consent-customize"
-          class="inline-flex items-center px-4 py-2 border border-white/30 text-sm font-medium rounded-md text-pale-blush-100 bg-white/10 backdrop-blur-sm hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-royal-purple-500"
+         class="inline-block px-6 sm:px-8 py-3 font-semibold rounded-lg shadow transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group text-sm sm:text-base"
+        style="background: var(--accent-primary); color: white;"
         >
           Customize
         </button>
         <button
           id="cookie-consent-accept"
-          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-royal-purple-600 hover:bg-electric-lavender-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-royal-purple-500"
+         class="inline-block px-6 sm:px-8 py-3 font-semibold rounded-lg shadow transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group text-sm sm:text-base"
+        style="background: var(--accent-primary); color: white;"
         >
           Accept All
         </button>
@@ -32,15 +35,15 @@ import { Cookies } from '../utils/cookies';
 </div>
 
 <!-- Cookie Preferences Modal - Moved outside the banner -->
-<div id="cookie-preferences" class="hidden fixed inset-0 bg-deep-charcoal-900/75 backdrop-blur-sm transition-opacity z-[100]">
-  <div class="fixed inset-0 z-[101] overflow-y-auto">
+<div id="cookie-preferences" class="hidden fixed inset-0 backdrop-blur-sm transition-opacity z-[100] bg-primary">
+  <div class="fixed inset-0 z-[101] overflow-y-auto custom-scrollbar">
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-              <div class="glass-modal relative transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+      <div class="glass-modal relative transform overflow-hidden rounded-lg px-4 pb-4 pt-5 text-left transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 bg-secondary text-primary">
         <div class="absolute right-0 top-0 pr-4 pt-4">
-                      <button
+          <button
             type="button"
             id="cookie-preferences-close"
-            class="rounded-md bg-white/10 text-pale-blush-200 hover:text-pale-blush-50 focus:outline-none focus:ring-2 focus:ring-royal-purple-500 focus:ring-offset-2"
+            class="rounded-md focus:outline-none focus:ring-2 focus:ring-royal-purple-500 focus:ring-offset-2 bg-tertiary text-tertiary z-50"
           >
             <span class="sr-only">Close</span>
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -51,7 +54,7 @@ import { Cookies } from '../utils/cookies';
 
         <div class="sm:flex sm:items-start">
           <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-            <h3 class="text-lg font-semibold leading-6 text-pale-blush-50">Cookie Preferences</h3>
+            <h3 class="text-lg font-semibold leading-6 text-primary">Cookie Preferences</h3>
             <div class="mt-4 space-y-4">
               <div class="flex items-start">
                 <div class="animated-checkbox-wrapper">
@@ -71,8 +74,8 @@ import { Cookies } from '../utils/cookies';
                   </label>
                 </div>
                 <div class="ml-4">
-                  <label for="cookie-essential" class="font-medium text-pale-blush-50 font-primary cursor-pointer">Essential Cookies 🔒</label>
-                  <p class="text-sm text-pale-blush-200 font-primary">Required for the website to function properly. Cannot be disabled.</p>
+                  <label for="cookie-essential" class="font-medium font-primary cursor-pointer text-primary">Essential Cookies 🔒</label>
+                  <p class="text-sm font-primary text-tertiary">Required for the website to function properly. Cannot be disabled.</p>
                 </div>
               </div>
 
@@ -92,8 +95,8 @@ import { Cookies } from '../utils/cookies';
                   </label>
                 </div>
                 <div class="ml-4">
-                  <label for="cookie-analytics" class="font-medium text-pale-blush-50 font-primary cursor-pointer">Analytics Cookies 📊</label>
-                  <p class="text-sm text-pale-blush-200 font-primary">Help us understand how visitors interact with our website.</p>
+                  <label for="cookie-analytics" class="font-medium font-primary cursor-pointer text-primary">Analytics Cookies 📊</label>
+                  <p class="text-sm font-primary text-tertiary">Help us understand how visitors interact with our website.</p>
                 </div>
               </div>
 
@@ -113,8 +116,8 @@ import { Cookies } from '../utils/cookies';
                   </label>
                 </div>
                 <div class="ml-4">
-                  <label for="cookie-marketing" class="font-medium text-pale-blush-50 font-primary cursor-pointer">Marketing Cookies 🎯</label>
-                  <p class="text-sm text-pale-blush-200 font-primary">Used to track visitors across websites for marketing purposes.</p>
+                  <label for="cookie-marketing" class="font-medium font-primary cursor-pointer text-primary">Marketing Cookies 🎯</label>
+                  <p class="text-sm font-primary text-tertiary">Used to track visitors across websites for marketing purposes.</p>
                 </div>
               </div>
             </div>
@@ -123,7 +126,8 @@ import { Cookies } from '../utils/cookies';
               <button
                 type="button"
                 id="cookie-preferences-save"
-                class="inline-flex justify-center rounded-md bg-royal-purple-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-electric-lavender-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal-purple-600"
+                 class="inline-block px-6 sm:px-8 py-3 font-semibold rounded-lg shadow transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group text-sm sm:text-base z-50"
+        style="background: var(--accent-primary); color: white;"
               >
                 Save Preferences
               </button>
@@ -383,5 +387,19 @@ import { Cookies } from '../utils/cookies';
 
   .animated-checkbox:active ~ .checkbox-label .checkbox-custom {
     transform: scale(0.95);
+  }
+
+  .chat-container {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+  }
+
+  .chat-message {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
   }
 </style> 

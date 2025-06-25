@@ -14,7 +14,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
 
 <div
   id={id}
-  class="fixed inset-0 z-50 hidden overflow-y-auto"
+  class="fixed inset-0 z-50 hidden overflow-y-auto custom-scrollbar"
   aria-labelledby={`${id}-title`}
   role="dialog"
   aria-modal="true"
@@ -46,7 +46,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       <div class="absolute right-0 top-0 pr-4 pt-4">
         <button
           type="button"
-          class="glass-button rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 transform hover:scale-110 focus:scale-110"
+          class="glass-button rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 transform hover:scale-110 focus:scale-110 z-50"
           style="color: var(--text-tertiary);"
           onclick={`document.getElementById('${id}').classList.add('hidden')`}
           aria-label="Close modal"
@@ -294,6 +294,73 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
 
   .form-input, .form-select, .form-textarea {
     padding-right: 2.5rem; /* pr-10 in Tailwind, enough space for icon */
+  }
+
+  /* Theme-aware form field container styles */
+  .form-field-container {
+    @apply relative mb-4;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .form-field-container:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-secondary);
+    box-shadow: var(--shadow-secondary);
+  }
+
+  .form-field-container:focus-within {
+    background: var(--bg-primary);
+    border-color: var(--accent-primary);
+    box-shadow: 
+      0 0 0 3px var(--accent-tertiary),
+      var(--shadow-secondary);
+    transform: translateY(-1px);
+  }
+
+  
+  /* Light theme specific adjustments */
+  [data-theme="light"] .form-field-container {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-primary);
+  }
+
+  [data-theme="light"] .form-field-container:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--border-secondary);
+    box-shadow: var(--shadow-secondary);
+  }
+
+  [data-theme="light"] .form-field-container:focus-within {
+    background: rgba(255, 255, 255, 1);
+    border-color: var(--accent-primary);
+    box-shadow: 
+      0 0 0 3px rgba(59, 130, 246, 0.1),
+      var(--shadow-secondary);
+  }
+
+  /* Dark theme specific adjustments */
+  [data-theme="dark"] .form-field-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-primary);
+  }
+
+  [data-theme="dark"] .form-field-container:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-secondary);
+    box-shadow: var(--shadow-secondary);
+  }
+
+  [data-theme="dark"] .form-field-container:focus-within {
+    background: var(--bg-primary);
+    border-color: var(--accent-primary);
+    box-shadow: 
+      0 0 0 3px rgba(108, 62, 166, 0.2),
+      var(--shadow-secondary);
   }
 </style>
 
