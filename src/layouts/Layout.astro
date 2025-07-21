@@ -166,6 +166,7 @@ const shouldHideContact = hideContact || isBlogPage;
         <div class="flex items-center gap-4">
           <LoadingAnimation variant="minimal" speed='slow' showText={false} size="sm" />
           <Logo />
+          <ThemeToggle />
         </div>
         
         <!-- Desktop Navigation -->
@@ -192,17 +193,15 @@ const shouldHideContact = hideContact || isBlogPage;
               </li>
             )}
           </ul>
-          <ThemeToggle />
         </div>
-
         <!-- Mobile Menu Button -->
-        <div class="md:hidden flex items-center gap-2">
-          <ThemeToggle />
+        <div class="md:hidden flex items-center gap-4">
+          
           <button
             type="button"
             id="mobile-menu-button"
-            class="inline-flex items-center justify-center p-2 rounded-md transition-colors duration-200 z-50"
-            style="color: var(--text-tertiary);"
+            class="inline-flex items-center justify-center p-2 rounded-md transition-colors duration-200"
+            style="color: var(--text-tertiary); position: relative; z-index: 50;"
             aria-controls="mobile-menu"
             aria-expanded="false"
           >

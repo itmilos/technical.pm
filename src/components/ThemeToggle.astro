@@ -58,10 +58,16 @@
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     /* Ensure it's above other elements */
     position: relative;
     z-index: 100;
+    /* Mobile-friendly settings */
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
   }
 
   .theme-toggle-btn:hover {
@@ -123,6 +129,13 @@
       /* Remove callout on iOS */
       -webkit-user-drag: none;
       /* Prevent dragging */
+      /* Ensure highest z-index on mobile */
+      position: relative !important;
+      z-index: 9999 !important;
+      /* Add margin for better touch isolation */
+      margin: 2px;
+      /* Ensure it's always clickable */
+      pointer-events: auto !important;
     }
   }
 
@@ -239,7 +252,7 @@
     }
   }
 
-  // Attach event listeners with better mobile support
+  // Simple and reliable event listener setup
   function attachEventListeners() {
     const toggleBtn = document.getElementById('theme-toggle');
     if (!toggleBtn) {
@@ -248,59 +261,37 @@
       return;
     }
 
-    // Clear any existing listeners
-    const newToggleBtn = toggleBtn.cloneNode(true);
-    toggleBtn.parentNode?.replaceChild(newToggleBtn, toggleBtn);
-    const btn = document.getElementById('theme-toggle');
-    if (!btn) return;
+    // Enhanced handler with better mobile support
+    const handleToggle = (e: Event | TouchEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation(); // Prevent any bubbling
+      toggleTheme();
+    };
+
+    // Detect mobile vs desktop
+    const isMobile = window.innerWidth <= 768;
     
-    // Detect if we're on a touch device
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    
-    if (isTouchDevice) {
-      // Mobile/touch devices: use touch events only
-      let touchStarted = false;
-      let touchMoved = false;
+    if (isMobile) {
+      console.log('Mobile theme toggle setup');
       
-      const handleTouchStart = (e: TouchEvent) => {
-        touchStarted = true;
-        touchMoved = false;
-        btn.style.transform = 'scale(0.95)';
+      // Mobile: touch events + click fallback
+      toggleBtn.addEventListener('touchend', handleToggle, { passive: false });
+      toggleBtn.addEventListener('click', handleToggle);
+      // Prevent interference
+      toggleBtn.addEventListener('touchstart', (e: TouchEvent) => {
         e.preventDefault();
-      };
+        console.log('Touch start on theme toggle');
+      }, { passive: false });
       
-      const handleTouchMove = (e: TouchEvent) => {
-        touchMoved = true;
-        btn.style.transform = '';
-      };
-      
-      const handleTouchEnd = (e: TouchEvent) => {
-        if (touchStarted && !touchMoved) {
-          e.preventDefault();
-          e.stopPropagation();
-          toggleTheme();
-          console.log('Theme toggled via touch');
-        }
-        touchStarted = false;
-        touchMoved = false;
-        btn.style.transform = '';
-      };
-      
-      btn.addEventListener('touchstart', handleTouchStart, { passive: false });
-      btn.addEventListener('touchmove', handleTouchMove, { passive: false });
-      btn.addEventListener('touchend', handleTouchEnd, { passive: false });
-      btn.addEventListener('touchcancel', handleTouchEnd, { passive: false });
+      toggleBtn.addEventListener('touchmove', (e: TouchEvent) => {
+        e.preventDefault();
+      }, { passive: false });
       
     } else {
-      // Desktop: use click events
-      const handleClick = (e: Event) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleTheme();
-        console.log('Theme toggled via click');
-      };
-      
-      btn.addEventListener('click', handleClick);
+      console.log('Desktop theme toggle setup');
+      // Desktop: click only
+      toggleBtn.addEventListener('click', handleToggle);
     }
     
     console.log('Theme toggle event listeners attached successfully');
@@ -311,6 +302,20 @@
     initTheme();
     attachEventListeners();
   }
+
+  // Re-attach listeners on window resize to handle mobile/desktop transitions
+  window.addEventListener('resize', () => {
+    setTimeout(() => {
+      const toggleBtn = document.getElementById('theme-toggle');
+      if (toggleBtn) {
+        // Remove all existing listeners by cloning the element
+        const newBtn = toggleBtn.cloneNode(true);
+        toggleBtn.parentNode?.replaceChild(newBtn, toggleBtn);
+        // Re-attach listeners
+        setTimeout(attachEventListeners, 100);
+      }
+    }, 250);
+  });
 
   // Run initialization immediately if DOM is ready, otherwise wait
   if (document.readyState === 'loading') {
