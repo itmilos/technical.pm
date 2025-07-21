@@ -1,0 +1,398 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WebGLBackground from '../components/WebGLBackground.astro';
+import Modal from '../components/Modal.astro';
+import WhiteRabbit from '../components/WhiteRabbit.astro';
+import AnimatedContactForm from '../components/AnimatedContactForm.astro';
+
+const processSteps = [
+  {
+    number: "01",
+    title: "Brand Sprint",
+    duration: "1-2 weeks",
+    description: "We start with a comprehensive brand sprint to understand your vision, values, and goals.",
+    details: [
+      "Discovery workshops and stakeholder interviews",
+      "Competitive analysis and market research",
+      "User persona development and journey mapping",
+      "Brand positioning and messaging strategy",
+      "Core values and mission definition"
+    ],
+    icon: "🚀",
+    color: "from-royal-purple-600 to-electric-lavender-500"
+  },
+  {
+    number: "02", 
+    title: "Design Guidelines",
+    duration: "1 week",
+    description: "Transform brand insights into comprehensive design guidelines and visual identity.",
+    details: [
+      "Visual identity and logo design",
+      "Color palette and typography selection", 
+      "UI/UX design principles and patterns",
+      "Brand voice and tone guidelines",
+      "Component library and style guide"
+    ],
+    icon: "🎨",
+    color: "from-electric-lavender-500 to-cyber-teal-500"
+  },
+  {
+    number: "03",
+    title: "Website Creation", 
+    duration: "2-4 weeks",
+    description: "Build your website using the established brand guidelines and design system.",
+    details: [
+      "Custom website development with modern tech stack",
+      "Responsive design implementation",
+      "Performance optimization and SEO setup",
+      "Content management and quality assurance",
+      "Launch preparation and deployment"
+    ],
+    icon: "💻",
+    color: "from-cyber-teal-500 to-neon-coral-500"
+  }
+];
+
+const deliverables = [
+  {
+    phase: "Brand Sprint",
+    items: [
+      "Brand strategy document",
+      "User personas and journey maps", 
+      "Competitive analysis report",
+      "Brand positioning statement",
+      "Core messaging framework"
+    ]
+  },
+  {
+    phase: "Design Guidelines",
+    items: [
+      "Visual identity package",
+      "Color palette and typography guide",
+      "UI component library", 
+      "Brand style guide",
+      "Design system documentation"
+    ]
+  },
+  {
+    phase: "Website Creation",
+    items: [
+      "Fully responsive website",
+      "SEO-optimized pages",
+      "Performance reports",
+      "Content management system",
+      "Analytics setup and documentation"
+    ]
+  }
+];
+---
+
+<Layout 
+  title="Website Creation Process | Technical PM"
+  description="Our comprehensive 3-step process: Brand Sprint → Design Guidelines → Website Creation. Transform your vision into a powerful digital presence."
+  image="/seo/og-image.png"
+>
+  <WebGLBackground />
+
+  <!-- Hero Section -->
+  <section id="hero" class="container mx-auto px-4 py-16 sm:py-20 md:py-24 max-w-6xl text-center relative z-10">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 hover:scale-105 transition-transform duration-300 cursor-default leading-tight">
+      <span class="bg-gradient-to-r from-royal-purple-600 via-electric-lavender-500 to-neon-coral-500 bg-clip-text text-transparent">
+        Website Creation Process
+      </span>
+    </h1>
+    <p class="text-lg sm:text-xl text-deep-charcoal-300 mb-8 hover:text-pale-blush-50 transition-colors duration-200 cursor-default max-w-3xl mx-auto leading-relaxed font-primary">
+      From brand discovery to digital reality in three strategic phases. We don't just build websites—we craft digital experiences that align with your brand's soul.
+    </p>
+  </section>
+
+  <!-- Process Overview -->
+  <section class="container mx-auto px-4 mb-16 max-w-6xl relative z-10">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-pale-blush-50">Our Three-Phase Approach</h2>
+      <p class="text-deep-charcoal-300 max-w-2xl mx-auto">
+        Each phase builds upon the previous one, ensuring your website isn't just beautiful—it's strategically aligned with your brand.
+      </p>
+    </div>
+
+    <!-- Process Steps -->
+    <div class="space-y-8">
+      {processSteps.map((step, index) => (
+        <div class="glass-card rounded-2xl p-8 relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
+          <!-- Background Gradient -->
+          <div class={`absolute inset-0 bg-gradient-to-r ${step.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}></div>
+          
+          <div class="relative z-10">
+            <div class="flex flex-col lg:flex-row items-start gap-8">
+              <!-- Step Number and Icon -->
+              <div class="flex-shrink-0">
+                <div class="relative">
+                  <div class={`w-20 h-20 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-2xl font-bold text-white mb-4`}>
+                    {step.number}
+                  </div>
+                  <div class="text-4xl absolute -top-2 -right-2">
+                    {step.icon}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Content -->
+              <div class="flex-1">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                  <h3 class="text-2xl font-bold text-pale-blush-50 mb-2 sm:mb-0">
+                    {step.title}
+                  </h3>
+                  <span class="inline-block px-3 py-1 bg-white/10 rounded-full text-sm text-electric-lavender-300 font-medium">
+                    {step.duration}
+                  </span>
+                </div>
+                
+                <p class="text-deep-charcoal-300 mb-6 text-lg leading-relaxed">
+                  {step.description}
+                </p>
+
+                <!-- Details List -->
+                <div class="grid sm:grid-cols-2 gap-3">
+                  {step.details.map((detail) => (
+                    <div class="flex items-start gap-3">
+                      <div class="w-2 h-2 rounded-full bg-electric-lavender-500 mt-2 flex-shrink-0"></div>
+                      <span class="text-pale-blush-200 text-sm">{detail}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Process Flow Arrow -->
+          {index < processSteps.length - 1 && (
+            <div class="flex justify-center mt-8">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-r from-electric-lavender-500 to-cyber-teal-500 flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Deliverables Section -->
+  <section class="container mx-auto px-4 mb-16 max-w-6xl relative z-10">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-pale-blush-50">What You'll Receive</h2>
+      <p class="text-deep-charcoal-300 max-w-2xl mx-auto">
+        Comprehensive deliverables at each phase ensure transparency and value throughout the process.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      {deliverables.map((phase) => (
+        <div class="glass-card rounded-xl p-6 hover:scale-105 transition-all duration-300">
+          <h3 class="text-xl font-bold text-pale-blush-50 mb-6">{phase.phase}</h3>
+          <ul class="space-y-3">
+            {phase.items.map((item) => (
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-cyber-teal-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span class="text-deep-charcoal-300 text-sm">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Why This Process Works -->
+  <section class="container mx-auto px-4 mb-16 max-w-4xl relative z-10">
+    <div class="glass-card rounded-2xl p-8">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-8 text-center text-pale-blush-50">Why This Process Works</h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-xl font-semibold text-electric-lavender-400 mb-4">Strategic Foundation</h3>
+          <p class="text-deep-charcoal-300 mb-4">
+            Every website decision is rooted in brand strategy, not aesthetic preferences. This ensures consistency and purpose.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="text-xl font-semibold text-cyber-teal-400 mb-4">Efficient Execution</h3>
+          <p class="text-deep-charcoal-300 mb-4">
+            Clear guidelines eliminate guesswork and revisions, leading to faster development and better results.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="text-xl font-semibold text-neon-coral-400 mb-4">Scalable Systems</h3>
+          <p class="text-deep-charcoal-300 mb-4">
+            Design systems and brand guidelines enable consistent growth and easy future updates.
+          </p>
+        </div>
+        
+        <div>
+          <h3 class="text-xl font-semibold text-royal-purple-400 mb-4">Measurable Impact</h3>
+          <p class="text-deep-charcoal-300 mb-4">
+            Strategy-first approach ensures your website drives real business results, not just pretty pictures.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section class="container mx-auto px-4 mb-16 max-w-4xl relative z-10">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-pale-blush-50">Typical Timeline</h2>
+      <p class="text-deep-charcoal-300">
+        From initial consultation to website launch: 4-7 weeks total
+      </p>
+    </div>
+
+    <div class="glass-card rounded-xl p-8">
+      <div class="relative">
+        <!-- Timeline Line -->
+        <div class="absolute left-8 top-4 bottom-4 w-0.5 bg-gradient-to-b from-royal-purple-600 to-neon-coral-500"></div>
+        
+        <!-- Timeline Items -->
+        <div class="space-y-8 relative">
+          <div class="flex items-start gap-6">
+            <div class="w-4 h-4 rounded-full bg-royal-purple-600 flex-shrink-0 mt-1 relative z-10"></div>
+            <div>
+              <h4 class="font-semibold text-pale-blush-50">Week 1-2: Brand Sprint</h4>
+              <p class="text-sm text-deep-charcoal-300">Discovery, research, and strategic foundation</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-6">
+            <div class="w-4 h-4 rounded-full bg-electric-lavender-500 flex-shrink-0 mt-1 relative z-10"></div>
+            <div>
+              <h4 class="font-semibold text-pale-blush-50">Week 3: Design Guidelines</h4>
+              <p class="text-sm text-deep-charcoal-300">Visual identity and design system creation</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-6">
+            <div class="w-4 h-4 rounded-full bg-cyber-teal-500 flex-shrink-0 mt-1 relative z-10"></div>
+            <div>
+              <h4 class="font-semibold text-pale-blush-50">Week 4-6: Development</h4>
+              <p class="text-sm text-deep-charcoal-300">Website build, content integration, and testing</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-6">
+            <div class="w-4 h-4 rounded-full bg-neon-coral-500 flex-shrink-0 mt-1 relative z-10"></div>
+            <div>
+              <h4 class="font-semibold text-pale-blush-50">Week 7: Launch</h4>
+              <p class="text-sm text-deep-charcoal-300">Final review, optimization, and go-live</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="container mx-auto px-4 mb-16 max-w-4xl relative z-10">
+    <div class="glass-card rounded-2xl p-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-pale-blush-50">
+        Ready to Start Your Website Journey?
+      </h2>
+      <p class="text-deep-charcoal-300 mb-8 max-w-2xl mx-auto">
+        Let's begin with a conversation about your brand vision and goals. The first step towards your perfect website starts here.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button
+          onclick="document.getElementById('process-modal').classList.remove('hidden'); return false;"
+          class="glass-button px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
+        >
+          <span class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+            Start the Process
+          </span>
+        </button>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Modal -->
+  <Modal id="process-modal" title="Start Your Website Process" subtitle="Tell us about your project and let's begin the journey">
+    <AnimatedContactForm 
+      formId="process-contact-form"
+      buttonText="Begin the Process"
+      fields={[
+        { type: 'text', id: 'process-name', name: 'name', label: 'How should we call you?', icon: '👤', required: true },
+        { type: 'email', id: 'process-email', name: 'email', label: 'Email Address', icon: '📧', required: true },
+        { type: 'text', id: 'process-company', name: 'company', label: 'Company/Organization', icon: '🏢', required: false },
+        { type: 'select', id: 'process-phase', name: 'interested-phase', label: 'Most Interested In', icon: '🎯', required: true, options: [
+          { value: 'full-process', label: 'Complete Process (Brand Sprint + Website)' },
+          { value: 'brand-sprint', label: 'Brand Sprint Only' },
+          { value: 'website-only', label: 'Website Creation (with existing brand)' },
+          { value: 'consultation', label: 'Process Consultation' }
+        ]},
+        { type: 'textarea', id: 'process-project', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4 }
+      ]}
+    />
+  </Modal>
+
+  <footer class="text-center text-deep-charcoal-400 text-sm py-6 relative">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-2">
+      <span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default font-primary">© 2025 Milos Rujevic. All rights reserved.</span>
+      <span class="text-pale-blush-200 hidden sm:inline font-primary">•</span>
+      <span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default font-primary">Strategic Process. Powerful Results.</span>
+      <span class="text-pale-blush-200 hidden sm:inline font-primary">•</span>
+      <div class="hover:scale-110 transition-transform duration-300">
+        <WhiteRabbit />
+      </div>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  /* Enhanced glass card for process page */
+  .glass-card {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-button {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.06) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 
+      0 6px 24px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    color: white;
+  }
+
+  .glass-button:hover {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.12) 50%,
+      rgba(255, 255, 255, 0.09) 100%);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+
+</style> 
