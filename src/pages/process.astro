@@ -394,5 +394,46 @@ const deliverables = [
     border-color: rgba(255, 255, 255, 0.35);
   }
 
+  /* Light theme adjustments */
+  [data-theme="light"] .glass-card {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.7) 50%,
+      rgba(255, 255, 255, 0.5) 100%);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-secondary);
+    backdrop-filter: blur(10px);
+  }
 
+  [data-theme="light"] .glass-button {
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    backdrop-filter: none;
+  }
+
+  [data-theme="light"] .glass-button:hover {
+    background: var(--accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+  }
+
+  /* Ensure all text colors work with both themes */
+  [data-theme="light"] .text-pale-blush-50,
+  [data-theme="light"] .glass-card h2,
+  [data-theme="light"] .glass-card h3 {
+    color: var(--text-primary) !important;
+  }
+
+  [data-theme="light"] .text-deep-charcoal-300,
+  [data-theme="light"] .text-pale-blush-200 {
+    color: var(--text-secondary) !important;
+  }
+
+  /* Improve color contrast for gradient text in light mode */
+  [data-theme="light"] .bg-gradient-to-r {
+    background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+  }
 </style> 
