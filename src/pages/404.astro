@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LoadingAnimation from '../components/LoadingAnimation.astro';
+import Modal from '../components/Modal.astro';
+import AnimatedContactForm from '../components/AnimatedContactForm.astro';
 ---
 
 <Layout title="404 - Page Not Found | Technical PM" description="The page you're looking for couldn't be found. Navigate back to our homepage or contact us for assistance.">
@@ -56,7 +58,7 @@ import LoadingAnimation from '../components/LoadingAnimation.astro';
         </button>
         
         <a
-          href="/"
+          href="https://www.technical.pm/"
           class="glass-button px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 inline-block"
         >
           <span class="flex items-center gap-2">
@@ -101,6 +103,19 @@ import LoadingAnimation from '../components/LoadingAnimation.astro';
     </div>
   </div>
 </Layout>
+
+<!-- Contact Modal - ADD THIS -->
+<Modal id="contact-modal" title="Get in Touch" subtitle="Let's discuss how we can work together">
+  <AnimatedContactForm 
+    formId="contact-form"
+    buttonText="Send Message"
+    fields={[
+      { type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
+      { type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true },
+      { type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4 }
+    ]}
+  />
+</Modal>
 
 <style>
   /* Animated particles */

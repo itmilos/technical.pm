@@ -20,15 +20,6 @@ const {
 
 <!-- Circular Diagram - PC Version -->
 <div class="relative w-full max-w-6xl mx-auto mb-20 hidden md:block">
-	<!-- Floating particles background -->
-	<div class="absolute inset-0 pointer-events-none">
-		<div class="floating-particle particle-1"></div>
-		<div class="floating-particle particle-2"></div>
-		<div class="floating-particle particle-3"></div>
-		<div class="floating-particle particle-4"></div>
-		<div class="floating-particle particle-5"></div>
-	</div>
-
 	<div class="circle-diagram relative mx-auto">
 		<!-- Center Circle - Why -->
 		<div class="absolute circle-center-position z-30">
@@ -128,12 +119,6 @@ const {
 			<path id="path3" d="M 140 380 Q 300 450 460 380" opacity="0" />
 		</svg>
 
-		<!-- Interactive overlay for enhanced effects -->
-		<div class="absolute inset-0 pointer-events-none z-40">
-			<div class="connection-highlight highlight-1"></div>
-			<div class="connection-highlight highlight-2"></div>
-			<div class="connection-highlight highlight-3"></div>
-		</div>
 	</div>
 </div>
 
@@ -144,23 +129,7 @@ const {
 		width: 600px;
 		position: relative;
 	}
-
-	/* Floating particles background */
-	.floating-particle {
-		position: absolute;
-		width: 6px;
-		height: 6px;
-		background: radial-gradient(circle, var(--accent-primary), var(--accent-secondary));
-		border-radius: 50%;
-		animation: float 6s ease-in-out infinite;
-	}
-
-	.particle-1 { top: 10%; left: 15%; animation-delay: 0s; }
-	.particle-2 { top: 25%; right: 20%; animation-delay: 1.2s; }
-	.particle-3 { bottom: 30%; left: 10%; animation-delay: 2.4s; }
-	.particle-4 { bottom: 15%; right: 15%; animation-delay: 3.6s; }
-	.particle-5 { top: 50%; left: 5%; animation-delay: 4.8s; }
-
+	
 	/* Circle positioning */
 	.circle-center-position {
 		top: 5%;
