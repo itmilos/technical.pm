@@ -18,7 +18,9 @@ export default defineConfig({
       customPages: [
         'https://technical.pm',
         'https://technical.pm/blog',
-        'https://technical.pm/brand-strategy'
+        'https://technical.pm/brand-strategy',
+        'https://technical.pm/llms.txt',
+        'https://technical.pm/agents.md'
       ],
       i18n: {
         defaultLocale: 'en',

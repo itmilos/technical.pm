@@ -1,6 +1,25 @@
 User-agent: *
 Allow: /
 
+# AI crawlers — explicitly allowed for LLM indexing
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: GoogleExtendedBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
 # Disallow API endpoints and private content
 Disallow: /api/
 Disallow: /admin/
@@ -17,6 +36,10 @@ Allow: /_astro/
 # Sitemap location
 Sitemap: https://technical.pm/sitemap-index.xml
 Sitemap: https://technical.pm/sitemap-0.xml
+
+# AI agent discoverability
+Sitemap: https://technical.pm/llms.txt
+Sitemap: https://technical.pm/agents.md
 
 # Crawl delay (optional - prevents overwhelming server)
 Crawl-delay: 1 

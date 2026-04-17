@@ -1,0 +1,39 @@
+# technical.pm
+
+> A blog and portfolio by Milos Rujevic, Technical Product Manager. Covers DeFi product management, RWA (Real World Assets), on-chain private markets, Web3 PM career transitions, and enterprise AI.
+
+## Author
+
+Milos Rujevic — Technical Product Manager with 10+ years building financial systems (Red-Black Tree, SAP) and DeFi exchange infrastructure (Stellarity DEX). Documenting a 60-day transition into DeFi protocol product management targeting on-chain private markets roles.
+
+Contact: milosrujevic@gmail.com
+Site: https://technical.pm
+
+## Blog Series: Tech PM → DeFi PM in 60 Days
+
+A real-time documented journey from traditional tech PM into DeFi protocol product management. Covers RWA protocols (Centrifuge, Maple Finance, Ondo Finance), on-chain private markets mechanics, protocol limitations, and hands-on technical skill building.
+
+- [Why I'm Betting 60 Days on DeFi](https://technical.pm/blog/post-0-why-defi) — Introduction to the transition: Stellarity DEX background, TradFi credentials, and the Orca Web3 PM role as north star.
+- [What the Hell is RWA? (A Tech PM's First Week)](https://technical.pm/blog/post-1-what-is-rwa) — Real World Assets explained from zero: tokenized private credit, treasuries, and why $10T in private markets is broken.
+- [5 Things That Are Still Broken in On-Chain Private Markets](https://technical.pm/blog/post-2-rwa-limitations) — Protocol limitations deep dive: oracle risk, legal enforceability gap, KYC friction, redemption illiquidity, counterparty concentration.
+- [Reading the Blockchain as a PM (No Solidity Required)](https://technical.pm/blog/post-3-blockchain-for-pm) — ethers.js and viem from a product manager's perspective: reading contract state and talking credibly with engineers.
+- [TradFi → DeFi: A Translation Guide](https://technical.pm/blog/post-4-tradfi-defi-translation) — Mapping TradFi concepts to on-chain equivalents: audit trails, policy engines, settlement, compliance.
+- [I Built a Thing: RWA Private Markets Dashboard](https://technical.pm/blog/post-5-rwa-dashboard-launch) — Portfolio project launch: React + wagmi + viem dashboard showing positions across Centrifuge, Maple, and Ondo.
+- [60 Days In: What I Got Wrong About DeFi](https://technical.pm/blog/post-6-retrospective) — Honest retrospective on the 60-day transition: surprises, corrected misconceptions, what actually mattered.
+
+## All Posts
+
+- [Azure AI Foundry: A Technical PM's Guide to Enterprise AI Development](https://technical.pm/blog/azure-ai-foundry-guide) — A comprehensive guide to Azure AI Foundry, exploring its capabilities, use cases, and integration points for enterprise AI development.
+
+## Machine-Readable Resources
+
+- [LLM Index](https://technical.pm/llms.txt) — This file: site and content summary
+- [Agent Capabilities](https://technical.pm/agents.md) — What AI agents can do on this site, permitted actions, contact API schema
+- [RSS Feed](https://technical.pm/blog/rss.xml) — All posts in RSS 2.0 format
+- [Sitemap](https://technical.pm/sitemap-index.xml) — Full URL index
+
+## Services
+
+- [Technical PM Consulting](https://technical.pm) — Product strategy, DeFi protocol PM, regulated financial systems, Agile delivery
+- [Brand Strategy](https://technical.pm/brand-strategy) — Positioning for technical products and PM consultants
+- [Process](https://technical.pm/process) — 3-phase engagement: Brand Sprint, Design Guidelines, Website Creation
