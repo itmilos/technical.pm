@@ -16,22 +16,142 @@ const { testimonials } = Astro.props;
 
 <section id="testimonials" class="mb-20 px-4">
   <h2 class="text-3xl font-semibold mb-8 text-center transition-colors duration-200 cursor-default" style="color: var(--text-primary);">What Others Say</h2>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-    {testimonials.map((testimonial) => (
-      <div class="glass-card p-6 rounded-lg group flex flex-col min-h-[260px]">
-        <div class="flex items-center mb-4">
-          <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl transition-transform duration-300" style="background: var(--accent-tertiary); color: var(--accent-primary);">
-            {testimonial.initials}
+
+  <div class="relative max-w-6xl mx-auto" id="testimonials-carousel">
+    <!-- Track -->
+    <div class="overflow-hidden">
+      <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out">
+        {testimonials.map((testimonial) => (
+          <div class="carousel-slide flex-shrink-0 px-3">
+            <div class="glass-card p-6 rounded-lg flex flex-col h-full min-h-[260px]">
+              <div class="flex items-center mb-4">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0 transition-transform duration-300" style="background: var(--accent-tertiary); color: var(--accent-primary);">
+                  {testimonial.initials}
+                </div>
+                <div class="ml-4">
+                  <h3 class="font-semibold transition-colors duration-200" style="color: var(--text-primary);">{testimonial.name}</h3>
+                  <p class="text-sm transition-colors duration-200" style="color: var(--text-secondary);">{testimonial.role}</p>
+                </div>
+              </div>
+              <p class="transition-colors duration-200 text-pretty flex-1" style="color: var(--text-secondary);">{testimonial.text}</p>
+              <p class="text-sm mt-4 transition-colors duration-200" style="color: var(--text-tertiary);">{testimonial.date}</p>
+            </div>
           </div>
-          <div class="ml-4">
-            <h3 class="font-semibold transition-colors duration-200" style="color: var(--text-primary);">{testimonial.name}</h3>
-            <p class="text-sm transition-colors duration-200" style="color: var(--text-secondary);">{testimonial.role}</p>
-          </div>
-        </div>
-        <p class="transition-colors duration-200 text-pretty -indent-2" style="color: var(--text-secondary);">{testimonial.text}</p>
-        <div class="flex-1"></div>
-        <p class="text-sm mt-4 transition-colors duration-200" style="color: var(--text-tertiary);">{testimonial.date}</p>
+        ))}
       </div>
-    ))}
+    </div>
+
+    <!-- Prev / Next buttons -->
+    <button id="carousel-prev" aria-label="Previous" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-200 hover:scale-110" style="background: var(--accent-tertiary); color: var(--accent-primary);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button id="carousel-next" aria-label="Next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-200 hover:scale-110" style="background: var(--accent-tertiary); color: var(--accent-primary);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+
+    <!-- Dots -->
+    <div id="carousel-dots" class="flex justify-center gap-2 mt-6">
+    </div>
   </div>
-</section> 
+</section>
+
+<script>
+  const track = document.getElementById('carousel-track') as HTMLElement;
+  const dotsContainer = document.getElementById('carousel-dots') as HTMLElement;
+  const prevBtn = document.getElementById('carousel-prev') as HTMLButtonElement;
+  const nextBtn = document.getElementById('carousel-next') as HTMLButtonElement;
+  const carousel = document.getElementById('testimonials-carousel') as HTMLElement;
+
+  const slides = track.querySelectorAll('.carousel-slide');
+  const total = slides.length;
+  let current = 0;
+  let autoTimer: ReturnType<typeof setInterval>;
+  let perView = 3;
+
+  function getPerView(): number {
+    if (window.innerWidth < 640) return 1;
+    if (window.innerWidth < 1024) return 2;
+    return 3;
+  }
+
+  function totalPages(): number {
+    return Math.ceil(total / perView);
+  }
+
+  function setSlideWidths() {
+    perView = getPerView();
+    slides.forEach((slide) => {
+      (slide as HTMLElement).style.width = `${100 / perView}%`;
+    });
+  }
+
+  function buildDots() {
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < totalPages(); i++) {
+      const dot = document.createElement('button');
+      dot.setAttribute('aria-label', `Go to page ${i + 1}`);
+      dot.className = 'w-2 h-2 rounded-full transition-all duration-300';
+      dot.style.background = i === Math.floor(current / perView)
+        ? 'var(--accent-primary)'
+        : 'var(--border-primary)';
+      dot.addEventListener('click', () => goTo(i * perView));
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    const activePage = Math.floor(current / perView);
+    dotsContainer.querySelectorAll('button').forEach((dot, i) => {
+      (dot as HTMLElement).style.background = i === activePage
+        ? 'var(--accent-primary)'
+        : 'var(--border-primary)';
+      (dot as HTMLElement).style.transform = i === activePage ? 'scale(1.4)' : 'scale(1)';
+    });
+  }
+
+  function goTo(index: number) {
+    const maxStart = total - perView;
+    current = Math.max(0, Math.min(index, maxStart));
+    const offset = (current / total) * 100;
+    track.style.transform = `translateX(-${offset}%)`;
+    updateDots();
+  }
+
+  function next() {
+    const maxStart = total - perView;
+    goTo(current + perView > maxStart ? 0 : current + perView);
+  }
+
+  function prev() {
+    const maxStart = total - perView;
+    goTo(current - perView < 0 ? maxStart : current - perView);
+  }
+
+  function startAuto() {
+    autoTimer = setInterval(next, 4500);
+  }
+
+  function stopAuto() {
+    clearInterval(autoTimer);
+  }
+
+  function init() {
+    setSlideWidths();
+    buildDots();
+    goTo(0);
+    startAuto();
+  }
+
+  prevBtn.addEventListener('click', () => { stopAuto(); prev(); startAuto(); });
+  nextBtn.addEventListener('click', () => { stopAuto(); next(); startAuto(); });
+  carousel.addEventListener('mouseenter', stopAuto);
+  carousel.addEventListener('mouseleave', startAuto);
+
+  window.addEventListener('resize', () => {
+    setSlideWidths();
+    buildDots();
+    goTo(0);
+  });
+
+  init();
+</script>

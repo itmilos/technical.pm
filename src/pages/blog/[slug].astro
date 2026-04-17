@@ -38,11 +38,10 @@ const { Content } = await post.render();
 const wordCount = post.body.split(/\s+/).length;
 const readingTime = Math.ceil(wordCount / 200);
 
-// Get the post image, defaulting to the first image in the content if available
-const postImage = post.data.image || (() => {
-  const imageMatch = post.body.match(/!\[.*?\]\((.*?)\)/);
-  return imageMatch ? imageMatch[1] : '/seo/og-image.png';
-})();
+// Use dynamic OG image endpoint; fall back to static image or default
+const postImage = post.data.image?.startsWith('/seo/')
+  ? `/og/${post.slug}.png`
+  : post.data.image || `/og/${post.slug}.png`;
 
 // Get related posts based on tags
 const relatedPosts = await getCollection('blog', (entry) => {

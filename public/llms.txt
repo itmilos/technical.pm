@@ -13,7 +13,7 @@ Site: https://technical.pm
 
 A real-time documented journey from traditional tech PM into DeFi protocol product management. Covers RWA protocols (Centrifuge, Maple Finance, Ondo Finance), on-chain private markets mechanics, protocol limitations, and hands-on technical skill building.
 
-- [Why I'm Betting 60 Days on DeFi](https://technical.pm/blog/post-0-why-defi) — Introduction to the transition: Stellarity DEX background, TradFi credentials, and the Orca Web3 PM role as north star.
+- [Tech PM to DeFi PM: Why I'm Betting 60 Days on the Transition](https://technical.pm/blog/tech-pm-to-defi-pm-why-i-made-the-bet) — Introduction to the transition: Stellarity DEX background, TradFi credentials, and the Orca Web3 PM role as north star.
 - [What the Hell is RWA? (A Tech PM's First Week)](https://technical.pm/blog/post-1-what-is-rwa) — Real World Assets explained from zero: tokenized private credit, treasuries, and why $10T in private markets is broken.
 - [5 Things That Are Still Broken in On-Chain Private Markets](https://technical.pm/blog/post-2-rwa-limitations) — Protocol limitations deep dive: oracle risk, legal enforceability gap, KYC friction, redemption illiquidity, counterparty concentration.
 - [Reading the Blockchain as a PM (No Solidity Required)](https://technical.pm/blog/post-3-blockchain-for-pm) — ethers.js and viem from a product manager's perspective: reading contract state and talking credibly with engineers.
