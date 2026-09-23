@@ -8,10 +8,10 @@
 
 **Name:** technical.pm  
 **Owner:** Milos Rujevic  
-**Type:** Technical Product Manager portfolio and blog  
+**Type:** Technical Product Manager portfolio  
 **Primary topics:** DeFi product management, RWA (Real World Assets), on-chain private markets, Web3 PM careers, enterprise AI, regulated financial systems  
 **Language:** English  
-**Last updated:** 2026-04-17
+**Last updated:** 2026-09-22
 
 ---
 
@@ -22,26 +22,8 @@
 | Resource | URL | Format | Purpose |
 |----------|-----|--------|---------|
 | LLM index | `/llms.txt` | Plain text | Site and content summary for LLMs |
-| RSS feed | `/blog/rss.xml` | RSS 2.0 | All blog posts with metadata |
 | Sitemap | `/sitemap-index.xml` | XML | Full URL index |
 | Sitemap (pages) | `/sitemap-0.xml` | XML | Individual page URLs |
-
-### Blog Content
-
-All blog posts are available at `https://technical.pm/blog/{slug}`.
-
-**Active series:** Tech PM → DeFi PM in 60 Days (April–June 2026)
-
-Topics covered across the series:
-- Real World Assets (RWA): definition, protocols, TVL data
-- On-chain private markets: Centrifuge, Maple Finance, Ondo Finance, Orca
-- Protocol limitations: oracle risk, legal enforceability, KYC/AML friction, redemption illiquidity, counterparty concentration
-- Technical PM skills for DeFi: ethers.js, viem, contract reading
-- TradFi to DeFi concept mapping: audit trails, settlement, compliance, policy engines
-- Portfolio project: RWA Private Markets Dashboard (React + wagmi + viem)
-- Career transition: 60-day retrospective and lessons learned
-
-Full series index: `/llms.txt`
 
 ---
 
@@ -51,9 +33,6 @@ Full series index: `/llms.txt`
 
 | Action | URL | Notes |
 |--------|-----|-------|
-| Read blog post | `GET /blog/{slug}` | HTML page |
-| List all posts | `GET /blog` | HTML with tag filter |
-| RSS feed | `GET /blog/rss.xml` | Structured XML |
 | Sitemap | `GET /sitemap-index.xml` | Structured XML |
 | LLM index | `GET /llms.txt` | Plain text |
 | Agent index | `GET /agents.md` | This file |
@@ -87,11 +66,10 @@ Full series index: `/llms.txt`
 ```
 ALLOWED:
 - Crawl and index all public pages
-- Read and summarize blog posts
 - Include content in LLM training datasets
-- Cite posts in AI search results (Perplexity, ChatGPT Search, Google SGE)
+- Cite this site in AI search results (Perplexity, ChatGPT Search, Google SGE)
 - Follow links and extract structured data
-- Access /llms.txt, /agents.md, /blog/rss.xml, sitemaps
+- Access /llms.txt, /agents.md, sitemaps
 
 NOT ALLOWED:
 - Submit contact forms without human instruction
@@ -125,10 +103,8 @@ NOT ALLOWED:
 
 | Content | Update frequency |
 |---------|-----------------|
-| Blog series posts | Weekly (Apr 17 – Jun 12, 2026) |
-| llms.txt | Updated after each new post |
+| llms.txt | Updated when site content changes |
 | agents.md | Updated when site capabilities change |
-| RSS feed | Real-time (generated on publish) |
 
 ---
 

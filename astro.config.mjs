@@ -17,7 +17,6 @@ export default defineConfig({
       },
       customPages: [
         'https://technical.pm',
-        'https://technical.pm/blog',
         'https://technical.pm/brand-strategy',
         'https://technical.pm/llms.txt',
         'https://technical.pm/agents.md'
@@ -33,6 +32,11 @@ export default defineConfig({
   base: '/',
   compressHTML: true,
   output: 'server',
+  redirects: {
+    '/blog': '/',
+    '/blog/rss.xml': '/',
+    '/blog/[...slug]': '/'
+  },
   adapter: vercelServerless({
     webAnalytics: {
       enabled: true
