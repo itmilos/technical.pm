@@ -6,7 +6,7 @@ const emailApiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 const contactsApiInstance = new SibApiV3Sdk.ContactsApi();
 
 // Set API key for both clients
-const apiKey = process.env.PUBLIC_BREVO_API_KEY;
+const apiKey = process.env.PUBLIC_BREVO_API_KEY || process.env.BREVO_API_KEY;
 emailApiInstance.setApiKey(SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey, apiKey);
 contactsApiInstance.setApiKey(SibApiV3Sdk.ContactsApiApiKeys.apiKey, apiKey);
 
