@@ -59,6 +59,10 @@
 
 > Note: The contact API is intended for genuine human-initiated inquiries. Agents should not autonomously submit contact forms without explicit human instruction.
 
+### WebMCP tools (in-page)
+
+The homepage's four contact forms are also exposed as [WebMCP](https://webmachinelearning.github.io/webmcp/) tools via the declarative `toolname`/`tooldescription`/`toolparamdescription` attributes, so a browser-based agent can discover and fill them directly instead of scraping the DOM: `send-general-inquiry`, `book-consultation`, `start-project-discussion`, `start-engagement-discussion`. The same human-intent rule applies — these are not auto-submit tools; a human must review and submit.
+
 ---
 
 ## Agent Permissions

@@ -217,64 +217,72 @@ const pricingTiers = [
 
 	<!-- Contact Modal -->
 	<Modal id="contact-modal" title="Get in Touch" subtitle="Let's discuss how we can work together">
-		<AnimatedContactForm 
+		<AnimatedContactForm
 			formId="contact-form"
 			buttonText="Send Message"
+			toolName="send-general-inquiry"
+			toolDescription="Send a general contact message to Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
-				{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
-				{ type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true },
-				{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4 }
+				{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
+				{ type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+				{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4, toolParamDescription: 'A description of the project or inquiry' }
 			]}
 		/>
 	</Modal>
 
 	<!-- Consultation Modal -->
 	<Modal id="consultation-modal" title="Book a Consultation" subtitle="Get expert guidance on your technical strategy">
-		<AnimatedContactForm 
+		<AnimatedContactForm
 			formId="contact-form-consultation"
 			buttonText="Book Consultation"
+			toolName="book-consultation"
+			toolDescription="Request a paid consultation session with Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
-				{ type: 'text', id: 'consultation-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
-				{ type: 'email', id: 'consultation-email', name: 'email', label: 'Email Address', icon: '📧', required: true },
-				{ type: 'textarea', id: 'consultation-goals', name: 'message', label: 'What are your consultation goals?', icon: '🎯', required: true, rows: 4 }
+				{ type: 'text', id: 'consultation-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
+				{ type: 'email', id: 'consultation-email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+				{ type: 'textarea', id: 'consultation-goals', name: 'message', label: 'What are your consultation goals?', icon: '🎯', required: true, rows: 4, toolParamDescription: 'What the visitor wants to get out of the consultation' }
 			]}
 		/>
 	</Modal>
 
 	<!-- Project Modal -->
 	<Modal id="project-modal" title="Start a Project" subtitle="Let's build something amazing together">
-		<AnimatedContactForm 
+		<AnimatedContactForm
 			formId="contact-form-project"
 			buttonText="Start Project"
+			toolName="start-project-discussion"
+			toolDescription="Kick off a project scoping discussion with Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
-				{ type: 'text', id: 'project-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
-				{ type: 'email', id: 'project-email', name: 'email', label: 'Email Address', icon: '📧', required: true },
-				{ type: 'select', id: 'project-timeline', name: 'timeline', label: 'Expected Timeline', icon: '⏰', required: true, options: [
+				{ type: 'text', id: 'project-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
+				{ type: 'email', id: 'project-email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+				{ type: 'select', id: 'project-timeline', name: 'timeline', label: 'Expected Timeline', icon: '⏰', required: true, toolParamDescription: 'How soon the project needs to start', options: [
 					{ value: 'urgent', label: 'Urgent (1-2 weeks)' },
 					{ value: 'soon', label: 'Soon (1-2 months)' },
 					{ value: 'planning', label: 'Planning Phase' },
 					{ value: 'flexible', label: 'Flexible' }
 				]},
-				{ type: 'textarea', id: 'project-requirements', name: 'message', label: 'Describe your project requirements', icon: '📋', required: true, rows: 4 }
+				{ type: 'textarea', id: 'project-requirements', name: 'message', label: 'Describe your project requirements', icon: '📋', required: true, rows: 4, toolParamDescription: "The project's requirements and scope" }
 			]}
 		/>
 	</Modal>
 
 	<!-- Engagement Modal -->
 	<Modal id="engagement-modal" title="Begin Partnership" subtitle="Let's build a long-term strategic relationship">
-		<AnimatedContactForm 
+		<AnimatedContactForm
 			formId="contact-form-engagement"
 			buttonText="Start Partnership Discussion"
+			toolName="start-engagement-discussion"
+			toolDescription="Start a long-term strategic partnership discussion with Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
-				{ type: 'text', id: 'engagement-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
-				{ type: 'email', id: 'engagement-email', name: 'email', label: 'Email Address', icon: '📧', required: true },
-				{ type: 'select', id: 'engagement-team-size', name: 'team-size', label: 'Team Size', icon: '👥', required: true, options: [
+				{ type: 'text', id: 'engagement-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
+				{ type: 'email', id: 'engagement-email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+				{ type: 'select', id: 'engagement-team-size', name: 'team-size', label: 'Team Size', icon: '👥', required: true, toolParamDescription: "The visitor's organization size", options: [
 					{ value: '1-10', label: '1-10 employees' },
 					{ value: '11-50', label: '11-50 employees' },
 					{ value: '51-200', label: '51-200 employees' },
 					{ value: '201+', label: '201+ employees' }
 				]},
-				{ type: 'textarea', id: 'engagement-goals', name: 'message', label: 'Describe your engagement goals', icon: '🤝', required: true, rows: 4 }
+				{ type: 'textarea', id: 'engagement-goals', name: 'message', label: 'Describe your engagement goals', icon: '🤝', required: true, rows: 4, toolParamDescription: 'What the visitor wants from a long-term engagement' }
 			]}
 		/>
 	</Modal>

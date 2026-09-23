@@ -6,6 +6,8 @@ export interface Props {
 	formId?: string;
 	buttonText?: string;
 	fields?: FormField[];
+	toolName?: string;
+	toolDescription?: string;
 }
 
 export interface FormField {
@@ -17,6 +19,7 @@ export interface FormField {
 	required?: boolean;
 	options?: { value: string; label: string }[];
 	rows?: number;
+	toolParamDescription?: string;
 }
 
 const {
@@ -26,17 +29,19 @@ const {
 	formId = 'contact-form',
 	buttonText = "Send Message",
 	fields = [
-		{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
-		{ type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true },
-		{ type: 'select', id: 'subject', name: 'subject', label: 'Subject', icon: '💼', required: true, options: [
+		{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
+		{ type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+		{ type: 'select', id: 'subject', name: 'subject', label: 'Subject', icon: '💼', required: true, toolParamDescription: 'What the inquiry is about', options: [
 			{ value: 'general', label: 'General Inquiry' },
 			{ value: 'consultation', label: 'Book a Consultation' },
 			{ value: 'project', label: 'Project Discussion' },
 			{ value: 'engagement', label: 'Full Engagement' },
 			{ value: 'other', label: 'Other' }
 		]},
-		{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your needs', icon: '💭', required: true, rows: 4 }
-	]
+		{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your needs', icon: '💭', required: true, rows: 4, toolParamDescription: 'A description of what the visitor needs' }
+	],
+	toolName = 'send-contact-message',
+	toolDescription = 'Send a contact message to Milos Rujevic on behalf of a site visitor. Requires explicit human instruction — never submit this on a visitor\'s behalf without them asking to.'
 } = Astro.props;
 ---
 
@@ -48,7 +53,7 @@ const {
 		<div class="form-particle particle-3"></div>
 	</div>
 
-	<form id={formId} class="space-y-6 relative z-10">
+	<form id={formId} class="space-y-6 relative z-10" toolname={toolName} tooldescription={toolDescription}>
 		{fields.map((field) => (
 			<div class="input-group">
 				<div class="input-wrapper">
@@ -60,6 +65,7 @@ const {
 							class="animated-input animated-textarea"
 							placeholder=" "
 							required={field.required}
+							toolparamdescription={field.toolParamDescription}
 						></textarea>
 					) : field.type === 'select' ? (
 						<select
@@ -67,6 +73,7 @@ const {
 							name={field.name}
 							class="animated-input animated-select"
 							required={field.required}
+							toolparamdescription={field.toolParamDescription}
 						>
 							<option value="" disabled selected></option>
 							{field.options?.map((option) => (
@@ -81,6 +88,7 @@ const {
 							class="animated-input"
 							placeholder=" "
 							required={field.required}
+							toolparamdescription={field.toolParamDescription}
 						/>
 					)}
 					<label for={field.id} class="floating-label font-primary">
