@@ -1,10 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-
-// Get blog posts for sitemap info
-const blogPosts = await getCollection('blog');
-const totalPosts = blogPosts.length;
 
 // SEO Status Data
 const seoFeatures = [
@@ -21,7 +16,7 @@ const seoFeatures = [
   {
     category: "Technical SEO",
     items: [
-      { name: "XML Sitemap", status: "✅", description: "Auto-generated sitemap with all pages and blog posts" },
+      { name: "XML Sitemap", status: "✅", description: "Auto-generated sitemap with all pages" },
       { name: "Robots.txt", status: "✅", description: "Proper crawling directives for search engines" },
       { name: "Schema Markup", status: "✅", description: "JSON-LD structured data for rich snippets" },
       { name: "Internal Linking", status: "✅", description: "Strategic internal link structure" },
@@ -34,7 +29,6 @@ const seoFeatures = [
     category: "Content & UX",
     items: [
       { name: "Quality Content", status: "✅", description: "Technical PM insights and comprehensive guides" },
-      { name: "Blog Structure", status: "✅", description: "Well-organized blog with categories and tags" },
       { name: "User Experience", status: "✅", description: "Intuitive navigation and clean design" },
       { name: "Loading Performance", status: "✅", description: "Optimized for Core Web Vitals" },
     ]
@@ -69,7 +63,6 @@ const seoFeatures = [
   {
     category: "Advanced Features",
     items: [
-      { name: "RSS Feed", status: "✅", description: "XML RSS feed for blog content" },
       { name: "Breadcrumbs", status: "⚠️", description: "Consider adding for complex navigation" },
       { name: "Search Functionality", status: "⚠️", description: "Could enhance with site search" },
       { name: "Analytics Ready", status: "✅", description: "Vercel Web Analytics enabled" },
@@ -88,7 +81,7 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
   title="SEO Status & Technical Optimization"
   description="Comprehensive technical SEO implementation status and performance metrics for technical.pm"
 >
-  <main class="container mx-auto px-4 py-8 max-w-4xl">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
     <!-- Header -->
     <div class="text-center mb-12">
       <h1 class="text-4xl font-bold mb-4">SEO Status Dashboard</h1>
@@ -131,14 +124,10 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
       </div>
 
       <!-- Quick Stats -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
         <div class="glass-card p-6 rounded-lg">
           <div class="text-3xl font-bold text-royal-purple-600 mb-2">{completedFeatures}/{totalFeatures}</div>
           <div class="text-sm text-deep-charcoal-300">SEO Features Implemented</div>
-        </div>
-        <div class="glass-card p-6 rounded-lg">
-          <div class="text-3xl font-bold text-electric-lavender-500 mb-2">{totalPosts}</div>
-          <div class="text-sm text-deep-charcoal-300">Blog Posts in Sitemap</div>
         </div>
         <div class="glass-card p-6 rounded-lg">
           <div class="text-3xl font-bold text-cyber-teal-500 mb-2">A+</div>
@@ -179,7 +168,6 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
           <ul class="space-y-2 text-sm text-deep-charcoal-300">
             <li><a href="/sitemap-index.xml" class="text-royal-purple-600 hover:underline">/sitemap-index.xml</a></li>
             <li><a href="/robots.txt" class="text-royal-purple-600 hover:underline">/robots.txt</a></li>
-            <li><a href="/blog/rss.xml" class="text-royal-purple-600 hover:underline">/blog/rss.xml</a></li>
             <li><a href="/site.webmanifest" class="text-royal-purple-600 hover:underline">/site.webmanifest</a></li>
           </ul>
         </div>
@@ -189,7 +177,6 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
           <ul class="space-y-2 text-sm text-deep-charcoal-300">
             <li>• Person (Author)</li>
             <li>• WebSite</li>
-            <li>• BlogPosting</li>
             <li>• Organization</li>
           </ul>
         </div>
@@ -245,7 +232,7 @@ const completionPercentage = Math.round((completedFeatures / totalFeatures) * 10
         </a>
       </div>
     </section>
-  </main>
+  </div>
 </Layout>
 
 <style>

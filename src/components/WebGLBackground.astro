@@ -1,7 +1,10 @@
 <div id="webgl-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
 
 <script>
-  import * as THREE from 'three';
+  // NOTE: 'three' is dynamically imported inside init() below, not statically
+  // here — a static import is fetched eagerly by the browser the moment this
+  // module script is parsed, regardless of when the code actually runs, which
+  // would defeat the whole point of deferring this decorative effect.
 
   // Theme-aware color function
   const getThemeColors = () => {
@@ -27,15 +30,25 @@
   if (!container) {
     throw new Error('WebGL container not found');
   }
-  
+
+  // Purely decorative — skip entirely for reduced-motion users and don't
+  // compete with the initial render for main-thread time.
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  async function init() {
+  if (prefersReducedMotion) return;
+
+  const THREE = await import('three');
+
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ 
-    alpha: true, 
-    antialias: true
+  const renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: false
   });
-  
+
   renderer.setClearColor(0x000000, 0); // Set clear color with 0 alpha
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
 
@@ -140,6 +153,24 @@
   });
 
   animate();
+  }
+
+  // Defer the WebGL setup until after the page has fully painted — it's
+  // decorative, not content, and must never delay FCP/LCP. requestIdleCallback
+  // alone isn't enough: it can fire *before* first paint if the main thread has
+  // any idle gap, so gate on `load` first.
+  function schedule() {
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(init, { timeout: 2000 });
+    } else {
+      setTimeout(init, 200);
+    }
+  }
+  if (document.readyState === 'complete') {
+    schedule();
+  } else {
+    window.addEventListener('load', schedule, { once: true });
+  }
 </script>
 
 <style>

@@ -44,7 +44,7 @@ export default defineConfig({
     maxDuration: 10
   }),
   build: {
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',
     assets: '_astro'
   },
   server: {

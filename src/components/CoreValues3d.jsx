@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
-import * as THREE from 'three';
-import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// NOTE: three and its addons are dynamically imported inside initScene() below,
+// not statically here — a static import is fetched eagerly by the browser the
+// moment this component's script is parsed, regardless of when the scene is
+// actually built, which would defeat deferring this below-the-fold visual.
 
 // Theme-aware color function
 const getThemeColors = () => {
@@ -57,6 +58,17 @@ export default function CoreValues3D() {
   const centerSphereRef = useRef();
 
   useEffect(() => {
+    let cancelled = false;
+    let teardown = () => {};
+
+    // The 3D scene is expensive to build (WebGL context, geometry, labels) and
+    // is below the fold on first paint — defer it so it doesn't compete with
+    // initial render, then build it once the browser is idle.
+    async function initScene() {
+    const THREE = await import('three');
+    const { CSS2DRenderer, CSS2DObject } = await import('three/examples/jsm/renderers/CSS2DRenderer.js');
+    const { OrbitControls } = await import('three/examples/jsm/controls/OrbitControls.js');
+
     // Theme detection
     const updateTheme = () => {
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
@@ -79,15 +91,6 @@ export default function CoreValues3D() {
       attributes: true,
       attributeFilter: ['data-theme']
     });
-
-    // Inject Google Fonts if not already present
-    if (!document.getElementById('core-values-google-font')) {
-      const link = document.createElement('link');
-      link.id = 'core-values-google-font';
-      link.rel = 'stylesheet';
-      link.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap';
-      document.head.appendChild(link);
-    }
 
     // Calculate responsive width
     const isMobile = window.innerWidth <= 768;
@@ -403,6 +406,41 @@ export default function CoreValues3D() {
       window.removeEventListener('touchcancel', handleTouchEnd);
       mountRef.current.removeChild(renderer.domElement);
       mountRef.current.removeChild(labelRenderer.domElement);
+    };
+    }
+
+    let idleId, timeoutId;
+
+    async function runInit() {
+      const cleanupFn = await initScene();
+      if (cancelled) {
+        cleanupFn();
+      } else {
+        teardown = cleanupFn;
+      }
+    }
+
+    // Defer until after the page has fully painted — requestIdleCallback alone
+    // can fire before first paint if the main thread has any idle gap.
+    function schedule() {
+      if ('requestIdleCallback' in window) {
+        idleId = window.requestIdleCallback(runInit, { timeout: 2000 });
+      } else {
+        timeoutId = setTimeout(runInit, 200);
+      }
+    }
+    if (document.readyState === 'complete') {
+      schedule();
+    } else {
+      window.addEventListener('load', schedule, { once: true });
+    }
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', schedule);
+      if (idleId !== undefined && 'cancelIdleCallback' in window) window.cancelIdleCallback(idleId);
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
+      teardown();
     };
   }, []); // Remove theme dependency to prevent recreation
 

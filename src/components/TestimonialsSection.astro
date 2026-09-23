@@ -25,7 +25,7 @@ const { testimonials } = Astro.props;
           <div class="carousel-slide flex-shrink-0 px-3">
             <div class="glass-card p-6 rounded-lg flex flex-col h-full min-h-[260px]">
               <div class="flex items-center mb-4">
-                <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0 transition-transform duration-300" style="background: var(--accent-tertiary); color: var(--accent-primary);">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0 transition-transform duration-300" style="background: var(--accent-tertiary); color: var(--accent-primary-contrast);">
                   {testimonial.initials}
                 </div>
                 <div class="ml-4">
@@ -42,10 +42,10 @@ const { testimonials } = Astro.props;
     </div>
 
     <!-- Prev / Next buttons -->
-    <button id="carousel-prev" aria-label="Previous" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-200 hover:scale-110" style="background: var(--accent-tertiary); color: var(--accent-primary);">
+    <button id="carousel-prev" aria-label="Previous" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-200 hover:scale-110" style="background: var(--accent-tertiary); color: var(--accent-primary-contrast);">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
-    <button id="carousel-next" aria-label="Next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-200 hover:scale-110" style="background: var(--accent-tertiary); color: var(--accent-primary);">
+    <button id="carousel-next" aria-label="Next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-200 hover:scale-110" style="background: var(--accent-tertiary); color: var(--accent-primary-contrast);">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
     </button>
 
@@ -90,7 +90,7 @@ const { testimonials } = Astro.props;
     for (let i = 0; i < totalPages(); i++) {
       const dot = document.createElement('button');
       dot.setAttribute('aria-label', `Go to page ${i + 1}`);
-      dot.className = 'w-2 h-2 rounded-full transition-all duration-300';
+      dot.className = 'carousel-dot transition-all duration-300';
       dot.style.background = i === Math.floor(current / perView)
         ? 'var(--accent-primary)'
         : 'var(--border-primary)';
@@ -155,3 +155,15 @@ const { testimonials } = Astro.props;
 
   init();
 </script>
+
+<style>
+  /* Keep the visible dot small but give it a full 24x24 tap target */
+  .carousel-dot {
+    width: 24px;
+    height: 24px;
+    padding: 8px;
+    border-radius: 9999px;
+    background-clip: content-box;
+    box-sizing: border-box;
+  }
+</style>

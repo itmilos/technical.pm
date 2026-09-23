@@ -9,9 +9,6 @@ const { id, title, subtitle } = Astro.props;
 const formType = id.split('-')[0]; // contact, consultation, project, or engagement
 ---
 
-<!-- Add Three.js via CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
 <div
   id={id}
   class="fixed inset-0 z-50 hidden overflow-y-auto custom-scrollbar"
@@ -368,20 +365,20 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
   import { sendEmail } from '../utils/email';
   import { Cookies } from '../utils/cookies';
 
-  // Declare THREE as a global variable
-  declare const THREE: any;
-
   // Three.js particle animation setup
-  function initParticleAnimation(modalId: string) {
+  async function initParticleAnimation(modalId: string) {
     const canvas = document.getElementById(`${modalId}-canvas`) as HTMLCanvasElement;
     if (!canvas) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const THREE = await import('three');
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
     // Create particles
     const particlesGeometry = new THREE.BufferGeometry();

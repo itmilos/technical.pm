@@ -24,10 +24,6 @@ const {
   hideContact = false
 } = Astro.props;
 const canonicalURL = Astro.url?.href ?? "https://technical.pm";
-
-// Auto-detect blog pages if hideContact is not explicitly set
-const isBlogPage = Astro.url.pathname?.includes('/blog') || false;
-const shouldHideContact = hideContact || isBlogPage;
 ---
 
 <!DOCTYPE html>
@@ -88,13 +84,13 @@ const shouldHideContact = hideContact || isBlogPage;
         link: [
           { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
           { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-          { 
-            rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&display=swap'
+          {
+            rel: 'preload',
+            as: 'style',
+            href: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Montserrat:wght@700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
+            onload: "this.onload=null;this.rel='stylesheet'"
           },
-          { href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap', rel: 'stylesheet' },
           { rel: 'canonical', href: canonicalURL },
-          { rel: 'alternate', type: 'application/rss+xml', title: 'Technical PM Blog RSS', href: '/blog/rss.xml' },
           { rel: 'sitemap', type: 'application/xml', href: '/sitemap-index.xml' },
           { rel: 'manifest', href: '/site.webmanifest' },
           { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
@@ -104,6 +100,9 @@ const shouldHideContact = hideContact || isBlogPage;
         ],
       }}
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Montserrat:wght@700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+    </noscript>
 
     <!-- Enhanced Structured Data -->
     <script type="application/ld+json">
@@ -151,11 +150,6 @@ const shouldHideContact = hideContact || isBlogPage;
         "author": {
           "@type": "Person",
           "name": "Milos Rujevic"
-        },
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://technical.pm/blog?q={search_term_string}",
-          "query-input": "required name=search_term_string"
         }
       })}
     </script>
@@ -172,24 +166,16 @@ const shouldHideContact = hideContact || isBlogPage;
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center gap-6">
           <ul class="flex items-center gap-6 font-medium" style="color: var(--text-secondary);">
-            <li>
-              <a
-                href="/blog"
-                class="menu-link hover:transition-colors duration-200"
-                style="color: var(--text-secondary);"
-              >
-                Blog
-              </a>
-            </li>
-            {!shouldHideContact && (
+            {!hideContact && (
               <li>
-                <a
+                <button
+                  type="button"
                   onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;"
                   class="menu-link hover:transition-colors duration-200 cursor-pointer"
                   style="color: var(--text-secondary);"
                 >
                   Contact
-                </a>
+                </button>
               </li>
             )}
           </ul>
@@ -256,23 +242,15 @@ const shouldHideContact = hideContact || isBlogPage;
                 </button>
               </div>
               <ul class="flex flex-col p-4 space-y-4 font-medium transition-colors duration-200" style="color: var(--text-secondary); background: var(--bg-secondary);">
-                  <li>
-                    <a
-                      href="/blog"
-                      class="menu-link block py-2 hover:transition-colors duration-200"
-                      onclick="document.getElementById('mobile-menu').classList.add('hidden')"
-                    >
-                      Blog
-                    </a>
-                  </li>
-                  {!shouldHideContact && (
+                  {!hideContact && (
                     <li>
-                      <a 
+                      <button
+                        type="button"
                         class="menu-link block py-2 hover:transition-colors duration-200 cursor-pointer"
                         onclick="document.getElementById('contact-modal').classList.remove('hidden'); document.getElementById('mobile-menu').classList.add('hidden'); return false;"
                       >
                         Contact
-                      </a>
+                      </button>
                     </li>
                   )}
               </ul>
@@ -281,7 +259,9 @@ const shouldHideContact = hideContact || isBlogPage;
         </div>
       </div>
     </nav>
-    <slot />
+    <main>
+      <slot />
+    </main>
     <CookieConsent />
 
     <script>
