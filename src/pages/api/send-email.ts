@@ -103,13 +103,13 @@ export const POST: APIRoute = async ({ request }) => {
       </div>
     `;
 
-    sendSmtpEmail.sender = { 
-      name: "Milos Rujevic Contact Form", 
+    sendSmtpEmail.sender = {
+      name: "Milos Rujevic Contact Form",
       email: process.env.PUBLIC_CONTACT_EMAIL
     };
-    sendSmtpEmail.to = [{ 
-      email: process.env.PUBLIC_CONTACT_EMAIL || '', 
-      name: 'Milos Rujevic' 
+    sendSmtpEmail.to = [{
+      email: process.env.RECIPIENT_EMAIL || process.env.PUBLIC_CONTACT_EMAIL || '',
+      name: 'Milos Rujevic'
     }];
     sendSmtpEmail.replyTo = { 
       email: email, 
