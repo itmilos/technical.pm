@@ -65,16 +65,20 @@ export const POST: APIRoute = async ({ request }) => {
     `;
 
     // Send the email
-    await bird.email.send({
+    const sent = await bird.email.send({
       to: [process.env.RECIPIENT_EMAIL || process.env.PUBLIC_CONTACT_EMAIL || ''],
       from: {
-        name: 'Milos Rujevic Contact Form',
+        name: 'TPM',
         email: process.env.PUBLIC_CONTACT_EMAIL || ''
       },
       reply_to: [{ email, name }],
       subject: `${formTypeTitle}: ${subject}`,
       html: htmlContent
     });
+
+    // Ties this request to the message in Bird's dashboard (raw MIME,
+    // delivery status, etc. live there under the mailbox's retention window).
+    console.log(`Email sent via Bird: id=${sent.id} status=${sent.status}`);
 
     return new Response(JSON.stringify({
       success: true,

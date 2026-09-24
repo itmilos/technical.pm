@@ -91,7 +91,6 @@ const {
 						<span class="label-icon">{field.icon}</span>
 					</label>
 					<div class="input-border"></div>
-					<div class="input-glow"></div>
 					{field.type === 'select' && (
 						<div class="select-arrow">
 							<svg width="12" height="8" viewBox="0 0 12 8" fill="none">
@@ -465,30 +464,11 @@ const {
 		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 	}
 
-	/* Enhanced Label animations - Hide when input has content */
+	/* Label becomes a compact tag above the field whenever it's focused or
+	   filled -- it never fully disappears, so a filled field still tells you
+	   what it is. */
+	.animated-input:focus ~ .floating-label,
 	.animated-input:not(:placeholder-shown) ~ .floating-label {
-		opacity: 0;
-		transform: translateY(-100%) scale(0.8);
-		pointer-events: none;
-	}
-
-	/* Hide both label text and icon when input has content - Higher specificity */
-	.animated-input:not(:placeholder-shown) ~ .floating-label .label-text,
-	.animated-input:not(:placeholder-shown) ~ .floating-label .label-icon {
-		opacity: 0 !important;
-		transform: scale(0.6) !important;
-		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	}
-
-	/* Ensure labels stay hidden even when focused if content exists */
-	.animated-input:focus:not(:placeholder-shown) ~ .floating-label .label-text,
-	.animated-input:focus:not(:placeholder-shown) ~ .floating-label .label-icon {
-		opacity: 0 !important;
-		transform: scale(0.6) !important;
-	}
-
-	/* Show compact label only on focus when input is empty */
-	.animated-input:focus:placeholder-shown ~ .floating-label {
 		top: -8px;
 		transform: translateY(0);
 		font-size: 12px;
@@ -496,11 +476,11 @@ const {
 		font-weight: 500;
 		background: linear-gradient(135deg, rgba(181, 126, 220, 0.2), rgba(108, 62, 166, 0.1));
 		border: 1px solid rgba(181, 126, 220, 0.3);
-		box-shadow: 0 4px 12px rgba(181, 126, 220, 0.2);
 		opacity: 1;
 	}
 
-	.animated-input:focus:placeholder-shown ~ .floating-label .label-icon {
+	.animated-input:focus ~ .floating-label .label-icon,
+	.animated-input:not(:placeholder-shown) ~ .floating-label .label-icon {
 		transform: scale(0.85);
 		opacity: 1;
 		color: #B57EDC;
@@ -521,22 +501,6 @@ const {
 
 	.animated-input:focus ~ .input-border {
 		transform: scaleX(1);
-	}
-
-	/* Enhanced Input Glow Effect */
-	.input-glow {
-		position: absolute;
-		inset: -2px;
-		border-radius: 18px;
-		background: linear-gradient(45deg, #6C3EA6, #B57EDC, #0EC2A4, #FF4F58);
-		opacity: 0;
-		z-index: -1;
-		transition: opacity 0.3s ease;
-		filter: blur(8px);
-	}
-
-	.animated-input:focus ~ .input-glow {
-		opacity: 0.4;
 	}
 
 	/* Enhanced Select Arrow */
@@ -741,11 +705,6 @@ const {
 		border-color: rgba(255, 79, 88, 0.4);
 	}
 
-	.animated-input:invalid:not(:placeholder-shown) ~ .input-glow {
-		background: linear-gradient(45deg, #FF4F58, #FF6B6B);
-		opacity: 0.3;
-	}
-
 	.animated-input:valid:not(:placeholder-shown) ~ .input-border {
 		background: linear-gradient(90deg, #0EC2A4, #4ECDC4);
 		transform: scaleX(1);
@@ -755,11 +714,6 @@ const {
 		color: #0EC2A4;
 		background: linear-gradient(135deg, rgba(14, 194, 164, 0.2), rgba(14, 194, 164, 0.1));
 		border-color: rgba(14, 194, 164, 0.4);
-	}
-
-	.animated-input:valid:not(:placeholder-shown) ~ .input-glow {
-		background: linear-gradient(45deg, #0EC2A4, #4ECDC4);
-		opacity: 0.25;
 	}
 
 	/* Hide any validation icons that might appear */
@@ -795,17 +749,6 @@ const {
 		box-shadow: none;
 	}
 
-	.input-wrapper:focus-within::before {
-		content: '';
-		position: absolute;
-		inset: -3px;
-		border-radius: 19px;
-		background: linear-gradient(45deg, #6C3EA6, #B57EDC, #0EC2A4);
-		z-index: -1;
-		opacity: 0.5;
-		filter: blur(4px);
-	}
-
 	/* Success state styling */
 	.animated-submit-btn.success {
 		background: linear-gradient(135deg, #0EC2A4, #4ECDC4) !important;
@@ -838,30 +781,11 @@ const {
 			// Enhanced input interactions
 			inputs.forEach(input => {
 				const wrapper = input.parentElement as HTMLElement;
-				const floatingLabel = wrapper?.querySelector('.floating-label') as HTMLElement;
-				
-				// Function to update label visibility
-				const updateLabelVisibility = () => {
-					if (input.value.trim().length > 0) {
-						// Hide label when input has content
-						if (floatingLabel) {
-							floatingLabel.style.opacity = '0';
-							floatingLabel.style.transform = 'translateY(-100%) scale(0.8)';
-							floatingLabel.style.pointerEvents = 'none';
-						}
-					} else {
-						// Show label when input is empty
-						if (floatingLabel) {
-							floatingLabel.style.opacity = '';
-							floatingLabel.style.transform = '';
-							floatingLabel.style.pointerEvents = '';
-						}
-					}
-				};
-				
-				// Check initial state (for pre-filled inputs)
-				updateLabelVisibility();
-				
+
+				// Label visibility (compact tag vs. centered idle state) is handled
+				// entirely by CSS (:focus and :not(:placeholder-shown)) -- no inline
+				// style here, so there's nothing for JS and CSS to fight over.
+
 				// Focus effects with improved animations
 				input.addEventListener('focus', function() {
 					if (wrapper) {
@@ -874,8 +798,6 @@ const {
 					if (wrapper) {
 						wrapper.style.transform = 'scale(1)';
 					}
-					// Update label visibility on blur
-					updateLabelVisibility();
 				});
 
 				// Enhanced auto-resize textarea with smooth transitions
@@ -916,25 +838,7 @@ const {
 				// Enhanced input validation feedback (no icons)
 				input.addEventListener('input', function() {
 					const inputElement = input;
-					const floatingLabel = wrapper?.querySelector('.floating-label') as HTMLElement;
-					
-					// Hide/show floating label based on input content
-					if (inputElement.value.trim().length > 0) {
-						// Hide label when input has content
-						if (floatingLabel) {
-							floatingLabel.style.opacity = '0';
-							floatingLabel.style.transform = 'translateY(-100%) scale(0.8)';
-							floatingLabel.style.pointerEvents = 'none';
-						}
-					} else {
-						// Show label when input is empty
-						if (floatingLabel) {
-							floatingLabel.style.opacity = '';
-							floatingLabel.style.transform = '';
-							floatingLabel.style.pointerEvents = '';
-						}
-					}
-					
+
 					// Validation styling
 					if (inputElement.checkValidity()) {
 						wrapper?.classList.add('valid');

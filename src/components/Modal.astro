@@ -346,14 +346,9 @@ const { id, title, subtitle } = Astro.props;
       showSuccess(modal);
       resolveAgentResponse?.({ status: 'sent', message: "Message sent successfully. We'll get back to you soon." });
 
-      // Reset AnimatedContactForm labels
-      const floatingLabels = form.querySelectorAll('.floating-label') as NodeListOf<HTMLElement>;
-      floatingLabels.forEach(label => {
-        label.style.opacity = '';
-        label.style.transform = '';
-        label.style.pointerEvents = '';
-      });
-      
+      // form.reset() above already clears values; label position is CSS-driven
+      // (:not(:placeholder-shown)) so it falls back to idle automatically.
+
       // Reset input wrapper states
       const inputWrappers = form.querySelectorAll('.input-wrapper');
       inputWrappers.forEach(wrapper => {
