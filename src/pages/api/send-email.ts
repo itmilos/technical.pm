@@ -1,14 +1,7 @@
 import type { APIRoute } from 'astro';
-import * as SibApiV3Sdk from '@getbrevo/brevo';
+import sgMail from '@sendgrid/mail';
 
-// Initialize Brevo API clients
-const emailApiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-const contactsApiInstance = new SibApiV3Sdk.ContactsApi();
-
-// Set API key for both clients
-const apiKey = process.env.PUBLIC_BREVO_API_KEY || process.env.BREVO_API_KEY;
-emailApiInstance.setApiKey(SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey, apiKey);
-contactsApiInstance.setApiKey(SibApiV3Sdk.ContactsApiApiKeys.apiKey, apiKey);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -22,37 +15,6 @@ export const POST: APIRoute = async ({ request }) => {
       formType = 'contact',
       additionalFields = {}
     } = data;
-
-    // Create contact attributes
-    const createContact = new SibApiV3Sdk.CreateContact();
-    createContact.email = email;
-    createContact.attributes = {
-      FIRSTNAME: name.split(' ')[0],
-      LASTNAME: name.split(' ').slice(1).join(' '),
-      COMPANY: company || '',
-      LAST_CONTACT: new Date().toISOString(),
-      FORM_TYPE: formType,
-      ...additionalFields
-    };
-    createContact.listIds = [2]; // Add to your contact list
-    createContact.updateEnabled = true;
-
-    try {
-      // Try to create the contact
-      await contactsApiInstance.createContact(createContact);
-    } catch (error: any) {
-      if (error.status === 400) {
-        // Contact already exists, update it
-        const updateContact = new SibApiV3Sdk.UpdateContact();
-        updateContact.attributes = createContact.attributes;
-        updateContact.listIds = createContact.listIds;
-        
-        await contactsApiInstance.updateContact(email, updateContact);
-      } else {
-        console.error('Error in contact management:', error);
-        // Don't throw - we still want to try sending the email
-      }
-    }
 
     // Format additional fields if present
     const additionalFieldsHtml = Object.entries(additionalFields)
@@ -70,12 +32,10 @@ export const POST: APIRoute = async ({ request }) => {
     const formTypeTitle = formTypeTitles[formType as keyof typeof formTypeTitles] || 'Contact Form';
 
     // Create email content
-    const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
-    sendSmtpEmail.subject = `${formTypeTitle}: ${subject}`;
-    sendSmtpEmail.htmlContent = `
+    const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #6B46C1;">New ${formTypeTitle}</h2>
-        
+
         <div style="background-color: #F9FAFB; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #4B5563; margin-top: 0;">Contact Information</h3>
           <p><strong>Name:</strong> ${name}</p>
@@ -103,25 +63,27 @@ export const POST: APIRoute = async ({ request }) => {
       </div>
     `;
 
-    sendSmtpEmail.sender = {
-      name: "Milos Rujevic Contact Form",
-      email: process.env.PUBLIC_CONTACT_EMAIL
-    };
-    sendSmtpEmail.to = [{
-      email: process.env.RECIPIENT_EMAIL || process.env.PUBLIC_CONTACT_EMAIL || '',
-      name: 'Milos Rujevic'
-    }];
-    sendSmtpEmail.replyTo = { 
-      email: email, 
-      name: name 
-    };
-
     // Send the email
-    await emailApiInstance.sendTransacEmail(sendSmtpEmail);
+    await sgMail.send({
+      to: {
+        email: process.env.RECIPIENT_EMAIL || process.env.PUBLIC_CONTACT_EMAIL || '',
+        name: 'Milos Rujevic'
+      },
+      from: {
+        name: 'Milos Rujevic Contact Form',
+        email: process.env.PUBLIC_CONTACT_EMAIL || ''
+      },
+      replyTo: {
+        email,
+        name
+      },
+      subject: `${formTypeTitle}: ${subject}`,
+      html: htmlContent
+    });
 
-    return new Response(JSON.stringify({ 
-      success: true, 
-      message: 'Email sent successfully' 
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Email sent successfully'
     }), {
       status: 200,
       headers: {
@@ -129,10 +91,10 @@ export const POST: APIRoute = async ({ request }) => {
       }
     });
   } catch (error: any) {
-    console.error('Error sending email:', error);
-    return new Response(JSON.stringify({ 
-      success: false, 
-      message: error.message || 'Failed to send email' 
+    console.error('Error sending email:', error?.response?.body || error);
+    return new Response(JSON.stringify({
+      success: false,
+      message: error.message || 'Failed to send email'
     }), {
       status: 500,
       headers: {
@@ -140,4 +102,4 @@ export const POST: APIRoute = async ({ request }) => {
       }
     });
   }
-}; 
+};
