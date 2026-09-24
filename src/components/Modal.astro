@@ -6,7 +6,6 @@ interface Props {
 }
 
 const { id, title, subtitle } = Astro.props;
-const formType = id.split('-')[0]; // contact, consultation, project, or engagement
 ---
 
 <div
@@ -105,12 +104,13 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
           </div>
 
           <!-- Error message with enhanced animation -->
-          <div 
-            id={`${id}-error`} 
+          <div
+            id={`${id}-error`}
             class="hidden mt-4 p-4 rounded-md transform transition-all duration-300 scale-95 opacity-0"
             style="background: rgba(239, 68, 68, 0.1); color: rgb(220, 38, 38);"
             role="alert"
             aria-live="assertive"
+            tabindex="-1"
           >
             <div class="flex items-center">
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -365,6 +365,19 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
   import { sendEmail } from '../utils/email';
   import { Cookies } from '../utils/cookies';
 
+  // Carries which field(s) a validation failure belongs to, so the catch
+  // handler can highlight the exact input instead of just the top banner.
+  class ValidationError extends Error {
+    fieldErrors: Record<string, string>;
+    constructor(message: string, fieldErrors: Record<string, string> = {}) {
+      super(message);
+      this.fieldErrors = fieldErrors;
+    }
+  }
+
+  const humanizeFieldName = (field: string) =>
+    field.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
   // Three.js particle animation setup
   async function initParticleAnimation(modalId: string) {
     const canvas = document.getElementById(`${modalId}-canvas`) as HTMLCanvasElement;
@@ -512,6 +525,9 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
           const input = form.querySelector(`[name="${key}"]`) as HTMLInputElement;
           if (input) {
             input.value = value;
+            // AnimatedContactForm's floating labels and char counter both
+            // key off the 'input' event, not the raw value assignment above.
+            input.dispatchEvent(new Event('input', { bubbles: true }));
           }
         });
       } catch (e) {
@@ -573,11 +589,10 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
   // Handle form submission
   document.addEventListener('submit', async (e) => {
     const form = e.target as HTMLFormElement;
-    if (!form.id?.startsWith('contact-form')) return;
-
-    e.preventDefault();
     const modal = form.closest('[role="dialog"]') as HTMLElement;
     if (!modal) return;
+
+    e.preventDefault();
 
     // WebMCP: hand a structured result back to an agent-invoked submission
     // instead of leaving it to infer success/failure from DOM mutations.
@@ -597,12 +612,14 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
     const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
     const errorMessage = errorEl.querySelector('p') as HTMLParagraphElement;
 
-    // Reset form validation
-    form.querySelectorAll('.form-input, .form-select, .form-textarea').forEach((input: Element) => {
+    // Reset form validation (targets every real field by name, not the
+    // legacy .form-input/.form-select/.form-textarea classes AnimatedContactForm
+    // never uses — those selectors matched nothing, so stale error state stuck around)
+    form.querySelectorAll('[name]').forEach((input: Element) => {
       input.classList.remove('border-red-500');
-      const errorMessage = input.nextElementSibling;
-      if (errorMessage?.classList.contains('text-red-500')) {
-        errorMessage.remove();
+      const nextEl = input.nextElementSibling;
+      if (nextEl?.classList.contains('text-red-500')) {
+        nextEl.remove();
       }
     });
 
@@ -618,8 +635,8 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       submitButton.disabled = true;
 
       const formData = new FormData(form);
-      const formType = form.id.split('-')[1] || 'contact';
-      
+      const formType = modal.id.replace(/-modal$/, '') || 'contact';
+
       // Get all form fields
       const data = {
         name: formData.get('name')?.toString() || '',
@@ -627,7 +644,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
         company: formData.get('company')?.toString() || undefined,
         subject: formData.get('subject')?.toString() || 'New Form Submission',
         message: formData.get('message')?.toString() || '',
-        formType: formType as 'contact' | 'consultation' | 'project' | 'engagement',
+        formType: formType as 'contact' | 'consultation' | 'project' | 'engagement' | 'process',
         additionalFields: {} as Record<string, string>
       };
 
@@ -636,13 +653,16 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       const missingFields = requiredFields.filter(field => !data[field as keyof typeof data]);
       
       if (missingFields.length > 0) {
-        throw new Error(`Please fill in all required fields: ${missingFields.join(', ')}`);
+        throw new ValidationError(
+          `Please fill in all required fields: ${missingFields.join(', ')}`,
+          Object.fromEntries(missingFields.map(field => [field, `${humanizeFieldName(field)} is required`]))
+        );
       }
 
       // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(data.email)) {
-        throw new Error('Please enter a valid email address');
+        throw new ValidationError('Please enter a valid email address', { email: 'Please enter a valid email address' });
       }
 
       // Add any additional fields based on form type
@@ -653,7 +673,7 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       } else if (formType === 'project') {
         const timeline = formData.get('timeline')?.toString();
         if (!timeline) {
-          throw new Error('Please select an expected timeline');
+          throw new ValidationError('Please select an expected timeline', { timeline: 'Please select an expected timeline' });
         }
         data.additionalFields = {
           'Timeline': timeline,
@@ -662,11 +682,20 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
       } else if (formType === 'engagement') {
         const teamSize = formData.get('team-size')?.toString();
         if (!teamSize) {
-          throw new Error('Please select your team size');
+          throw new ValidationError('Please select your team size', { 'team-size': 'Please select your team size' });
         }
         data.additionalFields = {
           'Team Size': teamSize,
           'Engagement Goals': formData.get('message')?.toString() || ''
+        };
+      } else if (formType === 'process') {
+        const interestedPhase = formData.get('interested-phase')?.toString();
+        if (!interestedPhase) {
+          throw new ValidationError('Please select what you are most interested in', { 'interested-phase': 'Please select what you are most interested in' });
+        }
+        data.additionalFields = {
+          'Interested In': interestedPhase,
+          'Project Details': formData.get('message')?.toString() || ''
         };
       }
 
@@ -711,21 +740,27 @@ const formType = id.split('-')[0]; // contact, consultation, project, or engagem
 
       if (error instanceof Error) {
         errorMessage.textContent = error.message;
-        
-        // Highlight invalid fields
-        if (error.message.includes('required fields')) {
-          const fields = error.message.split(': ')[1].split(', ');
-          fields.forEach(field => {
-            const input = form.querySelector(`[name="${field}"]`) as HTMLElement;
-            if (input) {
-              input.classList.add('border-red-500');
-              const errorDiv = document.createElement('div');
-              errorDiv.className = 'text-red-500 text-sm mt-1';
-              errorDiv.textContent = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
-              input.parentNode?.insertBefore(errorDiv, input.nextSibling);
-            }
-          });
-        }
+
+        // Highlight every invalid field (text inputs and selects alike) and
+        // jump to the first one so the failure isn't just a banner off-screen.
+        const fieldErrors = error instanceof ValidationError ? error.fieldErrors : {};
+        let firstInvalidField: HTMLElement | null = null;
+
+        Object.entries(fieldErrors).forEach(([field, message]) => {
+          const input = form.querySelector(`[name="${field}"]`) as HTMLElement;
+          if (input) {
+            input.classList.add('border-red-500');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'text-red-500 text-sm mt-1';
+            errorDiv.textContent = message;
+            input.parentNode?.insertBefore(errorDiv, input.nextSibling);
+            if (!firstInvalidField) firstInvalidField = input;
+          }
+        });
+
+        const scrollTarget = firstInvalidField ?? errorEl;
+        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        (firstInvalidField ?? errorEl)?.focus?.();
       }
     } finally {
       submitButton.disabled = false;

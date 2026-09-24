@@ -4,7 +4,7 @@ interface EmailData {
   company?: string;
   subject: string;
   message: string;
-  formType: 'contact' | 'consultation' | 'project' | 'engagement';
+  formType: 'contact' | 'consultation' | 'project' | 'engagement' | 'process';
   additionalFields?: Record<string, string>;
 }
 

@@ -26,7 +26,8 @@ export const POST: APIRoute = async ({ request }) => {
       contact: 'Contact Form',
       consultation: 'Consultation Request',
       project: 'Project Request',
-      engagement: 'Engagement Request'
+      engagement: 'Engagement Request',
+      process: 'Process Inquiry'
     } as const;
 
     const formTypeTitle = formTypeTitles[formType as keyof typeof formTypeTitles] || 'Contact Form';
