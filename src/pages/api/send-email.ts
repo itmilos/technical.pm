@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
-import sgMail from '@sendgrid/mail';
+import { BirdClient } from '@messagebird/sdk';
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
+const bird = new BirdClient({ apiKey: process.env.BIRD_API_KEY || '' });
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -65,19 +65,13 @@ export const POST: APIRoute = async ({ request }) => {
     `;
 
     // Send the email
-    await sgMail.send({
-      to: {
-        email: process.env.RECIPIENT_EMAIL || process.env.PUBLIC_CONTACT_EMAIL || '',
-        name: 'Milos Rujevic'
-      },
+    await bird.email.send({
+      to: [process.env.RECIPIENT_EMAIL || process.env.PUBLIC_CONTACT_EMAIL || ''],
       from: {
         name: 'Milos Rujevic Contact Form',
         email: process.env.PUBLIC_CONTACT_EMAIL || ''
       },
-      replyTo: {
-        email,
-        name
-      },
+      reply_to: [{ email, name }],
       subject: `${formTypeTitle}: ${subject}`,
       html: htmlContent
     });
@@ -92,7 +86,7 @@ export const POST: APIRoute = async ({ request }) => {
       }
     });
   } catch (error: any) {
-    console.error('Error sending email:', error?.response?.body || error);
+    console.error('Error sending email:', error);
     return new Response(JSON.stringify({
       success: false,
       message: error.message || 'Failed to send email'
