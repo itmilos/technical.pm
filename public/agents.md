@@ -44,6 +44,7 @@
 | Send contact message | `/api/send-email` | POST | name, email, company, subject, message, formType |
 | Request consultation | `/api/send-email` | POST | formType: "consultation" |
 | Inquire about project | `/api/send-email` | POST | formType: "project" |
+| Start website process | `/api/send-email` | POST | formType: "process" |
 
 **Contact API schema:**
 ```json
@@ -53,7 +54,7 @@
   "company": "string (optional)",
   "subject": "string (required)",
   "message": "string (required)",
-  "formType": "contact | consultation | project | engagement"
+  "formType": "contact | consultation | project | engagement | process"
 }
 ```
 
@@ -61,7 +62,13 @@
 
 ### WebMCP tools (in-page)
 
-The homepage's four contact forms are also exposed as [WebMCP](https://webmachinelearning.github.io/webmcp/) tools via the declarative `toolname`/`tooldescription`/`toolparamdescription` attributes, so a browser-based agent can discover and fill them directly instead of scraping the DOM: `send-general-inquiry`, `book-consultation`, `start-project-discussion`, `start-engagement-discussion`. The same human-intent rule applies — these are not auto-submit tools; a human must review and submit.
+Contact forms across the site are exposed as [WebMCP](https://webmachinelearning.github.io/webmcp/) tools via the declarative `toolname`/`tooldescription`/`toolparamdescription` attributes, so a browser-based agent can discover and fill them directly instead of scraping the DOM:
+
+- Homepage (`/`): `send-general-inquiry`, `book-consultation`, `start-project-discussion`, `start-engagement-discussion`
+- Process page (`/process`): `start-website-process`
+- Brand Strategy (`/brand-strategy`) and the 404 page share the generic `send-contact-message` tool used as the homepage's own default fallback
+
+The same human-intent rule applies everywhere — these are not auto-submit tools; a human must review and submit.
 
 ---
 

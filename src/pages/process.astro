@@ -325,20 +325,22 @@ const deliverables = [
 
   <!-- Process Modal -->
   <Modal id="process-modal" title="Start Your Website Process" subtitle="Tell us about your project and let's begin the journey">
-    <AnimatedContactForm 
+    <AnimatedContactForm
       formId="process-contact-form"
       buttonText="Begin the Process"
+      toolName="start-website-process"
+      toolDescription="Start the website creation process with Milos Rujevic — captures project details, which phase of the process the visitor wants, and contact info. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
       fields={[
-        { type: 'text', id: 'process-name', name: 'name', label: 'How should we call you?', icon: '👤', required: true },
-        { type: 'email', id: 'process-email', name: 'email', label: 'Email Address', icon: '📧', required: true },
-        { type: 'text', id: 'process-company', name: 'company', label: 'Company/Organization', icon: '🏢', required: false },
-        { type: 'select', id: 'process-phase', name: 'interested-phase', label: 'Most Interested In', icon: '🎯', required: true, options: [
+        { type: 'text', id: 'process-name', name: 'name', label: 'How should we call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
+        { type: 'email', id: 'process-email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+        { type: 'text', id: 'process-company', name: 'company', label: 'Company/Organization', icon: '🏢', required: false, toolParamDescription: "The visitor's company or organization, if any" },
+        { type: 'select', id: 'process-phase', name: 'interested-phase', label: 'Most Interested In', icon: '🎯', required: true, toolParamDescription: 'Which part of the website process the visitor wants: the complete process, brand sprint only, website creation only, or a process consultation', options: [
           { value: 'full-process', label: 'Complete Process (Brand Sprint + Website)' },
           { value: 'brand-sprint', label: 'Brand Sprint Only' },
           { value: 'website-only', label: 'Website Creation (with existing brand)' },
           { value: 'consultation', label: 'Process Consultation' }
         ]},
-        { type: 'textarea', id: 'process-project', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4 }
+        { type: 'textarea', id: 'process-project', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4, toolParamDescription: "A description of the visitor's project and goals" }
       ]}
     />
   </Modal>

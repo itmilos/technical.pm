@@ -596,10 +596,12 @@ const { id, title, subtitle } = Astro.props;
 
     // WebMCP: hand a structured result back to an agent-invoked submission
     // instead of leaving it to infer success/failure from DOM mutations.
-    // No-op (and harmless) on browsers without SubmitEvent#respondWith.
+    // respondWith() throws InvalidStateError on a normal human submission —
+    // it's only valid when the browser marked this event agentInvoked — so
+    // that flag must be checked, not just whether the method exists.
     let resolveAgentResponse: ((value: unknown) => void) | undefined;
     let rejectAgentResponse: ((reason: unknown) => void) | undefined;
-    if (typeof (e as any).respondWith === 'function') {
+    if (typeof (e as any).respondWith === 'function' && (e as any).agentInvoked === true) {
       (e as any).respondWith(new Promise((resolve, reject) => {
         resolveAgentResponse = resolve;
         rejectAgentResponse = reject;
