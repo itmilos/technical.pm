@@ -296,7 +296,7 @@ export default function GlobeAnimation() {
       </style>
       <div className="globe-wrapper">
         <div className="globe-controls-hint">
-          <h3>🌍 Interactive Globe Experience</h3>
+          <h3>Interactive Globe Experience</h3>
           <div className="globe-controls-desktop">
             <div className="globe-controls-text">
               <strong>Mouse:</strong> Move cursor over the globe to control rotation and perspective

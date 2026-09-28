@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import WebGLBackground from '../components/WebGLBackground.astro';
 import Modal from '../components/Modal.astro';
-import WhiteRabbit from '../components/WhiteRabbit.astro';
 import AnimatedContactForm from '../components/AnimatedContactForm.astro';
 
 const processSteps = [
@@ -18,27 +17,25 @@ const processSteps = [
       "Brand positioning and messaging strategy",
       "Core values and mission definition"
     ],
-    icon: "🚀",
     color: "from-royal-purple-600 to-electric-lavender-500"
   },
   {
-    number: "02", 
+    number: "02",
     title: "Design Guidelines",
     duration: "1 week",
     description: "Transform brand insights into comprehensive design guidelines and visual identity.",
     details: [
       "Visual identity and logo design",
-      "Color palette and typography selection", 
+      "Color palette and typography selection",
       "UI/UX design principles and patterns",
       "Brand voice and tone guidelines",
       "Component library and style guide"
     ],
-    icon: "🎨",
     color: "from-electric-lavender-500 to-cyber-teal-500"
   },
   {
     number: "03",
-    title: "Website Creation", 
+    title: "Website Creation",
     duration: "2-4 weeks",
     description: "Build your website using the established brand guidelines and design system.",
     details: [
@@ -48,7 +45,6 @@ const processSteps = [
       "Content management and quality assurance",
       "Launch preparation and deployment"
     ],
-    icon: "💻",
     color: "from-cyber-teal-500 to-neon-coral-500"
   }
 ];
@@ -96,12 +92,12 @@ const deliverables = [
 
   <!-- Hero Section -->
   <section id="hero" class="container mx-auto px-4 py-16 sm:py-20 md:py-24 max-w-6xl text-center relative z-10">
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 hover:scale-105 transition-transform duration-300 cursor-default leading-tight">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
       <span class="bg-gradient-to-r from-royal-purple-600 via-electric-lavender-500 to-neon-coral-500 bg-clip-text text-transparent">
         Website Creation Process
       </span>
     </h1>
-    <p class="text-lg sm:text-xl text-deep-charcoal-300 mb-8 hover:text-pale-blush-50 transition-colors duration-200 cursor-default max-w-3xl mx-auto leading-relaxed font-primary">
+    <p class="text-lg sm:text-xl text-deep-charcoal-300 mb-8 max-w-3xl mx-auto leading-relaxed font-primary">
       From brand discovery to digital reality in three strategic phases. We don't just build websites—we craft digital experiences that align with your brand's soul.
     </p>
   </section>
@@ -118,21 +114,16 @@ const deliverables = [
     <!-- Process Steps -->
     <div class="space-y-8">
       {processSteps.map((step, index) => (
-        <div class="glass-card rounded-2xl p-8 relative overflow-hidden group hover:scale-[1.02] transition-all duration-300">
+        <div class="glass-card rounded-2xl p-8 relative overflow-hidden group">
           <!-- Background Gradient -->
           <div class={`absolute inset-0 bg-gradient-to-r ${step.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}></div>
-          
+
           <div class="relative z-10">
             <div class="flex flex-col lg:flex-row items-start gap-8">
-              <!-- Step Number and Icon -->
+              <!-- Step Number -->
               <div class="flex-shrink-0">
-                <div class="relative">
-                  <div class={`w-20 h-20 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-2xl font-bold text-white mb-4`}>
-                    {step.number}
-                  </div>
-                  <div class="text-4xl absolute -top-2 -right-2">
-                    {step.icon}
-                  </div>
+                <div class={`w-20 h-20 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center text-2xl font-bold text-white mb-4`}>
+                  {step.number}
                 </div>
               </div>
 
@@ -190,7 +181,7 @@ const deliverables = [
 
     <div class="grid lg:grid-cols-3 gap-8">
       {deliverables.map((phase) => (
-        <div class="glass-card rounded-xl p-6 hover:scale-105 transition-all duration-300">
+        <div class="glass-card rounded-xl p-6">
           <h3 class="text-xl font-bold text-pale-blush-50 mb-6">{phase.phase}</h3>
           <ul class="space-y-3">
             {phase.items.map((item) => (
@@ -331,29 +322,23 @@ const deliverables = [
       toolName="start-website-process"
       toolDescription="Start the website creation process with Milos Rujevic — captures project details, which phase of the process the visitor wants, and contact info. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
       fields={[
-        { type: 'text', id: 'process-name', name: 'name', label: 'How should we call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
-        { type: 'email', id: 'process-email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
-        { type: 'text', id: 'process-company', name: 'company', label: 'Company/Organization', icon: '🏢', required: false, toolParamDescription: "The visitor's company or organization, if any" },
-        { type: 'select', id: 'process-phase', name: 'interested-phase', label: 'Most Interested In', icon: '🎯', required: true, toolParamDescription: 'Which part of the website process the visitor wants: the complete process, brand sprint only, website creation only, or a process consultation', options: [
+        { type: 'text', id: 'process-name', name: 'name', label: 'How should we call you?', required: true, toolParamDescription: "The visitor's name" },
+        { type: 'email', id: 'process-email', name: 'email', label: 'Email Address', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+        { type: 'text', id: 'process-company', name: 'company', label: 'Company/Organization', required: false, toolParamDescription: "The visitor's company or organization, if any" },
+        { type: 'select', id: 'process-phase', name: 'interested-phase', label: 'Most Interested In', required: true, toolParamDescription: 'Which part of the website process the visitor wants: the complete process, brand sprint only, website creation only, or a process consultation', options: [
           { value: 'full-process', label: 'Complete Process (Brand Sprint + Website)' },
           { value: 'brand-sprint', label: 'Brand Sprint Only' },
           { value: 'website-only', label: 'Website Creation (with existing brand)' },
           { value: 'consultation', label: 'Process Consultation' }
         ]},
-        { type: 'textarea', id: 'process-project', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4, toolParamDescription: "A description of the visitor's project and goals" }
+        { type: 'textarea', id: 'process-project', name: 'message', label: 'Tell us about your project', required: true, rows: 4, toolParamDescription: "A description of the visitor's project and goals" }
       ]}
     />
   </Modal>
 
   <footer class="text-center text-deep-charcoal-400 text-sm py-6 relative">
     <div class="flex flex-col sm:flex-row items-center justify-center gap-2">
-      <span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default font-primary">© 2025 Milos Rujevic. All rights reserved.</span>
-      <span class="text-pale-blush-200 hidden sm:inline font-primary">•</span>
-      <span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default font-primary">Strategic Process. Powerful Results.</span>
-      <span class="text-pale-blush-200 hidden sm:inline font-primary">•</span>
-      <div class="hover:scale-110 transition-transform duration-300">
-        <WhiteRabbit />
-      </div>
+      <span class="font-primary">© 2025 Milos Rujevic. All rights reserved.</span>
     </div>
   </footer>
 </Layout>

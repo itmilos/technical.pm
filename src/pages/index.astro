@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import WebGLBackground from '../components/WebGLBackground.astro';
 import Modal from '../components/Modal.astro';
-import WhiteRabbit from '../components/WhiteRabbit.astro';
 import ProjectSelection, { type Project } from '../components/ProjectSelection.astro';
 import AnimatedContactForm from '../components/AnimatedContactForm.astro';
 
@@ -181,7 +180,7 @@ const pricingTiers = [
 	</section>
 
 	<section id="experience" class="relative w-full mb-16 sm:mb-20 px-4">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center transition-colors duration-200 cursor-default" style="color: var(--text-primary);">Experience</h2>
+		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center" style="color: var(--text-primary);">Experience</h2>
 		<div class="flex justify-center items-center min-h-[250px] sm:min-h-[300px]">
 			
 				<GlobeAnimation  client:visible />
@@ -203,9 +202,9 @@ const pricingTiers = [
 
 	<!-- Contact Section -->
 	<section id="contact" class="mb-10 px-4">
-		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center transition-colors duration-200 cursor-default" style="color: var(--text-primary);">Ready to Elevate Your Project?</h2>
+		<h2 class="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-center" style="color: var(--text-primary);">Ready to Elevate Your Project?</h2>
 		<div class="flex flex-col items-center max-w-4xl mx-auto text-center">
-			<p class="mb-6 text-base sm:text-lg transition-colors duration-200 cursor-default max-w-2xl leading-relaxed" style="color: var(--text-secondary);">Let's collaborate to build impactful, cutting-edge solutions.</p>
+			<p class="mb-6 text-base sm:text-lg max-w-2xl leading-relaxed" style="color: var(--text-secondary);">Let's collaborate to build impactful, cutting-edge solutions.</p>
 			<button type="button" onclick="document.getElementById('contact-modal').classList.remove('hidden'); return false;"
 			   class="inline-block px-6 sm:px-8 py-3 font-semibold rounded-lg shadow transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 group mb-4 cursor-pointer text-sm sm:text-base"
 			   style="background: var(--accent-primary); color: white;">
@@ -223,9 +222,9 @@ const pricingTiers = [
 			toolName="send-general-inquiry"
 			toolDescription="Send a general contact message to Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
-				{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
-				{ type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
-				{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4, toolParamDescription: 'A description of the project or inquiry' }
+				{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', required: true, toolParamDescription: "The visitor's name" },
+				{ type: 'email', id: 'email', name: 'email', label: 'Email Address', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+				{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your project', required: true, rows: 4, toolParamDescription: 'A description of the project or inquiry' }
 			]}
 		/>
 	</Modal>
@@ -238,9 +237,9 @@ const pricingTiers = [
 			toolName="book-consultation"
 			toolDescription="Request a paid consultation session with Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
-				{ type: 'text', id: 'consultation-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
-				{ type: 'email', id: 'consultation-email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
-				{ type: 'textarea', id: 'consultation-goals', name: 'message', label: 'What are your consultation goals?', icon: '🎯', required: true, rows: 4, toolParamDescription: 'What the visitor wants to get out of the consultation' }
+				{ type: 'text', id: 'consultation-name', name: 'name', label: 'How we should call you?', required: true, toolParamDescription: "The visitor's name" },
+				{ type: 'email', id: 'consultation-email', name: 'email', label: 'Email Address', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+				{ type: 'textarea', id: 'consultation-goals', name: 'message', label: 'What are your consultation goals?', required: true, rows: 4, toolParamDescription: 'What the visitor wants to get out of the consultation' }
 			]}
 		/>
 	</Modal>
@@ -253,15 +252,15 @@ const pricingTiers = [
 			toolName="start-project-discussion"
 			toolDescription="Kick off a project scoping discussion with Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
-				{ type: 'text', id: 'project-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
-				{ type: 'email', id: 'project-email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
-				{ type: 'select', id: 'project-timeline', name: 'timeline', label: 'Expected Timeline', icon: '⏰', required: true, toolParamDescription: 'How soon the project needs to start', options: [
+				{ type: 'text', id: 'project-name', name: 'name', label: 'How we should call you?', required: true, toolParamDescription: "The visitor's name" },
+				{ type: 'email', id: 'project-email', name: 'email', label: 'Email Address', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+				{ type: 'select', id: 'project-timeline', name: 'timeline', label: 'Expected Timeline', required: true, toolParamDescription: 'How soon the project needs to start', options: [
 					{ value: 'urgent', label: 'Urgent (1-2 weeks)' },
 					{ value: 'soon', label: 'Soon (1-2 months)' },
 					{ value: 'planning', label: 'Planning Phase' },
 					{ value: 'flexible', label: 'Flexible' }
 				]},
-				{ type: 'textarea', id: 'project-requirements', name: 'message', label: 'Describe your project requirements', icon: '📋', required: true, rows: 4, toolParamDescription: "The project's requirements and scope" }
+				{ type: 'textarea', id: 'project-requirements', name: 'message', label: 'Describe your project requirements', required: true, rows: 4, toolParamDescription: "The project's requirements and scope" }
 			]}
 		/>
 	</Modal>
@@ -274,28 +273,22 @@ const pricingTiers = [
 			toolName="start-engagement-discussion"
 			toolDescription="Start a long-term strategic partnership discussion with Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
-				{ type: 'text', id: 'engagement-name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
-				{ type: 'email', id: 'engagement-email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
-				{ type: 'select', id: 'engagement-team-size', name: 'team-size', label: 'Team Size', icon: '👥', required: true, toolParamDescription: "The visitor's organization size", options: [
+				{ type: 'text', id: 'engagement-name', name: 'name', label: 'How we should call you?', required: true, toolParamDescription: "The visitor's name" },
+				{ type: 'email', id: 'engagement-email', name: 'email', label: 'Email Address', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+				{ type: 'select', id: 'engagement-team-size', name: 'team-size', label: 'Team Size', required: true, toolParamDescription: "The visitor's organization size", options: [
 					{ value: '1-10', label: '1-10 employees' },
 					{ value: '11-50', label: '11-50 employees' },
 					{ value: '51-200', label: '51-200 employees' },
 					{ value: '201+', label: '201+ employees' }
 				]},
-				{ type: 'textarea', id: 'engagement-goals', name: 'message', label: 'Describe your engagement goals', icon: '🤝', required: true, rows: 4, toolParamDescription: 'What the visitor wants from a long-term engagement' }
+				{ type: 'textarea', id: 'engagement-goals', name: 'message', label: 'Describe your engagement goals', required: true, rows: 4, toolParamDescription: 'What the visitor wants from a long-term engagement' }
 			]}
 		/>
 	</Modal>
 
 	<footer class="text-center text-sm py-6 relative" style="color: var(--text-secondary);">
 		<div class="flex flex-col sm:flex-row items-center justify-center gap-2">
-			<span class="transition-colors duration-200 cursor-default" style="color: var(--text-secondary);">© 2025 Milos Rujevic. All rights reserved.</span>
-			<span class="hidden sm:inline" style="color: var(--text-secondary);">•</span>
-			<span class="transition-colors duration-200 cursor-default" style="color: var(--text-secondary);">Powered by Creativity and Free Will</span>
-			<span class="hidden sm:inline" style="color: var(--text-secondary);">•</span>
-			<div class="hover:scale-110 transition-transform duration-300">
-				<WhiteRabbit />
-			</div>
+			<span style="color: var(--text-secondary);">© 2025 Milos Rujevic. All rights reserved.</span>
 		</div>
 	</footer>
 </Layout>

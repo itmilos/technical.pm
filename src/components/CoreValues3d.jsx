@@ -594,7 +594,7 @@ export default function CoreValues3D() {
       </style>
       <div className="core-values-wrapper">
         <div className="controls-hint">
-          <h3>🎮 Interactive 3D Experience</h3>
+          <h3>Interactive 3D Experience</h3>
           <div className="controls-desktop">
             <div className="controls-text">
               <strong>Mouse:</strong> Click and drag to rotate • Scroll to zoom in/out • Hover over values to highlight

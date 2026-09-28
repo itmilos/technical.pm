@@ -1,26 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import LoadingAnimation from '../components/LoadingAnimation.astro';
 import Modal from '../components/Modal.astro';
 import AnimatedContactForm from '../components/AnimatedContactForm.astro';
 ---
 
 <Layout title="404 - Page Not Found | Technical PM" description="The page you're looking for couldn't be found. Navigate back to our homepage or contact us for assistance.">
   <div class="min-h-screen flex items-center justify-center relative overflow-hidden">
-    <!-- Animated background particles -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="particle particle-1"></div>
-      <div class="particle particle-2"></div>
-      <div class="particle particle-3"></div>
-      <div class="particle particle-4"></div>
-      <div class="particle particle-5"></div>
-    </div>
-
     <!-- Main content -->
     <div class="relative z-10 text-center px-4 max-w-2xl mx-auto">
-      <!-- 404 Number with animation -->
+      <!-- 404 Number -->
       <div class="mb-8">
-        <h1 class="text-8xl md:text-9xl font-bold font-accent mb-4 animate-bounce">
+        <h1 class="text-8xl md:text-9xl font-bold font-accent mb-4">
           <span class="bg-gradient-to-r from-royal-purple-600 via-electric-lavender-500 to-neon-coral-500 bg-clip-text text-transparent">
             404
           </span>
@@ -33,14 +23,9 @@ import AnimatedContactForm from '../components/AnimatedContactForm.astro';
           Oops! Page Not Found
         </h2>
         <p class="text-lg mb-6 text-pale-blush-200">
-          The page you're looking for seems to have wandered off into the digital void. 
+          The page you're looking for seems to have wandered off into the digital void.
           Don't worry, even the best technical PMs get lost sometimes!
         </p>
-        
-        <!-- Loading animation for fun -->
-        <div class="flex justify-center mb-6">
-          <LoadingAnimation variant="minimal" speed="slow" showText={false} size="md" />
-        </div>
       </div>
 
       <!-- Action buttons -->
@@ -87,13 +72,13 @@ import AnimatedContactForm from '../components/AnimatedContactForm.astro';
         <h3 class="text-lg font-semibold mb-4 font-accent">Looking for something specific?</h3>
         <div class="grid md:grid-cols-2 gap-4 text-sm">
           <a href="/brand-strategy" class="hover:text-electric-lavender-300 transition-colors duration-200">
-            🎯 Learn about our brand strategy
+            Learn about our brand strategy
           </a>
           <a href="/seo-status" class="hover:text-electric-lavender-300 transition-colors duration-200">
-            📊 Check our SEO status
+            Check our SEO status
           </a>
           <a href="/#services" class="hover:text-electric-lavender-300 transition-colors duration-200">
-            🚀 Explore our services
+            Explore our services
           </a>
         </div>
       </div>
@@ -107,117 +92,29 @@ import AnimatedContactForm from '../components/AnimatedContactForm.astro';
     formId="contact-form"
     buttonText="Send Message"
     fields={[
-      { type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true },
-      { type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true },
-      { type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your project', icon: '🚀', required: true, rows: 4 }
+      { type: 'text', id: 'name', name: 'name', label: 'How we should call you?', required: true },
+      { type: 'email', id: 'email', name: 'email', label: 'Email Address', required: true },
+      { type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your project', required: true, rows: 4 }
     ]}
   />
 </Modal>
 
 <style>
-  /* Animated particles */
-  .particle {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    animation: float 8s ease-in-out infinite;
-    filter: blur(1px);
-  }
-
-  .particle-1 {
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, rgba(108, 62, 166, 0.6), rgba(108, 62, 166, 0.1));
-    top: 20%;
-    left: 10%;
-    animation-delay: 0s;
-  }
-
-  .particle-2 {
-    width: 16px;
-    height: 16px;
-    background: radial-gradient(circle, rgba(181, 126, 220, 0.5), rgba(181, 126, 220, 0.1));
-    top: 60%;
-    right: 15%;
-    animation-delay: 2s;
-  }
-
-  .particle-3 {
-    width: 12px;
-    height: 12px;
-    background: radial-gradient(circle, rgba(14, 194, 164, 0.5), rgba(14, 194, 164, 0.1));
-    bottom: 30%;
-    left: 20%;
-    animation-delay: 4s;
-  }
-
-  .particle-4 {
-    width: 18px;
-    height: 18px;
-    background: radial-gradient(circle, rgba(255, 79, 88, 0.5), rgba(255, 79, 88, 0.1));
-    top: 40%;
-    right: 25%;
-    animation-delay: 6s;
-  }
-
-  .particle-5 {
-    width: 14px;
-    height: 14px;
-    background: radial-gradient(circle, rgba(243, 230, 248, 0.5), rgba(243, 230, 248, 0.1));
-    bottom: 20%;
-    right: 10%;
-    animation-delay: 1s;
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px) rotate(0deg) scale(1);
-      opacity: 0.6;
-    }
-    33% {
-      transform: translateY(-30px) rotate(120deg) scale(1.1);
-      opacity: 0.8;
-    }
-    66% {
-      transform: translateY(-15px) rotate(240deg) scale(0.9);
-      opacity: 1;
-    }
-  }
-
   /* Enhanced glass card for 404 */
   .glass-card {
-    background: linear-gradient(135deg, 
+    background: linear-gradient(135deg,
       rgba(255, 255, 255, 0.12) 0%,
       rgba(255, 255, 255, 0.08) 50%,
       rgba(255, 255, 255, 0.05) 100%);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 
+    box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.15),
       inset 0 1px 0 rgba(255, 255, 255, 0.3),
       inset 0 -1px 0 rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
-  }
-
-  .glass-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-      transparent 0%, 
-      rgba(255, 255, 255, 0.1) 50%, 
-      transparent 100%);
-    transition: left 0.6s ease-in-out;
-    pointer-events: none;
-  }
-
-  .glass-card:hover::before {
-    left: 100%;
   }
 
   /* Light theme adjustments */
@@ -230,48 +127,22 @@ import AnimatedContactForm from '../components/AnimatedContactForm.astro';
     box-shadow: var(--shadow-secondary);
   }
 
-  [data-theme="light"] .glass-card::before {
-    background: linear-gradient(90deg, 
-      transparent 0%, 
-      rgba(0, 0, 0, 0.05) 50%, 
-      transparent 100%);
-  }
-
   /* Enhanced button styles */
   .glass-button {
-    background: linear-gradient(135deg, 
+    background: linear-gradient(135deg,
       rgba(255, 255, 255, 0.1) 0%,
       rgba(255, 255, 255, 0.08) 50%,
       rgba(255, 255, 255, 0.06) 100%);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 
+    box-shadow:
       0 6px 24px rgba(0, 0, 0, 0.12),
       inset 0 1px 0 rgba(255, 255, 255, 0.3);
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
     overflow: hidden;
     color: white;
-  }
-
-  .glass-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-      transparent 0%, 
-      rgba(255, 255, 255, 0.15) 50%, 
-      transparent 100%);
-    transition: left 0.5s ease;
-    pointer-events: none;
-  }
-
-  .glass-button:hover::before {
-    left: 100%;
   }
 
   .glass-button:hover {
