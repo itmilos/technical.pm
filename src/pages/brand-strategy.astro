@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WebGLBackground from '../components/WebGLBackground.astro';
-import WhiteRabbit from '../components/WhiteRabbit.astro';
 import Modal from '../components/Modal.astro';
 import FutureVisionSection from '../components/FutureVisionSection.astro';
 import ServicesSection from '../components/ServicesSection.astro';
@@ -14,10 +13,6 @@ import ColorPaletteSection from '../components/ColorPaletteSection.astro';
 import CompetitiveLandscapeSection from '../components/CompetitiveLandscapeSection.astro';
 import AnimatedContactForm from '../components/AnimatedContactForm.astro';
 import CTASection from '../components/CTASection.astro';
-
-
-
-
 ---
 
 <Layout 
@@ -29,10 +24,10 @@ import CTASection from '../components/CTASection.astro';
 
 	<!-- Hero Section -->
 	<section id="hero" class="container mx-auto px-4 py-16 sm:py-20 md:py-24 max-w-6xl text-center relative z-10">
-		<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 hover:scale-105 transition-transform duration-300 cursor-default leading-tight">
+		<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
 			Brand Strategy
 		</h1>
-		<p class="text-lg sm:text-xl text-deep-charcoal-300 mb-8 hover:text-pale-blush-50 transition-colors duration-200 cursor-default max-w-3xl mx-auto leading-relaxed font-primary">
+		<p class="text-lg sm:text-xl text-deep-charcoal-300 mb-8 max-w-3xl mx-auto leading-relaxed font-primary">
 			Our roadmap to transforming business operations through innovation, automation, and genuine human connection.
 		</p>
 	</section>
@@ -45,8 +40,6 @@ import CTASection from '../components/CTASection.astro';
 	<TargetAudiencesSection />
 	<BrandPersonalitySection />
 	<ColorPaletteSection />
-	<SecretSauceSection />
-	<!-- <InternalControlCycle /> -->
 	<CompetitiveLandscapeSection />
 
 	<CTASection />
@@ -61,13 +54,7 @@ import CTASection from '../components/CTASection.astro';
 
 	<footer class="text-center text-deep-charcoal-400 text-sm py-6 relative">
 		<div class="flex flex-col sm:flex-row items-center justify-center gap-2">
-			<span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default font-primary">© 2025 Milos Rujevic. All rights reserved.</span>
-			<span class="text-pale-blush-200 hidden sm:inline font-primary">•</span>
-			<span class="hover:text-pale-blush-50 transition-colors duration-200 cursor-default font-primary">Powered by Creativity and Free Will</span>
-			<span class="text-pale-blush-200 hidden sm:inline font-primary">•</span>
-			<div class="hover:scale-110 transition-transform duration-300">
-				<WhiteRabbit />
-			</div>
+			<span class="font-primary">© 2025 Milos Rujevic. All rights reserved.</span>
 		</div>
 	</footer>
 </Layout>
