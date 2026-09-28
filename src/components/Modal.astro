@@ -444,7 +444,7 @@ const { id, title, subtitle } = Astro.props;
             }
             
             // Trigger AnimatedContactForm initialization if needed
-            const animatedForms = modal.querySelectorAll('.animated-form-container form');
+            const animatedForms = modal.querySelectorAll('.contact-form form');
             animatedForms.forEach(form => {
               // Dispatch a custom event to reinitialize the form if needed
               form.dispatchEvent(new CustomEvent('modal-opened'));

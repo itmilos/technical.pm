@@ -15,7 +15,7 @@ export interface FormField {
 	id: string;
 	name: string;
 	label: string;
-	icon: string;
+	icon?: string;
 	required?: boolean;
 	options?: { value: string; label: string }[];
 	rows?: number;
@@ -30,34 +30,36 @@ const {
 	formId = 'contact-form',
 	buttonText = "Send Message",
 	fields = [
-		{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', icon: '👤', required: true, toolParamDescription: "The visitor's name" },
-		{ type: 'email', id: 'email', name: 'email', label: 'Email Address', icon: '📧', required: true, toolParamDescription: "The visitor's email address, for a reply" },
-		{ type: 'select', id: 'subject', name: 'subject', label: 'Subject', icon: '💼', required: true, toolParamDescription: 'What the inquiry is about', options: [
+		{ type: 'text', id: 'name', name: 'name', label: 'How we should call you?', required: true, toolParamDescription: "The visitor's name" },
+		{ type: 'email', id: 'email', name: 'email', label: 'Email Address', required: true, toolParamDescription: "The visitor's email address, for a reply" },
+		{ type: 'select', id: 'subject', name: 'subject', label: 'Subject', required: true, toolParamDescription: 'What the inquiry is about', options: [
 			{ value: 'general', label: 'General Inquiry' },
 			{ value: 'consultation', label: 'Book a Consultation' },
 			{ value: 'project', label: 'Project Discussion' },
 			{ value: 'engagement', label: 'Full Engagement' },
 			{ value: 'other', label: 'Other' }
 		]},
-		{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your needs', icon: '💭', required: true, rows: 4, toolParamDescription: 'A description of what the visitor needs' }
+		{ type: 'textarea', id: 'message', name: 'message', label: 'Tell us about your needs', required: true, rows: 4, toolParamDescription: 'A description of what the visitor needs' }
 	],
 	toolName = 'send-contact-message',
 	toolDescription = 'Send a contact message to Milos Rujevic on behalf of a site visitor. Requires explicit human instruction — never submit this on a visitor\'s behalf without them asking to.'
 } = Astro.props;
 ---
 
-<div class="animated-form-container">
-	<form id={formId} class="space-y-6 relative z-10" toolname={toolName} tooldescription={toolDescription}>
+<div class="contact-form">
+	<form id={formId} class="space-y-5" toolname={toolName} tooldescription={toolDescription}>
 		{fields.map((field) => (
 			<div class="input-group">
+				<label for={field.id} class="form-label font-primary">
+					{field.label}{field.required && <span class="required-mark">*</span>}
+				</label>
 				<div class="input-wrapper">
 					{field.type === 'textarea' ? (
 						<textarea
 							id={field.id}
 							name={field.name}
 							rows={field.rows || 4}
-							class="animated-input animated-textarea"
-							placeholder=" "
+							class="animated-input"
 							required={field.required}
 							maxlength={field.maxLength || 1000}
 							toolparamdescription={field.toolParamDescription}
@@ -66,11 +68,11 @@ const {
 						<select
 							id={field.id}
 							name={field.name}
-							class="animated-input animated-select"
+							class="animated-input"
 							required={field.required}
 							toolparamdescription={field.toolParamDescription}
 						>
-							<option value="" disabled selected></option>
+							<option value="" disabled selected>Select an option</option>
 							{field.options?.map((option) => (
 								<option value={option.value}>{option.label}</option>
 							))}
@@ -81,684 +83,121 @@ const {
 							id={field.id}
 							name={field.name}
 							class="animated-input"
-							placeholder=" "
 							required={field.required}
 							toolparamdescription={field.toolParamDescription}
 						/>
-					)}
-					<label for={field.id} class="floating-label font-primary">
-						<span class="label-text">{field.label}</span>
-						<span class="label-icon">{field.icon}</span>
-					</label>
-					<div class="input-border"></div>
-					{field.type === 'select' && (
-						<div class="select-arrow">
-							<svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-								<path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-							</svg>
-						</div>
-					)}
-					{field.type === 'textarea' && (
-						<div class="char-counter" aria-hidden="true">0/{field.maxLength || 1000}</div>
 					)}
 				</div>
 			</div>
 		))}
 
-		<!-- Animated Submit Button -->
-		<div class="text-center pt-4">
-			<button type="submit" class="animated-submit-btn group">
-				<span class="btn-background"></span>
-				<span class="btn-text font-accent">
-					{buttonText}
-					<svg class="btn-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none">
-						<path d="M1 8H15M9 2L15 8L9 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</span>
+		<div class="text-center pt-2">
+			<button type="submit" class="submit-btn font-accent">
+				{buttonText}
 			</button>
 		</div>
 	</form>
 </div>
 
 <style>
-	/* Animated Form Container */
-	.animated-form-container {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.12) 0%,
-			rgba(255, 255, 255, 0.08) 50%,
-			rgba(255, 255, 255, 0.05) 100%);
-		backdrop-filter: blur(24px) saturate(180%);
-		-webkit-backdrop-filter: blur(24px) saturate(180%);
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		box-shadow: 
-			0 8px 32px rgba(0, 0, 0, 0.15),
-			inset 0 1px 0 rgba(255, 255, 255, 0.3),
-			inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-		position: relative;
-		overflow: hidden;
-		padding: 8px;
-		border-radius: 20px;
+	.contact-form {
+		width: 100%;
 	}
 
-	/* Light theme adjustments for animated form container */
-	:root[data-theme="light"] .animated-form-container {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.8) 0%,
-			rgba(255, 255, 255, 0.6) 50%,
-			rgba(255, 255, 255, 0.4) 100%);
-		border: 1px solid var(--border-primary);
-		box-shadow: 
-			var(--shadow-secondary),
-			inset 0 1px 0 rgba(255, 255, 255, 0.8),
-			inset 0 -1px 0 rgba(0, 0, 0, 0.05);
-	}
-
-	/* Dark theme adjustments for animated form container */
-	:root[data-theme="dark"] .animated-form-container {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.12) 0%,
-			rgba(255, 255, 255, 0.08) 50%,
-			rgba(255, 255, 255, 0.05) 100%);
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		box-shadow: 
-			0 8px 32px rgba(0, 0, 0, 0.15),
-			inset 0 1px 0 rgba(255, 255, 255, 0.3),
-			inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-	}
-
-	/* Input Group Styling */
 	.input-group {
-		position: relative;
-		margin-bottom: 24px;
+		margin-bottom: 20px;
+	}
+
+	.form-label {
+		display: block;
+		margin-bottom: 6px;
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--text-secondary);
+	}
+
+	.required-mark {
+		color: var(--accent-primary);
+		margin-left: 2px;
 	}
 
 	.input-wrapper {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.08) 0%,
-			rgba(255, 255, 255, 0.05) 50%,
-			rgba(255, 255, 255, 0.03) 100%);
-		backdrop-filter: blur(18px) saturate(150%);
-		-webkit-backdrop-filter: blur(18px) saturate(150%);
-		border: 1.5px solid rgba(255, 255, 255, 0.2);
-		box-shadow:
-			0 4px 20px rgba(0, 0, 0, 0.1),
-			inset 0 1px 0 rgba(255, 255, 255, 0.25);
 		position: relative;
-		border-radius: 16px;
-		overflow: hidden;
 	}
 
-	.input-wrapper:hover {
-		background: linear-gradient(135deg,
-			rgba(255, 255, 255, 0.12) 0%,
-			rgba(255, 255, 255, 0.08) 50%,
-			rgba(255, 255, 255, 0.05) 100%);
-		border-color: rgba(181, 126, 220, 0.4);
-		box-shadow:
-			0 8px 32px rgba(108, 62, 166, 0.15),
-			inset 0 1px 0 rgba(255, 255, 255, 0.3);
+	.input-wrapper.invalid .animated-input {
+		border-color: #FF4F58;
 	}
 
-	.input-wrapper:focus-within {
-		background: linear-gradient(135deg,
-			rgba(255, 255, 255, 0.15) 0%,
-			rgba(255, 255, 255, 0.1) 50%,
-			rgba(255, 255, 255, 0.07) 100%);
-		border-color: rgba(181, 126, 220, 0.6);
-		box-shadow:
-			0 12px 40px rgba(108, 62, 166, 0.25),
-			0 0 0 4px rgba(181, 126, 220, 0.1),
-			inset 0 1px 0 rgba(255, 255, 255, 0.35);
-	}
-
-	/* Light theme adjustments for input wrapper */
-	:root[data-theme="light"] .input-wrapper {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.8) 0%,
-			rgba(255, 255, 255, 0.6) 50%,
-			rgba(255, 255, 255, 0.4) 100%);
-		border: 1.5px solid var(--border-primary);
-		box-shadow: 
-			var(--shadow-secondary),
-			inset 0 1px 0 rgba(255, 255, 255, 0.8);
-	}
-
-	:root[data-theme="light"] .input-wrapper:hover {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.9) 0%,
-			rgba(255, 255, 255, 0.7) 50%,
-			rgba(255, 255, 255, 0.5) 100%);
-		border-color: var(--accent-primary);
-		box-shadow: 
-			var(--shadow-tertiary),
-			inset 0 1px 0 rgba(255, 255, 255, 0.9);
-	}
-
-	:root[data-theme="light"] .input-wrapper:focus-within {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 1) 0%,
-			rgba(255, 255, 255, 0.8) 50%,
-			rgba(255, 255, 255, 0.6) 100%);
-		border-color: var(--accent-primary);
-		box-shadow: 
-			var(--shadow-tertiary),
-			0 0 0 4px rgba(59, 130, 246, 0.1),
-			inset 0 1px 0 rgba(255, 255, 255, 1);
-	}
-
-	/* Dark theme adjustments for input wrapper */
-	:root[data-theme="dark"] .input-wrapper {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.08) 0%,
-			rgba(255, 255, 255, 0.05) 50%,
-			rgba(255, 255, 255, 0.03) 100%);
-		border: 1.5px solid rgba(255, 255, 255, 0.2);
-		box-shadow: 
-			0 4px 20px rgba(0, 0, 0, 0.1),
-			inset 0 1px 0 rgba(255, 255, 255, 0.25);
-	}
-
-	:root[data-theme="dark"] .input-wrapper:hover {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.12) 0%,
-			rgba(255, 255, 255, 0.08) 50%,
-			rgba(255, 255, 255, 0.05) 100%);
-		border-color: rgba(181, 126, 220, 0.4);
-		box-shadow: 
-			0 8px 32px rgba(108, 62, 166, 0.15),
-			inset 0 1px 0 rgba(255, 255, 255, 0.3);
-	}
-
-	:root[data-theme="dark"] .input-wrapper:focus-within {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.15) 0%,
-			rgba(255, 255, 255, 0.1) 50%,
-			rgba(255, 255, 255, 0.07) 100%);
-		border-color: rgba(181, 126, 220, 0.6);
-		box-shadow: 
-			0 12px 40px rgba(108, 62, 166, 0.25),
-			0 0 0 4px rgba(181, 126, 220, 0.1),
-			inset 0 1px 0 rgba(255, 255, 255, 0.35);
-	}
-
-	/* Enhanced Animated Inputs */
 	.animated-input {
 		width: 100%;
-		padding: 12px;
-		background: transparent;
-		border: none;
-		outline: none;
+		padding: 10px 12px;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-primary);
+		border-radius: 8px;
 		color: var(--text-primary);
 		font-size: 16px;
 		font-family: var(--font-primary);
-		font-weight: 400;
 		line-height: 1.5;
-		position: relative;
-		z-index: 2;
-		min-height: 24px; /* Consistent base height */
 		box-sizing: border-box;
 	}
 
-	.animated-input::placeholder {
-		color: transparent;
+	.animated-input:focus {
+		outline: none;
+		border-color: var(--accent-primary);
 	}
 
-	.animated-textarea {
+	textarea.animated-input {
 		resize: vertical;
-		min-height: 120px;
-		padding: 12px; /* Consistent padding */
-		line-height: 1.6;
+		min-height: 100px;
 	}
 
-	.animated-select {
-		appearance: none;
+	select.animated-input {
 		cursor: pointer;
-		padding: 12px 50px 12px 12px; /* Consistent padding with space for arrow */
-		height: 48px; /* Fixed height to match other inputs */
 	}
 
-	/* Character counter for textareas */
-	.char-counter {
-		position: absolute;
-		right: 10px;
-		bottom: 8px;
-		z-index: 3;
-		font-size: 11px;
-		color: var(--text-tertiary);
-		pointer-events: none;
-		background: rgba(255, 255, 255, 0.08);
-		padding: 2px 6px;
-		border-radius: 6px;
-		backdrop-filter: blur(6px);
-	}
-
-	.char-counter.warning {
-		color: #FF9F43;
-	}
-
-	.char-counter.error {
-		color: #FF4F58;
-	}
-
-	/* Light theme adjustments for animated inputs */
-	:root[data-theme="light"] .animated-input {
-		color: var(--text-primary) !important;
-	}
-
-	:root[data-theme="light"] .animated-input::placeholder {
-		color: transparent !important;
-	}
-
-	/* Dark theme adjustments for animated inputs */
-	:root[data-theme="dark"] .animated-input {
-		color: var(--text-primary) !important;
-	}
-
-	:root[data-theme="dark"] .animated-input::placeholder {
-		color: transparent !important;
-	}
-
-	/* Target LastPass icons inside form inputs */
-	.animated-input + [data-lastpass-icon-root],
-	.form-field-container [data-lastpass-icon-root],
-	.input-wrapper [data-lastpass-icon-root] {
-		display: none !important;
-		visibility: hidden !important;
-		opacity: 0 !important;
-	}
-
-	/* Hide any LastPass generated content */
-	[data-lastpass-icon-root] * {
-		display: none !important;
-		visibility: hidden !important;
-		opacity: 0 !important;
-	}
-
-	/* Enhanced Floating Labels */
-	.floating-label {
-		position: absolute;
-		left: 10px;
-		top: 50%;
-		transform: translateY(-50%);
-		color: rgba(243, 230, 248, 0.7);
-		font-size: 16px;
-		font-weight: 400;
-		pointer-events: none;
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		z-index: 3;
-		background: rgba(255, 255, 255, 0.05);
-		padding: 4px 8px;
-		border-radius: 8px;
-		backdrop-filter: blur(10px);
-	}
-
-	.label-icon {
-		font-size: 18px;
-		opacity: 0.8;
-		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-	}
-
-	/* Light theme adjustments for floating labels */
-	:root[data-theme="light"] .floating-label {
-		color: var(--text-secondary);
-		background: rgba(255, 255, 255, 0.8);
-		border: 1px solid var(--border-primary);
-		box-shadow: var(--shadow-primary);
-	}
-
-	:root[data-theme="light"] .floating-label .label-icon {
-		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-	}
-
-	/* Dark theme adjustments for floating labels */
-	:root[data-theme="dark"] .floating-label {
-		color: rgba(243, 230, 248, 0.7);
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-	}
-
-	:root[data-theme="dark"] .floating-label .label-icon {
-		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-	}
-
-	/* Label becomes a compact tag above the field whenever it's focused or
-	   filled -- it never fully disappears, so a filled field still tells you
-	   what it is. */
-	.animated-input:focus ~ .floating-label,
-	.animated-input:not(:placeholder-shown) ~ .floating-label {
-		top: -8px;
-		transform: translateY(0);
-		font-size: 12px;
-		color: #B57EDC;
-		font-weight: 500;
-		background: linear-gradient(135deg, rgba(181, 126, 220, 0.2), rgba(108, 62, 166, 0.1));
-		border: 1px solid rgba(181, 126, 220, 0.3);
-		opacity: 1;
-	}
-
-	.animated-input:focus ~ .floating-label .label-icon,
-	.animated-input:not(:placeholder-shown) ~ .floating-label .label-icon {
-		transform: scale(0.85);
-		opacity: 1;
-		color: #B57EDC;
-	}
-
-	/* Enhanced Border Animations */
-	.input-border {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 3px;
-		background: linear-gradient(90deg, #6C3EA6, #B57EDC, #0EC2A4, #FF4F58);
-		transform: scaleX(0);
-		border-radius: 0 0 16px 16px;
-	}
-
-	.animated-input:focus ~ .input-border {
-		transform: scaleX(1);
-	}
-
-	/* Enhanced Select Arrow */
-	.select-arrow {
-		position: absolute;
-		right: 20px;
-		top: 50%;
-		transform: translateY(-50%);
-		color: var(--text-tertiary);
-		pointer-events: none;
-		z-index: 3;
-		background: rgba(255, 255, 255, 0.1);
-		padding: 8px;
-		border-radius: 8px;
-		backdrop-filter: blur(10px);
-	}
-
-	.animated-select:focus ~ .select-arrow {
-		color: var(--accent-primary);
-		transform: translateY(-50%) rotate(180deg);
-		background: rgba(181, 126, 220, 0.2);
-		box-shadow: 0 4px 12px rgba(181, 126, 220, 0.3);
-	}
-
-	/* Light theme adjustments for select arrow */
-	:root[data-theme="light"] .select-arrow {
-		color: var(--text-tertiary);
-		background: rgba(255, 255, 255, 0.8);
-		border: 1px solid var(--border-primary);
-		box-shadow: var(--shadow-primary);
-	}
-
-	:root[data-theme="light"] .animated-select:focus ~ .select-arrow {
-		color: var(--accent-primary);
-		background: rgba(59, 130, 246, 0.1);
-		box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-	}
-
-	/* Dark theme adjustments for select arrow */
-	:root[data-theme="dark"] .select-arrow {
-		color: var(--text-tertiary);
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-	}
-
-	:root[data-theme="dark"] .animated-select:focus ~ .select-arrow {
-		color: var(--accent-primary);
-		background: rgba(181, 126, 220, 0.2);
-		box-shadow: 0 4px 12px rgba(181, 126, 220, 0.3);
-	}
-
-	/* Enhanced Animated Submit Button */
-	.animated-submit-btn {
-		background: linear-gradient(135deg, 
-			rgba(255, 255, 255, 0.1) 0%,
-			rgba(255, 255, 255, 0.08) 50%,
-			rgba(255, 255, 255, 0.06) 100%);
-		backdrop-filter: blur(20px) saturate(180%);
-		-webkit-backdrop-filter: blur(20px) saturate(180%);
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		box-shadow:
-			0 6px 24px rgba(0, 0, 0, 0.12),
-			inset 0 1px 0 rgba(255, 255, 255, 0.3);
-		overflow: hidden;
-		position: relative;
-		padding: 18px 36px;
-		border-radius: 16px;
+	.submit-btn {
+		display: inline-block;
+		padding: 12px 32px;
+		background: var(--accent-primary);
 		color: white;
 		font-size: 16px;
 		font-weight: 600;
-		font-family: var(--font-accent);
+		border: none;
+		border-radius: 8px;
 		cursor: pointer;
-		min-width: 220px;
 	}
 
-	.btn-background {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(135deg, #6C3EA6, #B57EDC, #0EC2A4);
-		border-radius: 16px;
+	.submit-btn:hover {
+		background: var(--accent-secondary);
 	}
 
-	.btn-background::before {
-		content: '';
-		position: absolute;
-		inset: 2px;
-		background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-		border-radius: 14px;
-		opacity: 0;
-	}
-
-	.animated-submit-btn:hover .btn-background::before {
-		opacity: 1;
-	}
-
-	.btn-text {
-		position: relative;
-		z-index: 2;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 12px;
-		font-weight: 600;
-		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-	}
-
-	.btn-arrow {
-		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-	}
-
-	.animated-submit-btn:hover {
-		background: linear-gradient(135deg,
-			rgba(255, 255, 255, 0.15) 0%,
-			rgba(255, 255, 255, 0.12) 50%,
-			rgba(255, 255, 255, 0.09) 100%);
-		border-color: rgba(255, 255, 255, 0.35);
-		box-shadow:
-			0 12px 36px rgba(0, 0, 0, 0.18),
-			inset 0 1px 0 rgba(255, 255, 255, 0.4);
-	}
-
-	/* Enhanced Responsive Design */
-	@media (max-width: 768px) {
-		.animated-form-container {
-			padding: 6px;
-			border-radius: 16px;
-		}
-
-		.input-wrapper {
-			border-radius: 12px;
-		}
-
-		.animated-input {
-			padding: 20px 16px 6px 16px;
-			font-size: 16px; /* Prevent zoom on iOS */
-		}
-
-		.floating-label {
-			left: 16px;
-			font-size: 14px;
-			padding: 2px 6px;
-		}
-
-		.animated-submit-btn {
-			width: 100%;
-			padding: 16px 24px;
-			min-width: unset;
-			border-radius: 12px;
-		}
-
-		.select-arrow {
-			right: 16px;
-			padding: 6px;
-		}
-	}
-
-	/* Enhanced Form validation states - No validation icons */
-	.animated-input:invalid:not(:placeholder-shown) ~ .input-border {
-		background: linear-gradient(90deg, #FF4F58, #FF6B6B);
-		transform: scaleX(1);
-	}
-
-	.animated-input:invalid:not(:placeholder-shown) ~ .floating-label {
-		color: #FF4F58;
-		background: linear-gradient(135deg, rgba(255, 79, 88, 0.2), rgba(255, 79, 88, 0.1));
-		border-color: rgba(255, 79, 88, 0.4);
-	}
-
-	.animated-input:valid:not(:placeholder-shown) ~ .input-border {
-		background: linear-gradient(90deg, #0EC2A4, #4ECDC4);
-		transform: scaleX(1);
-	}
-
-	.animated-input:valid:not(:placeholder-shown) ~ .floating-label {
-		color: #0EC2A4;
-		background: linear-gradient(135deg, rgba(14, 194, 164, 0.2), rgba(14, 194, 164, 0.1));
-		border-color: rgba(14, 194, 164, 0.4);
-	}
-
-	/* Hide any validation icons that might appear */
-	.animated-input:valid ~ .validation-icon,
-	.animated-input:invalid ~ .validation-icon,
-	.input-wrapper .validation-icon,
-	.input-wrapper::after,
-	.input-wrapper::before {
-		display: none !important;
-	}
-
-	/* Ensure no browser default validation styling appears */
-	.animated-input:valid,
-	.animated-input:invalid {
-		box-shadow: none !important;
-		outline: none !important;
-	}
-
-	.animated-input:valid:focus,
-	.animated-input:invalid:focus {
-		box-shadow: none !important;
-		outline: none !important;
-	}
-
-	/* Loading state improvements */
-	.animated-submit-btn.loading {
-		pointer-events: none;
-		opacity: 0.8;
-	}
-
-	/* Focus ring improvements */
-	.animated-input:focus {
-		box-shadow: none;
-	}
-
-	/* Success state styling */
-	.animated-submit-btn.success {
-		background: linear-gradient(135deg, #0EC2A4, #4ECDC4) !important;
-		transform: translateY(-2px) !important;
-	}
-	
-	.animated-submit-btn.success .btn-background {
-		background: linear-gradient(135deg, #0EC2A4, #4ECDC4) !important;
-	}
-	
-	.input-wrapper.valid {
-		border-color: rgba(14, 194, 164, 0.5) !important;
-		box-shadow: 0 8px 25px rgba(14, 194, 164, 0.2) !important;
-	}
-	
-	.input-wrapper.invalid {
-		border-color: rgba(255, 79, 88, 0.5) !important;
-		box-shadow: 0 8px 25px rgba(255, 79, 88, 0.2) !important;
+	.submit-btn:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
 	}
 </style>
 
 <script>
-	// Enhanced form interactivity for all animated forms
 	document.addEventListener('DOMContentLoaded', function() {
-		const forms = document.querySelectorAll('.animated-form-container form') as NodeListOf<HTMLFormElement>;
-		
+		const forms = document.querySelectorAll('.contact-form form') as NodeListOf<HTMLFormElement>;
+
 		forms.forEach(form => {
 			const inputs = form.querySelectorAll('.animated-input') as NodeListOf<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
 
-			// Enhanced input interactions
 			inputs.forEach(input => {
 				const wrapper = input.parentElement as HTMLElement;
 
-				// Label visibility (compact tag vs. centered idle state) is handled
-				// entirely by CSS (:focus and :not(:placeholder-shown)) -- no inline
-				// style here, so there's nothing for JS and CSS to fight over.
-
-				// Enhanced auto-resize textarea
-				if (input.tagName === 'TEXTAREA') {
-					const textarea = input as HTMLTextAreaElement;
-					const counter = wrapper?.querySelector('.char-counter') as HTMLElement;
-					const maxLength = textarea.maxLength;
-
-					const updateCounter = () => {
-						if (!counter || maxLength < 0) return;
-						const length = textarea.value.length;
-						counter.textContent = `${length}/${maxLength}`;
-						counter.classList.remove('warning', 'error');
-						if (length > maxLength * 0.95) {
-							counter.classList.add('error');
-						} else if (length > maxLength * 0.8) {
-							counter.classList.add('warning');
-						}
-					};
-
-					updateCounter();
-
-					textarea.addEventListener('input', function() {
-						const textareaElement = this as HTMLTextAreaElement;
-						textareaElement.style.height = 'auto';
-						textareaElement.style.height = textareaElement.scrollHeight + 'px';
-
-						updateCounter();
-					});
-				}
-
-				// Enhanced input validation feedback (no icons)
 				input.addEventListener('input', function() {
-					const inputElement = input;
-
-					// Validation styling
-					if (inputElement.checkValidity()) {
-						wrapper?.classList.add('valid');
+					if (input.checkValidity()) {
 						wrapper?.classList.remove('invalid');
-					} else if (inputElement.value.length > 0) {
+					} else if (input.value.length > 0) {
 						wrapper?.classList.add('invalid');
-						wrapper?.classList.remove('valid');
 					} else {
-						wrapper?.classList.remove('valid', 'invalid');
+						wrapper?.classList.remove('invalid');
 					}
 				});
 			});
-
-			// Let the Modal component handle form submission
-			// Just handle the visual feedback and label management
-			// The actual form submission is handled by the Modal component
 		});
 	});
-</script> 
+</script>
