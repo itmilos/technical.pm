@@ -140,25 +140,6 @@ const {
 		border-radius: 20px;
 	}
 
-	.animated-form-container::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -100%;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(90deg, 
-			transparent 0%, 
-			rgba(255, 255, 255, 0.1) 50%, 
-			transparent 100%);
-		transition: left 0.6s ease-in-out;
-		pointer-events: none;
-	}
-
-	.animated-form-container:hover::before {
-		left: 100%;
-	}
-
 	/* Light theme adjustments for animated form container */
 	:root[data-theme="light"] .animated-form-container {
 		background: linear-gradient(135deg, 
@@ -172,13 +153,6 @@ const {
 			inset 0 -1px 0 rgba(0, 0, 0, 0.05);
 	}
 
-	:root[data-theme="light"] .animated-form-container::before {
-		background: linear-gradient(90deg, 
-			transparent 0%, 
-			rgba(0, 0, 0, 0.05) 50%, 
-			transparent 100%);
-	}
-
 	/* Dark theme adjustments for animated form container */
 	:root[data-theme="dark"] .animated-form-container {
 		background: linear-gradient(135deg, 
@@ -190,13 +164,6 @@ const {
 			0 8px 32px rgba(0, 0, 0, 0.15),
 			inset 0 1px 0 rgba(255, 255, 255, 0.3),
 			inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-	}
-
-	:root[data-theme="dark"] .animated-form-container::before {
-		background: linear-gradient(90deg, 
-			transparent 0%, 
-			rgba(255, 255, 255, 0.1) 50%, 
-			transparent 100%);
 	}
 
 	/* Input Group Styling */
@@ -213,38 +180,35 @@ const {
 		backdrop-filter: blur(18px) saturate(150%);
 		-webkit-backdrop-filter: blur(18px) saturate(150%);
 		border: 1.5px solid rgba(255, 255, 255, 0.2);
-		box-shadow: 
+		box-shadow:
 			0 4px 20px rgba(0, 0, 0, 0.1),
 			inset 0 1px 0 rgba(255, 255, 255, 0.25);
-		transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		position: relative;
 		border-radius: 16px;
 		overflow: hidden;
 	}
 
 	.input-wrapper:hover {
-		background: linear-gradient(135deg, 
+		background: linear-gradient(135deg,
 			rgba(255, 255, 255, 0.12) 0%,
 			rgba(255, 255, 255, 0.08) 50%,
 			rgba(255, 255, 255, 0.05) 100%);
 		border-color: rgba(181, 126, 220, 0.4);
-		box-shadow: 
+		box-shadow:
 			0 8px 32px rgba(108, 62, 166, 0.15),
 			inset 0 1px 0 rgba(255, 255, 255, 0.3);
-		transform: translateY(-2px);
 	}
 
 	.input-wrapper:focus-within {
-		background: linear-gradient(135deg, 
+		background: linear-gradient(135deg,
 			rgba(255, 255, 255, 0.15) 0%,
 			rgba(255, 255, 255, 0.1) 50%,
 			rgba(255, 255, 255, 0.07) 100%);
 		border-color: rgba(181, 126, 220, 0.6);
-		box-shadow: 
+		box-shadow:
 			0 12px 40px rgba(108, 62, 166, 0.25),
 			0 0 0 4px rgba(181, 126, 220, 0.1),
 			inset 0 1px 0 rgba(255, 255, 255, 0.35);
-		transform: translateY(-1px);
 	}
 
 	/* Light theme adjustments for input wrapper */
@@ -329,7 +293,6 @@ const {
 		font-family: var(--font-primary);
 		font-weight: 400;
 		line-height: 1.5;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		position: relative;
 		z-index: 2;
 		min-height: 24px; /* Consistent base height */
@@ -367,7 +330,6 @@ const {
 		padding: 2px 6px;
 		border-radius: 6px;
 		backdrop-filter: blur(6px);
-		transition: color 0.2s ease;
 	}
 
 	.char-counter.warning {
@@ -421,7 +383,6 @@ const {
 		color: rgba(243, 230, 248, 0.7);
 		font-size: 16px;
 		font-weight: 400;
-		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		pointer-events: none;
 		display: flex;
 		align-items: center;
@@ -436,7 +397,6 @@ const {
 	.label-icon {
 		font-size: 18px;
 		opacity: 0.8;
-		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 	}
 
@@ -495,7 +455,6 @@ const {
 		height: 3px;
 		background: linear-gradient(90deg, #6C3EA6, #B57EDC, #0EC2A4, #FF4F58);
 		transform: scaleX(0);
-		transition: transform 0.3s ease;
 		border-radius: 0 0 16px 16px;
 	}
 
@@ -510,7 +469,6 @@ const {
 		top: 50%;
 		transform: translateY(-50%);
 		color: var(--text-tertiary);
-		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		pointer-events: none;
 		z-index: 3;
 		background: rgba(255, 255, 255, 0.1);
@@ -563,10 +521,9 @@ const {
 		backdrop-filter: blur(20px) saturate(180%);
 		-webkit-backdrop-filter: blur(20px) saturate(180%);
 		border: 1px solid rgba(255, 255, 255, 0.25);
-		box-shadow: 
+		box-shadow:
 			0 6px 24px rgba(0, 0, 0, 0.12),
 			inset 0 1px 0 rgba(255, 255, 255, 0.3);
-		transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		overflow: hidden;
 		position: relative;
 		padding: 18px 36px;
@@ -579,31 +536,10 @@ const {
 		min-width: 220px;
 	}
 
-	.animated-submit-btn::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: -100%;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(90deg, 
-			transparent 0%, 
-			rgba(255, 255, 255, 0.15) 50%, 
-			transparent 100%);
-		transition: left 0.5s ease;
-		pointer-events: none;
-		z-index: 1;
-	}
-
-	.animated-submit-btn:hover::before {
-		left: 100%;
-	}
-
 	.btn-background {
 		position: absolute;
 		inset: 0;
 		background: linear-gradient(135deg, #6C3EA6, #B57EDC, #0EC2A4);
-		transition: all 0.3s ease;
 		border-radius: 16px;
 	}
 
@@ -614,7 +550,6 @@ const {
 		background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
 		border-radius: 14px;
 		opacity: 0;
-		transition: opacity 0.3s ease;
 	}
 
 	.animated-submit-btn:hover .btn-background::before {
@@ -633,29 +568,18 @@ const {
 	}
 
 	.btn-arrow {
-		transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 	}
 
 	.animated-submit-btn:hover {
-		background: linear-gradient(135deg, 
+		background: linear-gradient(135deg,
 			rgba(255, 255, 255, 0.15) 0%,
 			rgba(255, 255, 255, 0.12) 50%,
 			rgba(255, 255, 255, 0.09) 100%);
 		border-color: rgba(255, 255, 255, 0.35);
-		box-shadow: 
+		box-shadow:
 			0 12px 36px rgba(0, 0, 0, 0.18),
 			inset 0 1px 0 rgba(255, 255, 255, 0.4);
-		transform: translateY(-4px);
-	}
-
-	.animated-submit-btn:hover .btn-arrow {
-		transform: translateX(6px);
-	}
-
-	.animated-submit-btn:active {
-		transform: translateY(0px);
-		transition: transform 0.1s ease;
 	}
 
 	/* Enhanced Responsive Design */
@@ -786,21 +710,7 @@ const {
 				// entirely by CSS (:focus and :not(:placeholder-shown)) -- no inline
 				// style here, so there's nothing for JS and CSS to fight over.
 
-				// Focus effects with improved animations
-				input.addEventListener('focus', function() {
-					if (wrapper) {
-						wrapper.style.transform = 'scale(1.01)';
-						wrapper.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-					}
-				});
-
-				input.addEventListener('blur', function() {
-					if (wrapper) {
-						wrapper.style.transform = 'scale(1)';
-					}
-				});
-
-				// Enhanced auto-resize textarea with smooth transitions
+				// Enhanced auto-resize textarea
 				if (input.tagName === 'TEXTAREA') {
 					const textarea = input as HTMLTextAreaElement;
 					const counter = wrapper?.querySelector('.char-counter') as HTMLElement;
@@ -824,12 +734,6 @@ const {
 						const textareaElement = this as HTMLTextAreaElement;
 						textareaElement.style.height = 'auto';
 						textareaElement.style.height = textareaElement.scrollHeight + 'px';
-
-						// Add smooth resize animation
-						textareaElement.style.transition = 'height 0.2s ease';
-						setTimeout(() => {
-							textareaElement.style.transition = '';
-						}, 200);
 
 						updateCounter();
 					});
