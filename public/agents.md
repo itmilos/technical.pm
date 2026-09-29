@@ -64,7 +64,7 @@
 
 ### WebMCP tools (in-page)
 
-Contact forms across the site are exposed as [WebMCP](https://webmachinelearning.github.io/webmcp/) tools via the declarative `toolname`/`tooldescription`/`toolparamdescription` attributes, so a browser-based agent can discover and fill them directly instead of scraping the DOM:
+Contact forms across the site are exposed as [WebMCP](https://webmachinelearning.github.io/webmcp/) tools two ways: declaratively, via `toolname`/`tooldescription`/`toolparamdescription` attributes any crawler can read without executing JS; and, in browsers that implement the WebMCP imperative API, as real callable tools registered with `document.modelContext.registerTool()`, derived from those same attributes. Calling one fills the form's fields (and reveals it, if it's inside a closed modal) — it never submits. Feature-detected: falls back to declarative-only where `document.modelContext` doesn't exist.
 
 - Homepage (`/`): `send-general-inquiry`, `book-consultation`, `start-project-discussion`, `start-engagement-discussion`
 - Process page (`/process`): `start-website-process`

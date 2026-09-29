@@ -198,6 +198,76 @@ const {
 					}
 				});
 			});
+
+			registerFillTool(form, inputs);
 		});
 	});
+
+	// Registers a real WebMCP tool (document.modelContext.registerTool) that
+	// lets a browser-based agent fill this form's fields from the same
+	// toolname/tooldescription/toolparamdescription attributes already used
+	// for declarative (crawler-read) discovery. The tool only fills fields
+	// and reveals the form if it's inside a hidden modal -- it never submits.
+	// That stays a human action, same as the "draft, don't send" pattern
+	// used for every contact form on this site. Feature-detected: falls
+	// back to the declarative attributes alone in browsers without WebMCP.
+	function registerFillTool(
+		form: HTMLFormElement,
+		inputs: NodeListOf<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+	) {
+		const modelContext = (document as unknown as { modelContext?: { registerTool: (tool: unknown) => Promise<unknown> } }).modelContext;
+		if (!modelContext) return;
+
+		const toolName = form.getAttribute('toolname');
+		const toolDescription = form.getAttribute('tooldescription');
+		if (!toolName || !toolDescription) return;
+
+		const properties: Record<string, { type: string; description?: string; enum?: string[] }> = {};
+		const required: string[] = [];
+
+		inputs.forEach((field) => {
+			const name = field.getAttribute('name');
+			if (!name) return;
+			const description = field.getAttribute('toolparamdescription') || undefined;
+			const property: { type: string; description?: string; enum?: string[] } = { type: 'string' };
+			if (description) property.description = description;
+			if (field instanceof HTMLSelectElement) {
+				const values = Array.from(field.options).map((o) => o.value).filter(Boolean);
+				if (values.length) property.enum = values;
+			}
+			properties[name] = property;
+			if (field.hasAttribute('required')) required.push(name);
+		});
+
+		modelContext.registerTool({
+			name: toolName,
+			description: `${toolDescription} This fills the form's fields; it does not submit anything -- a human must review and click send.`,
+			inputSchema: { type: 'object', properties, required },
+			annotations: { readOnlyHint: false, consequentialHint: false, untrustedContentHint: false },
+			execute: async (input: Record<string, string>) => {
+				const filledFields: string[] = [];
+				Object.entries(input || {}).forEach(([key, value]) => {
+					const field = form.querySelector(`[name="${key}"]`) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null;
+					if (!field) return;
+					field.value = String(value);
+					field.dispatchEvent(new Event('input', { bubbles: true }));
+					field.dispatchEvent(new Event('change', { bubbles: true }));
+					filledFields.push(key);
+				});
+
+				const dialog = form.closest('[role="dialog"]') as HTMLElement | null;
+				dialog?.classList.remove('hidden');
+
+				return {
+					status: 'drafted',
+					formId: form.id,
+					filledFields,
+					message: 'Form filled. A human must review and submit it -- this tool never sends anything itself.',
+				};
+			},
+		}).catch(() => {
+			// WebMCP registration failed (e.g. mid-spec browser change) --
+			// declarative attributes remain as the fallback discovery path.
+		});
+	}
 </script>
