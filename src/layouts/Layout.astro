@@ -13,17 +13,64 @@ interface Props {
   article?: boolean;
   twitterCard?: 'summary' | 'summary_large_image';
   hideContact?: boolean;
+  hideIdentity?: boolean;
 }
 
-const { 
-  title, 
-  description = "Technical Product Manager Portfolio", 
+const {
+  title,
+  description = "Technical Product Manager Portfolio",
   image = "/seo/og-image.png",
   article = false,
   twitterCard = 'summary_large_image',
-  hideContact = false
+  hideContact = false,
+  hideIdentity = false
 } = Astro.props;
 const canonicalURL = Astro.url?.href ?? "https://technical.pm";
+
+// Astro does not evaluate {expressions} inside <script> tag content the way
+// it does in regular markup, so these are computed here and injected with
+// set:html instead of interpolated inline (which would render as literal,
+// unexecuted source text).
+const personSchemaJson = hideIdentity ? '{}' : JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Milos Rujevic",
+  "jobTitle": "Technical Product Manager",
+  "description": "Expert Technical Product Manager specializing in AI/ML, cloud infrastructure, and data-driven product strategy",
+  "url": "https://technical.pm",
+  "image": "https://technical.pm/images/milos-rujevic.jpg",
+  "email": "magic@technical.pm",
+  "knowsAbout": [
+    "Product Management",
+    "Technical Strategy",
+    "AI/ML Products",
+    "Cloud Computing",
+    "Data Analytics",
+    "Azure",
+    "Python",
+    "JavaScript"
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/aitechpm/",
+    "https://github.com/itmilos",
+    "https://twitter.com/MikeTechnicalPM"
+  ],
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Technical Product Management"
+  }
+});
+
+const websiteSchemaJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": hideIdentity ? "Technical Product Manager Portfolio" : "Technical Product Manager - Milos Rujevic",
+  "description": "Technical Product Manager portfolio showcasing expertise in AI/ML, cloud infrastructure, and strategic product development",
+  "url": "https://technical.pm",
+  "inLanguage": "en-US",
+  "copyrightYear": new Date().getFullYear(),
+  ...(hideIdentity ? {} : { "author": { "@type": "Person", "name": "Milos Rujevic" } })
+});
 ---
 
 <!DOCTYPE html>
@@ -65,8 +112,8 @@ const canonicalURL = Astro.url?.href ?? "https://technical.pm";
       extend={{
         meta: [
           { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
-          { name: 'author', content: 'Milos Rujevic' },
-          { name: 'copyright', content: `© ${new Date().getFullYear()} Milos Rujevic. All rights reserved.` },
+          ...(hideIdentity ? [] : [{ name: 'author', content: 'Milos Rujevic' }]),
+          { name: 'copyright', content: `© ${new Date().getFullYear()}${hideIdentity ? '' : ' Milos Rujevic'}. All rights reserved.` },
           { name: 'language', content: 'English' },
           { name: 'revisit-after', content: '7 days' },
           { name: 'distribution', content: 'web' },
@@ -105,54 +152,10 @@ const canonicalURL = Astro.url?.href ?? "https://technical.pm";
     </noscript>
 
     <!-- Enhanced Structured Data -->
-    <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Milos Rujevic",
-        "jobTitle": "Technical Product Manager",
-        "description": "Expert Technical Product Manager specializing in AI/ML, cloud infrastructure, and data-driven product strategy",
-        "url": "https://technical.pm",
-        "image": "https://technical.pm/images/milos-rujevic.jpg",
-        "email": "magic@technical.pm",
-        "knowsAbout": [
-          "Product Management",
-          "Technical Strategy", 
-          "AI/ML Products",
-          "Cloud Computing",
-          "Data Analytics",
-          "Azure",
-          "Python",
-          "JavaScript"
-        ],
-        "sameAs": [
-          "https://www.linkedin.com/in/aitechpm/",
-          "https://github.com/itmilos",
-          "https://twitter.com/MikeTechnicalPM"
-        ],
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Technical Product Management"
-        }
-      })}
-    </script>
+    <script type="application/ld+json" set:html={personSchemaJson} />
 
     <!-- Website Schema -->
-    <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "Technical Product Manager - Milos Rujevic",
-        "description": "Technical Product Manager portfolio showcasing expertise in AI/ML, cloud infrastructure, and strategic product development",
-        "url": "https://technical.pm",
-        "inLanguage": "en-US",
-        "copyrightYear": new Date().getFullYear(),
-        "author": {
-          "@type": "Person",
-          "name": "Milos Rujevic"
-        }
-      })}
-    </script>
+    <script type="application/ld+json" set:html={websiteSchemaJson} />
   </head>
   <body class="min-h-screen font-primary antialiased transition-colors duration-200">
     <nav class="sticky top-0 z-20 backdrop-blur border-b transition-all duration-200" style="background: var(--bg-primary); border-color: var(--border-primary);">

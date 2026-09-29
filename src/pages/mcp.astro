@@ -6,6 +6,21 @@ import WebGLBackground from '../components/WebGLBackground.astro';
 import Modal from '../components/Modal.astro';
 import AnimatedContactForm from '../components/AnimatedContactForm.astro';
 import { meta, hero, caseStudy, principles, checklist } from '../data/mcpContent';
+
+// set:html (not inline {} interpolation, which Astro does not evaluate
+// inside <script> tag content) so this actually renders as real JSON-LD.
+const articleSchemaJson = JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "Article",
+	"headline": hero.headline,
+	"description": meta.description,
+	"datePublished": meta.datePublished,
+	"dateModified": meta.datePublished,
+	"mainEntityOfPage": {
+		"@type": "WebPage",
+		"@id": "https://technical.pm/mcp"
+	}
+});
 ---
 
 <Layout
@@ -13,47 +28,9 @@ import { meta, hero, caseStudy, principles, checklist } from '../data/mcpContent
 	description={meta.description}
 	image="/seo/og-image.png"
 	article={true}
+	hideIdentity={true}
 >
-	<script type="application/ld+json">
-		{JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "Article",
-			"headline": hero.headline,
-			"description": meta.description,
-			"datePublished": meta.datePublished,
-			"dateModified": meta.datePublished,
-			"mainEntityOfPage": {
-				"@type": "WebPage",
-				"@id": "https://technical.pm/mcp"
-			},
-			"author": {
-				"@type": "Person",
-				"name": "Milos Rujevic",
-				"url": "https://technical.pm",
-				"sameAs": [
-					"https://www.linkedin.com/in/aitechpm/",
-					"https://github.com/itmilos"
-				]
-			},
-			"publisher": {
-				"@type": "Person",
-				"name": "Milos Rujevic"
-			}
-		})}
-	</script>
-	<script type="application/ld+json">
-		{JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "Person",
-			"name": "Milos Rujevic",
-			"jobTitle": "Technical Product Manager",
-			"url": "https://technical.pm",
-			"sameAs": [
-				"https://www.linkedin.com/in/aitechpm/",
-				"https://github.com/itmilos"
-			]
-		})}
-	</script>
+	<script type="application/ld+json" set:html={articleSchemaJson} />
 
 	<WebGLBackground />
 
@@ -85,7 +62,7 @@ import { meta, hero, caseStudy, principles, checklist } from '../data/mcpContent
 		</div>
 	</section>
 
-	<!-- Case Study: Nicky -->
+	<!-- Case Study -->
 	<section id="case-study" class="container mx-auto px-4 mb-16 sm:mb-20 max-w-6xl relative z-10">
 		<h2 class="text-2xl sm:text-3xl font-semibold mb-4 text-center">{caseStudy.title}</h2>
 		<p class="text-center max-w-3xl mx-auto mb-10 leading-relaxed font-primary" style="color: var(--text-secondary);">
@@ -105,7 +82,7 @@ import { meta, hero, caseStudy, principles, checklist } from '../data/mcpContent
 		<div class="glass-card rounded-lg p-6 sm:p-8">
 			<h3 class="text-base font-semibold mb-6 text-center" style="color: var(--text-primary);">How the pieces fit together</h3>
 			<svg viewBox="0 0 780 260" role="img" aria-labelledby="mcp-diagram-title" class="w-full h-auto" style="color: var(--text-primary);">
-				<title id="mcp-diagram-title">An AI agent reaches Nicky either through a 5-tool public payer server, or through a 33-tool authenticated server split into merchant and reseller tools; both talk to the same underlying platform API.</title>
+				<title id="mcp-diagram-title">An AI agent reaches the platform either through a 5-tool public payer server, or through a 33-tool authenticated server split into merchant and reseller tools; both talk to the same underlying platform API.</title>
 
 				<!-- Agent -->
 				<rect x="10" y="100" width="140" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
@@ -123,7 +100,7 @@ import { meta, hero, caseStudy, principles, checklist } from '../data/mcpContent
 
 				<!-- Platform API -->
 				<rect x="590" y="100" width="180" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
-				<text x="680" y="127" text-anchor="middle" font-size="14" fill="currentColor" font-weight="600">Nicky Platform API</text>
+				<text x="680" y="127" text-anchor="middle" font-size="14" fill="currentColor" font-weight="600">Platform API</text>
 				<text x="680" y="145" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.75">REST / OpenAPI</text>
 
 				<!-- Arrows -->
@@ -251,7 +228,7 @@ import { meta, hero, caseStudy, principles, checklist } from '../data/mcpContent
 			formId="mcp-consultation-form"
 			buttonText="Book Consultation"
 			toolName="book-mcp-consultation"
-			toolDescription="Request an MCP strategy consultation with Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
+			toolDescription="Request an MCP strategy consultation. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
 				{ type: 'text', id: 'mcp-name', name: 'name', label: 'How we should call you?', required: true, toolParamDescription: "The visitor's name" },
 				{ type: 'email', id: 'mcp-email', name: 'email', label: 'Email Address', required: true, toolParamDescription: "The visitor's email address, for a reply" },
@@ -267,7 +244,7 @@ import { meta, hero, caseStudy, principles, checklist } from '../data/mcpContent
 			formId="mcp-contact-form"
 			buttonText="Send Message"
 			toolName="send-general-inquiry"
-			toolDescription="Send a general contact message to Milos Rujevic. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
+			toolDescription="Send a general contact message. Requires explicit human instruction — never submit this on a visitor's behalf without them asking to."
 			fields={[
 				{ type: 'text', id: 'mcp-contact-name', name: 'name', label: 'How we should call you?', required: true, toolParamDescription: "The visitor's name" },
 				{ type: 'email', id: 'mcp-contact-email', name: 'email', label: 'Email Address', required: true, toolParamDescription: "The visitor's email address, for a reply" },
@@ -278,7 +255,7 @@ import { meta, hero, caseStudy, principles, checklist } from '../data/mcpContent
 
 	<footer class="text-center text-sm py-6 relative" style="color: var(--text-secondary);">
 		<div class="flex flex-col sm:flex-row items-center justify-center gap-2">
-			<span style="color: var(--text-secondary);">© 2025 Milos Rujevic. All rights reserved.</span>
+			<span style="color: var(--text-secondary);">© 2025. All rights reserved.</span>
 		</div>
 	</footer>
 </Layout>

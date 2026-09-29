@@ -97,17 +97,20 @@ const {
 			<path d="M 140 380 Q 300 450 460 380" stroke="url(#enhancedGradient3)" stroke-width="3" fill="none" opacity="0.7" class="connection-line line-3" filter="url(#glow)" />
 			
 			<!-- Animated flow dots -->
-			<circle r="4" fill="var(--accent-primary)" opacity="0.8" class="flow-dot dot-1">
+			<!-- cx/cy match each path's own starting point, so a dot with a
+			     `begin` delay renders on its path from the first frame instead
+			     of flashing at the SVG origin (0,0) until its delay elapses. -->
+			<circle cx="300" cy="200" r="4" fill="var(--accent-primary)" opacity="0.8" class="flow-dot dot-1">
 				<animateMotion dur="4s" repeatCount="indefinite" calcMode="linear">
 					<mpath href="#path1"/>
 				</animateMotion>
 			</circle>
-			<circle r="4" fill="var(--accent-tertiary)" opacity="0.8" class="flow-dot dot-2">
+			<circle cx="300" cy="200" r="4" fill="var(--accent-tertiary)" opacity="0.8" class="flow-dot dot-2">
 				<animateMotion dur="4s" repeatCount="indefinite" calcMode="linear" begin="1.3s">
 					<mpath href="#path2"/>
 				</animateMotion>
 			</circle>
-			<circle r="4" fill="var(--accent-secondary)" opacity="0.8" class="flow-dot dot-3">
+			<circle cx="140" cy="380" r="4" fill="var(--accent-secondary)" opacity="0.8" class="flow-dot dot-3">
 				<animateMotion dur="4s" repeatCount="indefinite" calcMode="linear" begin="2.6s">
 					<mpath href="#path3"/>
 				</animateMotion>
