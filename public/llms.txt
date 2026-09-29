@@ -1,12 +1,12 @@
 # technical.pm
 
-> Portfolio site for Milos Rujevic, Technical Product Manager. Covers DeFi product management, RWA (Real World Assets), on-chain private markets, Web3 PM career transitions, and enterprise AI.
+> Portfolio and consulting site for Milos Rujevic, Technical Product Manager. Covers technical PM consulting, brand strategy, website/brand-sprint engagements, and building production Model Context Protocol (MCP) servers for agentic platforms.
 
 ## Author
 
-Milos Rujevic — Technical Product Manager with 10+ years building financial systems (Red-Black Tree, SAP) and DeFi exchange infrastructure (Stellarity DEX). Transitioning into DeFi protocol product management targeting on-chain private markets roles.
+Milos Rujevic — Technical Product Manager with 10+ years across financial systems (Red-Black Tree, SAP) and crypto exchange infrastructure (Stellarity DEX). Designs and ships production MCP servers and agent-facing tooling for real platforms.
 
-Contact: milosrujevic@gmail.com
+Contact: magic@technical.pm
 Site: https://technical.pm
 
 ## Machine-Readable Resources
@@ -15,8 +15,10 @@ Site: https://technical.pm
 - [Agent Capabilities](https://technical.pm/agents.md) — What AI agents can do on this site, permitted actions, contact API schema
 - [Sitemap](https://technical.pm/sitemap-index.xml) — Full URL index
 
-## Services
+## Pages
 
-- [Technical PM Consulting](https://technical.pm) — Product strategy, DeFi protocol PM, regulated financial systems, Agile delivery
-- [Brand Strategy](https://technical.pm/brand-strategy) — Positioning for technical products and PM consultants
+- [Home](https://technical.pm) — Technical PM consulting overview, services, pricing tiers, past projects
+- [MCP Insights](https://technical.pm/mcp) — A practitioner's view on building production MCP servers, backed by a real shipped case study
+- [MCP Insights (Markdown)](https://technical.pm/mcp.md) — Plain-markdown mirror of the MCP Insights page
+- [Brand Strategy](https://technical.pm/brand-strategy) — Positioning, values, and brand system behind this site
 - [Process](https://technical.pm/process) — 3-phase engagement: Brand Sprint, Design Guidelines, Website Creation

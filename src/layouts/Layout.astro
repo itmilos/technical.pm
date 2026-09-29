@@ -127,7 +127,7 @@ const canonicalURL = Astro.url?.href ?? "https://technical.pm";
         ],
         "sameAs": [
           "https://www.linkedin.com/in/aitechpm/",
-          "https://github.com/mikeruje",
+          "https://github.com/itmilos",
           "https://twitter.com/MikeTechnicalPM"
         ],
         "worksFor": {
@@ -166,6 +166,15 @@ const canonicalURL = Astro.url?.href ?? "https://technical.pm";
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center gap-6">
           <ul class="flex items-center gap-6 font-medium" style="color: var(--text-secondary);">
+            <li>
+              <a
+                href="/mcp"
+                class="menu-link hover:transition-colors duration-200"
+                style="color: var(--text-secondary);"
+              >
+                MCP
+              </a>
+            </li>
             {!hideContact && (
               <li>
                 <button
@@ -242,6 +251,14 @@ const canonicalURL = Astro.url?.href ?? "https://technical.pm";
                 </button>
               </div>
               <ul class="flex flex-col p-4 space-y-4 font-medium transition-colors duration-200" style="color: var(--text-secondary); background: var(--bg-secondary);">
+                  <li>
+                    <a
+                      href="/mcp"
+                      class="menu-link block py-2 hover:transition-colors duration-200"
+                    >
+                      MCP
+                    </a>
+                  </li>
                   {!hideContact && (
                     <li>
                       <button

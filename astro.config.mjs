@@ -18,6 +18,8 @@ export default defineConfig({
       customPages: [
         'https://technical.pm',
         'https://technical.pm/brand-strategy',
+        'https://technical.pm/mcp',
+        'https://technical.pm/mcp.md',
         'https://technical.pm/llms.txt',
         'https://technical.pm/agents.md'
       ],
