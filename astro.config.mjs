@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-import vercelServerless from '@astrojs/vercel/serverless';
 import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
@@ -33,18 +32,9 @@ export default defineConfig({
   ],
   base: '/',
   compressHTML: true,
-  output: 'server',
-  redirects: {
-    '/blog': '/',
-    '/blog/rss.xml': '/',
-    '/blog/[...slug]': '/'
-  },
-  adapter: vercelServerless({
-    webAnalytics: {
-      enabled: true
-    },
-    maxDuration: 10
-  }),
+  // Static build for AWS Amplify Hosting; the contact-form API moved to a Lambda that Amplify proxies /api/send-email to.
+  output: 'static',
+  // The old /blog redirects (/blog, /blog/rss.xml, /blog/*) are Amplify 301 rules now; a static build cannot do the wildcard.
   build: {
     inlineStylesheets: 'always',
     assets: '_astro'
